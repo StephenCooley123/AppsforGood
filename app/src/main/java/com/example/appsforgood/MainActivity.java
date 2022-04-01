@@ -11,5 +11,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         System.out.println("hello");
+        System.out.println("hi");
+        //if you see this the pull thingy worked
     }
 }
