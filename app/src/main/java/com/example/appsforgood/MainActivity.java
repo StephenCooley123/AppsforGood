@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         System.out.println("hello");
         System.out.println("hi");
+        System.out.println("Hello this is a test!");
         //if you see this the pull thingy worked
     }
 }
