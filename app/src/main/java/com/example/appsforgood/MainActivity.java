@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
-
+    //Commit to save local
+    //Push to save
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,5 +17,7 @@ public class MainActivity extends AppCompatActivity {
         //if you see this the pull thingy worked
         //Does this work
         System.out.println("hello this is another test");
+        System.out.println("Stephen Test");
+        System.out.println("Stephen Test 2");
     }
 }
