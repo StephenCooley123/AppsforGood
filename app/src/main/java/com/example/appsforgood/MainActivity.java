@@ -16,6 +16,5 @@ public class MainActivity extends AppCompatActivity {
         //if you see this the pull thingy worked
         //Does this work
         System.out.println("hello this is another test");
-        System.out.println("Stephen Test");
     }
 }
