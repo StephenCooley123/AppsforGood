@@ -2,7 +2,7 @@ package com.example.appsforgood;
 
 import java.util.ArrayList;
 
-public class Interaction extends Printable {
+public class Interaction implements Printable {
     boolean timeout;
     Long time;
     ArrayList<Tap> taps;

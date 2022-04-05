@@ -1,6 +1,6 @@
 package com.example.appsforgood;
 
-public abstract class Printable {
+public interface Printable {
     public abstract String startKey();
     public abstract String endKey();
 }

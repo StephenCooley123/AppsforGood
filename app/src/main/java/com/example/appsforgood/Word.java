@@ -1,6 +1,6 @@
 package com.example.appsforgood;
 
-public class Word extends Printable {
+public class Word implements Printable {
     String word;
 
     public String getWord() {
