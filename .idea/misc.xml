@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/activity_flashcard.xml" value="0.2623456790123457" />
+        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_wordlayout.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/word_layout.xml" value="0.3029891304347826" />
       </map>
     </option>
   </component>
