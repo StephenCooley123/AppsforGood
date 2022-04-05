@@ -14,7 +14,6 @@ public class Word implements Printable {
         word = str;
     }
     public String getWord() {
-
         return word;
 
     }
