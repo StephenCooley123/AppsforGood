@@ -29,6 +29,6 @@ public class Interaction extends Printable {
 
     @Override
     public String endKey() {
-        return null;
+        return "}";
     }
 }
