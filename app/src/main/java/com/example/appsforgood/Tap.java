@@ -1,6 +1,6 @@
 package com.example.appsforgood;
 
-public class Tap implements Printable{
+public class Tap{
     char xySeparatorChar = '\t';
     double x;
     double y;
@@ -18,12 +18,12 @@ public class Tap implements Printable{
     }
 
 
-    @Override
+
     public String startKey() {
         return "tap{";
     }
 
-    @Override
+
     public String endKey() {
         return "}";
     }

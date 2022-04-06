@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     //TO MERGE MASTER INTO CURRENT:
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
+    //to merge changes from someone else, fetch first
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

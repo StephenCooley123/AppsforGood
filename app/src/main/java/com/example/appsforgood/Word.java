@@ -1,11 +1,22 @@
 package com.example.appsforgood;
 
+import android.content.ContentValues;
+import android.database.sqlite.SQLiteDatabase;
 import android.widget.ImageButton;
+import android.widget.Toast;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
 
-public class Word implements Printable {
-    String word;
+@Entity(tableName = "words")
+public class Word {
+    @PrimaryKey
+    public String word;
+
     ArrayList<Interaction> interactions;
     //ArrayList<ImageButton> images = new ArrayList<ImageButton>();
 
@@ -13,27 +24,20 @@ public class Word implements Printable {
     public Word(String str) {
         word = str;
     }
+
     public String getWord() {
         return word;
 
     }
 
-    @Override
-    public String startKey() {
-        return "word{";
-    }
-
-    @Override
-    public String endKey() {
-        return "}";
-    }
-
 
     public String toString() {
-        return null;
+        return word;
     }
 
     public void addInteraction(Interaction i) {
         interactions.add(i);
     }
+
+
 }

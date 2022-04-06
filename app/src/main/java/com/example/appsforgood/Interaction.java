@@ -2,7 +2,7 @@ package com.example.appsforgood;
 
 import java.util.ArrayList;
 
-public class Interaction implements Printable {
+public class Interaction {
     boolean timeout;
     Long time;
     ArrayList<Tap> taps;
@@ -22,12 +22,12 @@ public class Interaction implements Printable {
         return null;
     }
 
-    @Override
+
     public String startKey() {
         return "interaction{";
     }
 
-    @Override
+
     public String endKey() {
         return "}";
     }
