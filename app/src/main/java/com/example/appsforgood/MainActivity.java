@@ -1,10 +1,12 @@
 package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.*;
 
 import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
@@ -17,22 +19,25 @@ public class MainActivity extends AppCompatActivity {
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
-    ArrayList<Word> words = new ArrayList<Word>();
+    List<Word> words = new ArrayList<Word>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         readWords();
         generateTestWord();
-        System.out.println(words.get(0).toString());
+        System.out.println(words.get(0));
     }
 
     /**
      * Interacts with the database and reads the words on startup
      */
     private void readWords() {
-
-
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "AFGWords").build();
+        WordDAO wordDAO = db.wordDao();
+        List<Word> words = wordDAO.getAll();
+        this.words =  words;
     }
 
     /**
@@ -52,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void generateTestWord() {
         String s = "";
-        for(int i = 0; i < 5; i++) {
-            s = s + (((int)(Math.random() * 24)) + 'a');
+        for (int i = 0; i < 5; i++) {
+            s = s + (char)(((int) (Math.random() * 26)) + 'a');
         }
         Word w = new Word(s);
         w.addTag("tag1");

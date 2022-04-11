@@ -1,4 +1,4 @@
-package com.example.appsforgood;
+package com.example.appsforgood.data;
 
 public class Tap{
     char xySeparatorChar = '\t';

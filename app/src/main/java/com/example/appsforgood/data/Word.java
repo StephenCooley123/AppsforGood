@@ -1,7 +1,8 @@
-package com.example.appsforgood;
+package com.example.appsforgood.data;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ public class Word {
 
     private ArrayList<Interaction> interactions;
     private ArrayList<String> tags = new ArrayList<String>();
+    private ArrayList<Bitmap> pictures;
     //ArrayList<ImageButton> images = new ArrayList<ImageButton>();
 
 

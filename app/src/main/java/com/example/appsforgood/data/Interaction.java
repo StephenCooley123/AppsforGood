@@ -1,4 +1,4 @@
-package com.example.appsforgood;
+package com.example.appsforgood.data;
 
 import java.util.ArrayList;
 
