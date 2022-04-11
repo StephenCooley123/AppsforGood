@@ -17,14 +17,4 @@ public class Tap{
         return x + Character.toString(xySeparatorChar) + y;
     }
 
-
-
-    public String startKey() {
-        return "tap{";
-    }
-
-
-    public String endKey() {
-        return "}";
-    }
 }

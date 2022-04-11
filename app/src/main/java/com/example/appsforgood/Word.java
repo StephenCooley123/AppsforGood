@@ -15,9 +15,10 @@ import java.util.ArrayList;
 @Entity(tableName = "words")
 public class Word {
     @PrimaryKey
-    public String word;
+    private String word;
 
-    ArrayList<Interaction> interactions;
+    private ArrayList<Interaction> interactions;
+    private ArrayList<String> tags = new ArrayList<String>();
     //ArrayList<ImageButton> images = new ArrayList<ImageButton>();
 
 
@@ -32,6 +33,7 @@ public class Word {
 
 
     public String toString() {
+
         return word;
     }
 
@@ -39,5 +41,27 @@ public class Word {
         interactions.add(i);
     }
 
+    public void addTag(String tag) {
+        boolean contains = false;
+        for(String s : tags) {
+            if(!s.equals(tag)) {
+                contains = true;
+            }
+        }
+        if(!contains) {
+            tags.add(tag);
+        }
+    }
+    public boolean containsTag(String tag) {
+        for(String s : tags) {
+            if(s.equals(tag)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    public ArrayList<String> getTags() {
+        return tags;
+    }
 }
