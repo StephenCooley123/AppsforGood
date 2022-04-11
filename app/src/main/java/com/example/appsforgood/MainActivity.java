@@ -19,25 +19,25 @@ public class MainActivity extends AppCompatActivity {
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
-    List<Word> words = new ArrayList<Word>();
+    //List<Word> words = new ArrayList<Word>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        readWords();
-        generateTestWord();
-        System.out.println(words.get(0));
+        //readWords();
+        //generateTestWord();
+        //.out.println(words.get(0));
     }
 
     /**
      * Interacts with the database and reads the words on startup
      */
     private void readWords() {
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "AFGWords").build();
-        WordDAO wordDAO = db.wordDao();
-        List<Word> words = wordDAO.getAll();
-        this.words =  words;
+        //AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+        //        AppDatabase.class, "AFGWords").build();
+       // WordDAO wordDAO = db.wordDao();
+       // List<Word> words = wordDAO.getAll();
+        //this.words =  words;
     }
 
     /**
@@ -56,15 +56,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generateTestWord() {
-        String s = "";
-        for (int i = 0; i < 5; i++) {
-            s = s + (char)(((int) (Math.random() * 26)) + 'a');
-        }
-        Word w = new Word(s);
-        w.addTag("tag1");
-        w.addTag("tag2");
-        w.addTag("tag3");
-        words.add(w);
+      //  String s = "";
+      //  for (int i = 0; i < 5; i++) {
+       //     s = s + (char)(((int) (Math.random() * 26)) + 'a');
+      //  }/ w.addTag("tag1");
+       // w.addTag("tag2");
+       // w.addTag("tag3");
+       // words.add(w);
     }
 
 
