@@ -20,5 +20,9 @@
     <string name="ReplaceActivity">-Activity-</string>
     <string name="Word">Word</string>
     <string name="Next">Next</string>
+    <string name="AddWord">Add Word:</string>
+    <string name="ImageUpload">Upload Image:</string>
+    <string name="VocabHeading">Update Vocab List</string>
+
 
 </resources>
