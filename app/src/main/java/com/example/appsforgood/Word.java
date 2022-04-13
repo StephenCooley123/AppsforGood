@@ -1,4 +1,4 @@
-package com.example.appsforgood.data;
+package com.example.appsforgood;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,15 +13,14 @@ import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
 
-@Entity(tableName = "words")
+//@Entity(tableName = "words")
 public class Word {
-    @PrimaryKey
+    //@PrimaryKey
     private String word;
 
-    private ArrayList<Interaction> interactions;
+    private ArrayList<Interaction> interactions = new ArrayList<Interaction>();
     private ArrayList<String> tags = new ArrayList<String>();
-    private ArrayList<Bitmap> pictures;
-    //ArrayList<ImageButton> images = new ArrayList<ImageButton>();
+    private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
 
 
     public Word(String str) {
@@ -33,7 +32,7 @@ public class Word {
 
     }
 
-
+    @Override
     public String toString() {
 
         return word;
@@ -66,4 +65,13 @@ public class Word {
     public ArrayList<String> getTags() {
         return tags;
     }
+
+    public ArrayList<LoadedImage> getImages() {
+        return images;
+    }
+
+    public ArrayList<Interaction> getInteractions() {
+        return interactions;
+    }
+
 }
