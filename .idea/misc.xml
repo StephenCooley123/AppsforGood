@@ -3,21 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-land/activity_flashcard.xml" value="0.25" />
-        <entry key="app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_word_page.xml" value="0.2543822146216332" />
-        <entry key="app/src/main/res/layout/activity_wordlayout.xml" value="0.3029891304347826" />
-        <entry key="app/src/main/res/layout/word_layout.xml" value="0.3029891304347826" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1785" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_home_page.xml" value="0.1625" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_home_page.xml" value="0.1" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_parental_settings.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_flashcard.xml" value="0.22" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_home_page.xml" value="0.2890625" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_main.xml" value="0.2890625" />
@@ -27,6 +12,20 @@
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_home_page.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_parental_settings.xml" value="0.17552083333333332" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/activity_flashcard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_wordlayout.xml" value="0.3029891304347826" />
+        <entry key="app/src/main/res/layout/word_layout.xml" value="0.3029891304347826" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1785" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_home_page.xml" value="0.1625" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_home_page.xml" value="0.1" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_parental_settings.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_settings.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_word_page.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />

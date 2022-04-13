@@ -1,12 +1,18 @@
 package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.*;
 
+import android.graphics.Bitmap;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.widget.EditText;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import android.view.View;
 import android.widget.ImageView;
@@ -45,12 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
-
-    public void nextWord(View v){
-        Intent intent = new Intent(this,HomePage.class);
-        intent.putExtra("condition",true);
-        startActivity(intent);
     }
 
     /**
@@ -197,6 +197,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void nextWord(View v){
+        Intent intent = new Intent(this,HomePage.class);
+        intent.putExtra("condition",true);
+        startActivity(intent);
+    }
+
     public void Parental(View v){
         setContentView(R.layout.activity_flashcard);
         ImageView imageView;
@@ -211,10 +217,9 @@ public class MainActivity extends AppCompatActivity {
         imageView2 = (ImageView) findViewById(R.id.imageView3);
         imageView2.setImageResource(R.drawable.cow);
 
+        }
 
 
-        Intent intent = new Intent(this,Settings.class);
-        startActivity(intent);
+
     }
 
-}
