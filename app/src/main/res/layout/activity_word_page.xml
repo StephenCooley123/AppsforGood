@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WordPage">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="-37dp"
+        tools:layout_editor_absoluteY="-43dp"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:id="@+id/WordRow"
+            android:layout_marginTop="30dp"
+            android:layout_width="243dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+
+            <TextView
+                android:id="@+id/Word"
+                android:layout_width="158dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/Word"
+                android:textColor="@color/purple_700"
+                android:textSize="50sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/TextQuestion"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="monospace"
+                android:text="@string/Question"
+                android:textColor="@color/purple_700"
+                android:textSize="30sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row2"
+            android:layout_width="239dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/Question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/ReplaceQuestion"
+                android:textSize="20sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/TextActivity"
+                android:layout_width="272dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/Activity"
+                android:textColor="@color/purple_700"
+                android:textSize="30sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/Activity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/ReplaceActivity"
+                android:textSize="20sp" />
+
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/ButtonRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/NextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Next" />
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
