@@ -43,17 +43,13 @@ public class CSVParser {
         // Requesting Permission to access External Storage
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                 EXTERNAL_STORAGE_PERMISSION_CODE);
-        ActionBar.Tab editText;
 
-        // getExternalStoragePublicDirectory() represents root of external storage, we are using DOWNLOADS
-        // We can use following directories: MUSIC, PODCASTS, ALARMS, RINGTONES, NOTIFICATIONS, PICTURES, MOVIES
-        File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
         // Storing the data in file with name as geeksData.txt
         File file = new File(filePath);
         String entireFile = "";
         for(String s : lines) {
-            entireFile += lines;
+            entireFile += s;
         }
 
         writeTextData(file, entireFile);
@@ -72,7 +68,7 @@ public class CSVParser {
             bw.close();
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("THIS WAS MY ERROR");
+           // System.out.println("THIS WAS MY ERROR");
 
         }
     }

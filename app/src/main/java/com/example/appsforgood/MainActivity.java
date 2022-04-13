@@ -37,9 +37,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //readWords();
+
+        //generate 5 random words just to test the file system
+        //to access device files, go to view > tool windows > device file explorer
+        //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
         generateTestWord(5);
         writeData();
-        //.out.println(words.get(0));
+
 
 
     }
@@ -58,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void writeData() {
-        File folder = new File(Environment.getExternalStorageDirectory()
+        File folder = new File(getFilesDir()
                 + appFolder);
         //System.out.println("FILE: " + folder.toString());
 
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if (!folder.exists()) {
             var = folder.mkdir();
             System.out.println("Made the directory");
+            System.out.println(folder.toString());
         }
 
         final String wordsFilePath = folder.toString() + "/" + "words.csv";
@@ -75,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
         generateInteractionKeys();
 
         ArrayList<String> wordsLines = new ArrayList<String>();
+
         wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + '\n');
+
         for (Word w : words) {
             wordsLines.add(writeWord(w));
         }
@@ -118,23 +125,29 @@ public class MainActivity extends AppCompatActivity {
         String s = w.toString() + CSVParser.csvSeparatorChar;
 
         //write images
-        for (LoadedImage l : w.getImages()) {
-            s = s + l.toString() + CSVParser.listSeparatorChar;
+        if(w.getImages().size() > 0) {
+            for (LoadedImage l : w.getImages()) {
+                s = s + l.toString() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
         }
-        s = s.substring(0, s.length() - 1);
         s = s + CSVParser.csvSeparatorChar;
 
         //write interaction keys
-        for (Interaction i : w.getInteractions()) {
-            s = s + i.getKey() + CSVParser.listSeparatorChar;
+        if(w.getInteractions().size() > 0) {
+            for (Interaction i : w.getInteractions()) {
+                s = s + i.getKey() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
         }
-        s = s.substring(0, s.length() - 1);
         s = s + CSVParser.csvSeparatorChar;
 
-        for (String tag : w.getTags()) {
-            s = s + tag + CSVParser.listSeparatorChar;
+        if(w.getTags().size() > 0) {
+            for (String tag : w.getTags()) {
+                s = s + tag + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
         }
-        s = s.substring(0, s.length() - 1);
         s = s + '\n';
 
         return s;
