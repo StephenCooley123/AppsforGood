@@ -2,7 +2,8 @@ package com.example.appsforgood;
 
 import java.util.ArrayList;
 
-public class Interaction implements Printable {
+public class Interaction {
+    int key;
     boolean timeout;
     Long time;
     ArrayList<Tap> taps;
@@ -10,25 +11,16 @@ public class Interaction implements Printable {
     Word correctAnswer;
     Word selectedAnswer;
 
+    public Interaction() {
 
+    }
+    public String getKey() {
+        return Integer.toString(key);
 
-
-    public String toString() {
-
-        return "";
+    }
+    public void setKey(int key) {
+        this.key = key;
     }
 
-    public static Interaction parseInteraction(String input) {
-        return null;
-    }
 
-    @Override
-    public String startKey() {
-        return "interaction{";
-    }
-
-    @Override
-    public String endKey() {
-        return "}";
-    }
 }

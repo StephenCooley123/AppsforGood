@@ -4,4 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"/>
+    tools:context=".MainActivity">
+
+<RelativeLayout
+    android:id="@+id/ContainedLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center_vertical"
+    android:orientation="horizontal"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="1.0"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.0">
+
+
+    <TextView
+        android:id="@+id/Vocabli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20sp"
+        android:fontFamily="monospace"
+        android:text="@string/VocabliStr"
+        android:textSize="50sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Creative"
+        android:layout_width="260sp"
+        android:layout_height="160sp"
+        android:layout_below="@id/Vocabli"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="51sp"
+        android:layout_marginBottom="20sp"
+        android:fontFamily="monospace"
+        android:text="@string/CreativeStr"
+        android:textSize="25sp"
+        android:onClick="nextWord"/>
+
+    <Button
+        android:id="@+id/Guide"
+        android:layout_width="260sp"
+        android:layout_height="160sp"
+        android:layout_below="@id/Creative"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="18sp"
+        android:fontFamily="monospace"
+        android:onClick="Description"
+        android:text="@string/GuidedStr"
+        android:textSize="25sp" />
+
+
+    <Button
+        android:id="@+id/ParentSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Guide"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="12sp"
+        android:fontFamily="monospace"
+        android:text="@string/ParentStr"
+        android:onClick="Parental"/>
+
+
+</RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
