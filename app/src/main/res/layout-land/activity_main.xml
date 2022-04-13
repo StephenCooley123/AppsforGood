@@ -10,24 +10,23 @@
         android:id="@+id/ParentSettings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:height="70sp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="32dp"
-        android:height="70sp"
         android:fontFamily="monospace"
         android:onClick="Parental"
         android:text="@string/ParentStr"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintTop_toBottomOf="@id/Creative"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Creative" />
+        tools:layout_editor_absoluteY="340dp" />
 
     <TextView
         android:id="@+id/Vocabli"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30sp"
-        android:layout_marginTop="40dp"
         android:fontFamily="monospace"
         android:text="@string/VocabliStr"
         android:textSize="50sp"
@@ -38,31 +37,33 @@
     <Button
         android:id="@+id/Guide"
         android:layout_width="260sp"
+        android:layout_marginTop="30dp"
         android:layout_height="160sp"
-        android:layout_marginTop="40dp"
         android:fontFamily="monospace"
         android:onClick="Description"
         android:text="@string/GuidedStr"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/ParentSettings"
         app:layout_constraintEnd_toStartOf="@+id/Creative"
-
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Vocabli" />
+     
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/Creative"
         android:layout_width="260sp"
         android:layout_height="160sp"
-        android:layout_marginTop="40dp"
         android:fontFamily="monospace"
         android:onClick="nextWord"
         android:text="@string/CreativeStr"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/ParentSettings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/Guide"
-        app:layout_constraintTop_toBottomOf="@+id/Vocabli" />
+        app:layout_constraintTop_toBottomOf="@+id/Vocabli"
+        app:layout_constraintVertical_bias="0.646" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
