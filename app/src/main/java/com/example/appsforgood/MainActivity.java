@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.*;
 
 import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
@@ -40,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
         //.out.println(words.get(0));
 
 
+    }
+
+    public void nextWord(View v){
+        Intent intent = new Intent(this,HomePage.class);
+        intent.putExtra("condition",true);
+        startActivity(intent);
     }
 
     /**
@@ -169,5 +177,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+    public void Description(View v){
+        Intent intent = new Intent(this,HomePage.class);
+        intent.putExtra("condition",false);
+        startActivity(intent);
+    }
+
+    public void Parental(View v){
+
+    }
 
 }
