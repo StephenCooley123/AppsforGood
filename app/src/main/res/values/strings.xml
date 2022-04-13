@@ -23,6 +23,7 @@
     <string name="AddWord">Add Word:</string>
     <string name="ImageUpload">Upload Image:</string>
     <string name="VocabHeading">Update Vocab List</string>
+    <string name="Settings">Settings</string>
 
 
 </resources>

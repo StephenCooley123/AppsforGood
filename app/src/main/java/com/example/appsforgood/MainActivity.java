@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Parental(View v){
-
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
     }
 
 }
