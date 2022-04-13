@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void nextWord(View v){
-        Intent intent = new Intent(this,HomePage.class);
-        intent.putExtra("condition",true);
-        startActivity(intent);
-    }
-
     /**
      * Interacts with the database and reads the words on startup
      */
@@ -200,6 +194,12 @@ public class MainActivity extends AppCompatActivity {
     public void Description(View v){
         Intent intent = new Intent(this,HomePage.class);
         intent.putExtra("condition",false);
+        startActivity(intent);
+    }
+
+    public void nextWord(View v){
+        Intent intent = new Intent(this,HomePage.class);
+        intent.putExtra("condition",true);
         startActivity(intent);
     }
 
