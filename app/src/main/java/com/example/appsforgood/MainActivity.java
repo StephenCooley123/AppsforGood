@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import android.view.View;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
@@ -29,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
     List<Word> words = new ArrayList<Word>();
     String appFolder = "/VocabliData";
+
+
+
+
 
 
 
@@ -199,7 +204,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Parental(View v){
+        setContentView(R.layout.activity_flashcard);
+        ImageView imageView;
+        ImageView imageView1;
+        ImageView imageView2;
+
+
+        imageView = (ImageView) findViewById(R.id.imageView1);
+        imageView.setImageResource(R.drawable.cow);
+        imageView1 = (ImageView) findViewById(R.id.imageView2);
+        imageView1.setImageResource(R.drawable.cow);
+        imageView2 = (ImageView) findViewById(R.id.imageView3);
+        imageView2.setImageResource(R.drawable.cow);
+
+        }
+
+
 
     }
 
-}
