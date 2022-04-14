@@ -144,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         if(w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
+                System.out.println(tag);
             }
             s = s.substring(0, s.length() - 1);
         }
