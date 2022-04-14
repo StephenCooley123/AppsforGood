@@ -23,7 +23,7 @@ public class WordPage extends AppCompatActivity {
     }
 
     public void returntoSlides(View v){
-        Intent intent = new Intent(this, HomePage.class);
+        Intent intent = new Intent(this, FlashcardActivity.class);
         intent.putExtra("condition",false);
         startActivity(intent);
     }

@@ -30,8 +30,9 @@
 
 
         <activity
-            android:name=".Flashcard"
+            android:name=".FlashcardActivity"
             android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true" >

@@ -53,12 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void nextWord(View v){
-        Intent intent = new Intent(this,HomePage.class);
-        intent.putExtra("condition",true);
-        startActivity(intent);
-    }
-
     /**
      * Interacts with the database and reads the words on startup
      */
@@ -123,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Returns the String representing a CSV Line for a Word object
      *
-     * @param w
+     * @param
      * @return The String representing a CSV Line for a Word object
      */
     private String writeWord(Word w) {
@@ -150,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         if(w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
+                System.out.println(tag);
             }
             s = s.substring(0, s.length() - 1);
         }
@@ -198,25 +193,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void Description(View v){
-        Intent intent = new Intent(this,HomePage.class);
+        Intent intent = new Intent(this,FlashcardActivity.class);
         intent.putExtra("condition",false);
         startActivity(intent);
     }
 
+    public void nextWord(View v){
+        Intent intent = new Intent(this,FlashcardActivity.class);
+        intent.putExtra("condition",true);
+        startActivity(intent);
+    }
+
     public void Parental(View v){
-        setContentView(R.layout.activity_flashcard);
-        ImageView imageView;
-        ImageView imageView1;
-        ImageView imageView2;
-
-
-        imageView = (ImageView) findViewById(R.id.imageView1);
-        imageView.setImageResource(R.drawable.cow);
-        imageView1 = (ImageView) findViewById(R.id.imageView2);
-        imageView1.setImageResource(R.drawable.cow);
-        imageView2 = (ImageView) findViewById(R.id.imageView3);
-        imageView2.setImageResource(R.drawable.cow);
-
+        Intent intent = new Intent(this,Settings.class);
+        startActivity(intent);
         }
 
 

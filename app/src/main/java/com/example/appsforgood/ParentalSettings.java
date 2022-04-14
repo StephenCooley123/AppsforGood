@@ -11,7 +11,6 @@ public class ParentalSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parental_settings);
     }
-
     public void selectImage(){
     }
 }

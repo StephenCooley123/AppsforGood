@@ -45,7 +45,7 @@ public class Word {
     public void addTag(String tag) {
         boolean contains = false;
         for(String s : tags) {
-            if(!s.equals(tag)) {
+            if(s.equals(tag)) {
                 contains = true;
             }
         }
