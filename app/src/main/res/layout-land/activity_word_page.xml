@@ -28,7 +28,7 @@
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/Word"
                 android:textColor="@color/purple_700"
-                android:textSize="50sp" />
+                android:textSize="30dp" />
         </TableRow>
 
         <TableRow
@@ -45,7 +45,7 @@
                 android:fontFamily="monospace"
                 android:text="@string/Question"
                 android:textColor="@color/purple_700"
-                android:textSize="30sp" />
+                android:textSize="20sp" />
 
         </TableRow>
 
@@ -79,7 +79,7 @@
                 android:fontFamily="monospace"
                 android:text="@string/Activity"
                 android:textColor="@color/purple_700"
-                android:textSize="30sp" />
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
