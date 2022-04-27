@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
@@ -28,7 +31,6 @@ public class Word {
         return word;
 
     }
-
 
     @Override
     public String toString() {
@@ -75,4 +77,8 @@ public class Word {
     public void setImages(ArrayList<LoadedImage> wordImages) {
         images = wordImages;
     }
+    public LoadedImage RandomImage(){
+        return images.get((int) (Math.random()*images.size()));
+    }
+
 }

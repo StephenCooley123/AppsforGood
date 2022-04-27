@@ -17,4 +17,8 @@ public class LoadedImage {
     public String toString() {
         return reference;
     }
+
+    public Bitmap getImage(){
+        return image;
+    }
 }

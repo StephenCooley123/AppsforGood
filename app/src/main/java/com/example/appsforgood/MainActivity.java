@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Interacts with the csv and reads the words on startup
+     * Interacts with the database and reads the words on startup
      */
     private void readWords() {
         File folder = new File(getFilesDir()
@@ -140,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return loadedImages;
+    }
+
+    public static List<Word> getWords() {
+        return words;
     }
 
     private void writeData() {
@@ -211,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         String s = w.toString() + CSVParser.csvSeparatorChar;
 
         //write images
-        if (w.getImages().size() > 0) {
+        if(w.getImages().size() > 0) {
             for (LoadedImage l : w.getImages()) {
                 s = s + l.toString() + CSVParser.listSeparatorChar;
             }
@@ -220,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
         s = s + CSVParser.csvSeparatorChar;
 
         //write interaction keys
-        if (w.getInteractions().size() > 0) {
+        if(w.getInteractions().size() > 0) {
             for (Interaction i : w.getInteractions()) {
                 s = s + i.getKey() + CSVParser.listSeparatorChar;
             }
@@ -228,10 +232,10 @@ public class MainActivity extends AppCompatActivity {
         }
         s = s + CSVParser.csvSeparatorChar;
 
-        if (w.getTags().size() > 0) {
+        if(w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
-
+                System.out.println(tag);
             }
             s = s.substring(0, s.length() - 1);
         }
@@ -264,16 +268,16 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void nextWord(View v) {
-        Intent intent = new Intent(this, FlashcardActivity.class);
-        intent.putExtra("condition", true);
+    public void nextWord(View v){
+        Intent intent = new Intent(this,FlashcardActivity.class);
+        intent.putExtra("condition",true);
         startActivity(intent);
     }
 
-    public void Parental(View v) {
-        Intent intent = new Intent(this, Settings.class);
+    public void Parental(View v){
+        Intent intent = new Intent(this,Settings.class);
         startActivity(intent);
-    }
+        }
 
     private Bitmap getImageAsset(String name) {
 
@@ -287,5 +291,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-}
+    }
 
