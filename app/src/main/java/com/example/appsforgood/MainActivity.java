@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
-    List<Word> words = new ArrayList<Word>();
+    static List<Word> words = new ArrayList<Word>();
     String appFolder = "/VocabliData";
 
 
@@ -58,6 +58,10 @@ public class MainActivity extends AppCompatActivity {
      */
     private void readWords() {
 
+    }
+
+    public static List<Word> getWords() {
+        return words;
     }
 
     private void writeData() {
@@ -189,8 +193,6 @@ public class MainActivity extends AppCompatActivity {
             words.add(w);
         }
     }
-
-
 
     public void Description(View v){
         Intent intent = new Intent(this,FlashcardActivity.class);

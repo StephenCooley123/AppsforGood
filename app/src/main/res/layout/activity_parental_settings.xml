@@ -22,10 +22,11 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/VocabHeading"
-                android:textColor="@color/blue"
+                android:layout_marginTop="20sp"
                 android:fontFamily="sans-serif-medium"
-                android:textSize="45sp"/>
+                android:text="@string/VocabHeading"
+                android:textColor="#3F51B5"
+                android:textSize="45sp" />
         </TableRow>
 
         <TableRow
@@ -35,14 +36,14 @@
             android:gravity="center_horizontal">
 
             <TextView
-                android:id="@+id/AddWord"
+                android:id="@+id/addWord"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="monospace"
                 android:text="@string/AddWord"
-                android:textColor="@color/purple_500"
-                android:textSize="40sp"
+                android:textColor="#3F51B5"
 
-                />
+                android:textSize="40sp" />
         </TableRow>
 
         <TableRow
@@ -55,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="10"
+                android:fontFamily="monospace"
                 android:inputType="textPersonName"
                 android:text="Enter Word"
                 android:textSize="30sp" />
@@ -69,8 +71,10 @@
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20"
+                android:fontFamily="monospace"
                 android:text="@string/ImageUpload"
-                android:textColor="@color/purple_500"
+                android:textColor="#3F51B5"
                 android:textSize="40sp" />
         </TableRow>
 
@@ -79,12 +83,18 @@
             android:layout_height="match_parent"
             android:gravity="center_horizontal">
 
-            <ImageView
-                android:id="@android:id/icon"
+            <ImageButton
+                android:id="@+id/imageButton2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_marginTop="10"
+                app:srcCompat="@drawable/ic_launcher_background" />
         </TableRow>
     </TableLayout>
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        tools:layout_editor_absoluteY="258dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
