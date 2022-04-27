@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
-    List<Word> words = new ArrayList<Word>();
+    static List<Word> words = new ArrayList<Word>();
     public static final String appFolder = "/VocabliData";
     public static final String assetsReferenceKey = "/assets/";
 
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (reference.contains(assetsReferenceKey)) {
                 reference = reference.substring(assetsReferenceKey.length());
-                loadedImages.add(new LoadedImage(getImageAsset(reference), reference.substring(assetsReferenceKey.length())));
+                loadedImages.add(new LoadedImage(getImageAsset(reference), reference));
             } else {
                 loadedImages.add(new LoadedImage(BitmapFactory.decodeFile(reference), reference));
             }
@@ -253,8 +253,9 @@ public class MainActivity extends AppCompatActivity {
             Word w = new Word(s);
             ArrayList<LoadedImage> temp = new ArrayList<LoadedImage>();
             temp.add(new LoadedImage(getImageAsset("dog.jpg"), assetsReferenceKey + "dog.jpg"));
+            temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
             w.setImages(temp);
-            w.addTag("tag1");
+            w.addTag("animal");
             w.addTag("tag2");
             w.addTag("tag3");
             words.add(w);
