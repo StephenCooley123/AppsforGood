@@ -7,15 +7,14 @@ import java.io.File;
 
 public class LoadedImage {
     Bitmap image;
-    String filepath;
-    public LoadedImage(String filepath) {
-        this.filepath = filepath;
-        File file = new File(filepath);
-        image = BitmapFactory.decodeFile(file.getAbsolutePath());
+    String reference;
+    public LoadedImage(Bitmap image, String reference) {
+        this.image = image;
+        this.reference = reference;
     }
 
     @Override
     public String toString() {
-        return filepath;
+        return reference;
     }
 }
