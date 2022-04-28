@@ -33,32 +33,17 @@ public class MainActivity extends AppCompatActivity {
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
+
     public static final String appFolder = "/VocabliData";
+    public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
 
     @Override
     protected void onStart() {
         super.onStart();
-        installImagesIfNecessary();
         generateTestWord(5);
         writeData();
         readWords();
-    }
-
-    private void installImagesIfNecessary() {
-        File folder = new File(getFilesDir()
-                + "/Images");
-
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        try {
-
-            Bitmap b = BitmapFactory.decodeStream(getAssets().open("dog.jpg"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -215,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
         String s = w.toString() + CSVParser.csvSeparatorChar;
 
         //write images
-        if(w.getImages().size() > 0) {
+        if (w.getImages().size() > 0) {
             for (LoadedImage l : w.getImages()) {
                 s = s + l.toString() + CSVParser.listSeparatorChar;
             }
@@ -224,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         s = s + CSVParser.csvSeparatorChar;
 
         //write interaction keys
-        if(w.getInteractions().size() > 0) {
+        if (w.getInteractions().size() > 0) {
             for (Interaction i : w.getInteractions()) {
                 s = s + i.getKey() + CSVParser.listSeparatorChar;
             }
@@ -232,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         }
         s = s + CSVParser.csvSeparatorChar;
 
-        if(w.getTags().size() > 0) {
+        if (w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
                 System.out.println(tag);
@@ -252,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
             }
             Word w = new Word(s);
             ArrayList<LoadedImage> temp = new ArrayList<LoadedImage>();
-            temp.add(new LoadedImage(getImageAsset("dog.jpg"), assetsReferenceKey + "dog.jpg"));
             temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
+            temp.add(new LoadedImage(getImageFromAppData(getFilesDir() + imageFolder + "/dog.jpg"), getFilesDir() + imageFolder + "/dog.jpg"));
             w.setImages(temp);
             w.addTag("animal");
             w.addTag("tag2");
@@ -269,21 +254,21 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void nextWord(View v){
-        Intent intent = new Intent(this,FlashcardActivity.class);
-        intent.putExtra("condition",true);
+    public void nextWord(View v) {
+        Intent intent = new Intent(this, FlashcardActivity.class);
+        intent.putExtra("condition", true);
         startActivity(intent);
     }
 
-    public void Parental(View v){
-        Intent intent = new Intent(this,Settings.class);
+    public void Parental(View v) {
+        Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
-        }
+    }
 
     private Bitmap getImageAsset(String name) {
 
         try {
-            System.out.println("Getting Image Asset");
+            //System.out.println("Getting Image Asset");
             return BitmapFactory.decodeStream(getAssets().open(name));
         } catch (IOException e) {
             e.printStackTrace();
@@ -291,6 +276,13 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    private Bitmap getImageFromAppData(String name) {
 
+
+        //System.out.println("Getting Image Asset");
+        return BitmapFactory.decodeFile(name);
     }
+
+
+}
 
