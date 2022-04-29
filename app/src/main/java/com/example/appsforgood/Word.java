@@ -6,8 +6,7 @@ import android.graphics.Bitmap;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
+
 
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 

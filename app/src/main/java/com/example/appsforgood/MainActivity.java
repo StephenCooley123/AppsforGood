@@ -1,7 +1,6 @@
 package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.*;
 
 import android.graphics.Bitmap;
 import android.content.Intent;
