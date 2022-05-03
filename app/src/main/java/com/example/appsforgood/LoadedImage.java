@@ -18,4 +18,8 @@ public class LoadedImage {
     public String toString() {
         return filepath;
     }
+
+    public Bitmap getImage(){
+        return image;
+    }
 }

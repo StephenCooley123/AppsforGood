@@ -6,8 +6,6 @@ import android.graphics.Bitmap;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-
-
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
@@ -71,6 +69,10 @@ public class Word {
 
     public ArrayList<Interaction> getInteractions() {
         return interactions;
+    }
+
+    public LoadedImage RandomImage(){
+        return images.get((int) (Math.random()*images.size()));
     }
 
 }
