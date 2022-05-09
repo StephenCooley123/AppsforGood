@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.tts.TextToSpeech;
 import android.widget.EditText;
 
 import java.io.BufferedWriter;
@@ -17,11 +18,14 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import android.view.View;
 import android.widget.ImageView;
 
-public class MainActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
+
+public class MainActivity extends AppCompatActivity{
     //TO SAVE CHANGES TO MASTER
     // Commit to save local
     //Push to save to your cloud branch
@@ -38,12 +42,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
 
+
     @Override
     protected void onStart() {
         super.onStart();
         generateTestWord(5);
-        writeData();
-        readWords();
+        //writeData();
+        //readWords();
     }
 
 
@@ -93,9 +98,30 @@ public class MainActivity extends AppCompatActivity {
         s = s.substring(s.indexOf(",") + 1);
         String tags = s;
         System.out.println("TAGS: " + tags);
+
+
         Word word = new Word(w);
         ArrayList<LoadedImage> wordImages = parseImages(images);
         word.setImages(wordImages);
+        word.setTags(parseTags(tags));
+
+        words.add(word);
+    }
+
+    private ArrayList<String> parseTags(String tags) {
+        ArrayList<String> tagsList = new ArrayList<String>();
+        while (tags.contains("|")) {
+            String tag = tags.substring(0, tags.indexOf("|"));
+            tags = tags.substring(tags.indexOf("|") + 1);
+            tagsList.add(tag);
+
+
+        }
+        if (!tags.equals("")) {
+            String tag = tags;
+            tagsList.add(tag);
+        }
+        return tagsList;
     }
 
     private ArrayList<LoadedImage> parseImages(String images) {
@@ -231,13 +257,15 @@ public class MainActivity extends AppCompatActivity {
 
     private void generateTestWord(int numWords) {
         for (int j = 0; j < numWords; j++) {
-            String s = "";
-            for (int i = 0; i < 5; i++) {
-                s = s + (char) (((int) (Math.random() * 26)) + 'a');
-            }
+            String s = "Testing Word";
+
+            //String s = "";
+            //for (int i = 0; i < 5; i++) {
+            //    s = s + (char) (((int) (Math.random() * 26)) + 'a');
+            //}
             Word w = new Word(s);
             ArrayList<LoadedImage> temp = new ArrayList<LoadedImage>();
-            temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
+            //temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
             temp.add(new LoadedImage(getImageFromAppData(getFilesDir() + imageFolder + "/dog.jpg"), getFilesDir() + imageFolder + "/dog.jpg"));
             w.setImages(temp);
             w.addTag("animal");

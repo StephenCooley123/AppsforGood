@@ -81,4 +81,8 @@ public class Word {
         return images.get((int) (Math.random()*images.size()));
     }
 
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
 }
