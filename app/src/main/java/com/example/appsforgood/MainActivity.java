@@ -7,14 +7,21 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.ScriptGroup;
 import android.speech.tts.TextToSpeech;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Writer;
 import java.lang.reflect.Array;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +32,7 @@ import android.widget.ImageView;
 
 import org.w3c.dom.Text;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
     // Commit to save local
     //Push to save to your cloud branch
@@ -46,9 +53,10 @@ public class MainActivity extends AppCompatActivity{
     @Override
     protected void onStart() {
         super.onStart();
-        generateTestWord(5);
-        //writeData();
-        //readWords();
+        readWords();
+        //generateTestWord(5);
+        writeData();
+
     }
 
 
@@ -69,20 +77,56 @@ public class MainActivity extends AppCompatActivity{
      * Interacts with the database and reads the words on startup
      */
     private void readWords() {
-        File folder = new File(getFilesDir()
-                + appFolder);
+        try {
 
-        final String wordsFilePath = folder.toString() + "/" + "words.csv";
-        final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+            File folder = new File(getFilesDir()
+                    + appFolder);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+            final String wordsFilePath = folder.toString() + "/" + "words.csv";
+            System.out.println("Words File Path: " + wordsFilePath);
+            if (!new File(wordsFilePath).exists()) {
+                File wordsFile = new File(wordsFilePath);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("DefaultWords.csv")));
+                String line = reader.readLine();
+                //System.out.println("First line incoming");
+                System.out.println("FIRST LINE:" + line);
+                BufferedWriter wr = new BufferedWriter(new FileWriter(wordsFile));
+                while(line != null) {
+                    wr.write(line + "\n");
+                    System.out.println("FILE LINE: " + line);
+                    line = reader.readLine();
 
-        if (!folder.exists()) {
-            folder.mkdir();
-        }
-        ArrayList<String> unparsedWords = CSVParser.readFile(wordsFilePath, this);
-        unparsedWords.remove(0);
-        for (String s : unparsedWords) {
-            System.out.println("WORDS LINE: " + s);
-            parseWord(s);
+                }
+                reader.close();
+                wr.flush();
+                wr.close();
+            }
+            final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+            if (!new File(interactionsFilePath).exists()) {
+                File interactionsFile = new File(interactionsFilePath);
+                interactionsFile.createNewFile();
+            }
+
+            File imagesFolder = new File(getFilesDir() + appFolder + imageFolder);
+            if (!imagesFolder.exists()) {
+                imagesFolder.mkdir();
+            }
+
+            System.out.println("Parsing words");
+            ArrayList<String> unparsedWords = CSVParser.readFile(wordsFilePath, this);
+            unparsedWords.remove(0);
+
+            for (String s : unparsedWords) {
+                System.out.println("WORDS LINE: " + s);
+                parseWord(s);
+            }
+
+            System.out.println("Wrote Directories");
+        } catch (IOException e) {
+            System.out.println("FAILED TO WRITE DIRECTORIES");
+            e.printStackTrace();
         }
     }
 
@@ -164,9 +208,6 @@ public class MainActivity extends AppCompatActivity{
         //System.out.println("IN WRITE DATA METHOD");
 
         boolean var = false;
-        if (folder.exists()) {
-            System.out.println("Folder Exists, I just can't see it");
-        }
         if (!folder.exists()) {
             var = folder.mkdir();
             //System.out.println("Made the directory");
@@ -265,8 +306,9 @@ public class MainActivity extends AppCompatActivity{
             //}
             Word w = new Word(s);
             ArrayList<LoadedImage> temp = new ArrayList<LoadedImage>();
-            //temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
-            temp.add(new LoadedImage(getImageFromAppData(getFilesDir() + imageFolder + "/dog.jpg"), getFilesDir() + imageFolder + "/dog.jpg"));
+            temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
+            temp.add(new LoadedImage(getImageAsset("dog.jpg"), assetsReferenceKey + "dog.jpg"));
+            //temp.add(new LoadedImage(getImageFromAppData(getFilesDir() + imageFolder + "/dog.jpg"), getFilesDir() + imageFolder + "/dog.jpg"));
             w.setImages(temp);
             w.addTag("animal");
             w.addTag("tag2");

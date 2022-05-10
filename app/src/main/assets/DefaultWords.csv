@@ -1,1 +1,5 @@
 Word,Images,InteractionKeys,Tags
+Dog,/assets/dog.jpg,,animal
+Cat,/assets/cat.jpg,,animal
+Cow,/assets/cow.jpg,,animal
+Ice Cream,/assets/icecream.jpg,,animal
