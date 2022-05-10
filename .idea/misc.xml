@@ -3,30 +3,34 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.173" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_flashcard.xml" value="0.22" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_home_page.xml" value="0.2890625" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_lists.xml" value="0.28378378378378377" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_main.xml" value="0.2890625" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_settings.xml" value="0.2890625" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-land/activity_word_page.xml" value="0.21621621621621623" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.131640625" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout-v26/activity_lists.xml" value="0.1640625" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_flashcard.xml" value="0.1" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_flashcard.xml" value="0.22" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_home_page.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_lists.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_main.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_parental_settings.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_settings.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_word_page.xml" value="0.1" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_words.xml" value="0.22" />
-        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/listinwordlists.xml" value="0.1640625" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_settings.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/Garyth/AndroidStudioProjects/AppsforGood/app/src/main/res/layout/activity_word_page.xml" value="0.17552083333333332" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1645" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
-        <entry key="app/src/main/res/layout-land/activity_flashcard.xml" value="0.25" />
-        <entry key="app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.335" />
+        <entry key="app/src/main/res/layout-land/activity_flashcard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-land/activity_home_page.xml" value="0.2448559670781893" />
+        <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.2448559670781893" />
+        <entry key="app/src/main/res/layout-large-land/activity_flashcard.xml" value="0.21675929884566053" />
+        <entry key="app/src/main/res/layout-large/activity_flashcard.xml" value="0.12740487387772553" />
+        <entry key="app/src/main/res/layout-sw500dp-land/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-sw600dp-land/activity_flashcard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.125" />
+        <entry key="app/src/main/res/layout-w600dp-land/activity_flashcard.xml" value="0.20384615384615384" />
+        <entry key="app/src/main/res/layout-xlarge-land/activity_flashcard.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.15494791666666666" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_parental_settings.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout/activity_wordlayout.xml" value="0.3029891304347826" />
         <entry key="app/src/main/res/layout/word_layout.xml" value="0.3029891304347826" />
       </map>
@@ -41,7 +45,7 @@
   <component name="VisualizationToolProject">
     <option name="state">
       <ProjectState>
-        <option name="scale" value="0.10666666666666667" />
+        <option name="scale" value="0.165" />
       </ProjectState>
     </option>
   </component>
