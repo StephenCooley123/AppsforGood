@@ -1,21 +1,14 @@
 package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.*;
 
-import android.graphics.Bitmap;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.widget.EditText;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import android.view.View;
-import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
@@ -33,10 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
         generateTestWord(5);
         writeData();
+
 
 
 
@@ -195,14 +185,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void Description(View v){
-        Intent intent = new Intent(this,FlashcardActivity.class);
+        Intent intent = new Intent(this, Categories.class);
         intent.putExtra("condition",false);
+        intent.putExtra("edit",false);
         startActivity(intent);
     }
 
     public void nextWord(View v){
-        Intent intent = new Intent(this,FlashcardActivity.class);
+        Intent intent = new Intent(this, Categories.class);
         intent.putExtra("condition",true);
+        intent.putExtra("edit",false);
         startActivity(intent);
     }
 

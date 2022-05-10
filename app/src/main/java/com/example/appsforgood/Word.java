@@ -18,7 +18,24 @@ public class Word {
     private ArrayList<Interaction> interactions = new ArrayList<Interaction>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
+    private String Question= new String();
+    private String Activity = new String();
 
+    public void defineActivity(String S){
+        Question=S;
+    }
+
+    public void defineQuestion(String S){
+        Activity=S;
+    }
+
+    public String getQuestion(){
+        return Question;
+    }
+
+    public String getActivity(){
+        return Activity;
+    }
 
     public Word(String str) {
         word = str;

@@ -11,6 +11,9 @@ import android.widget.ImageView;
 public class FlashcardActivity extends AppCompatActivity {
 
     String word;
+    String question;
+    String activity;
+    int randomImageLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,8 @@ public class FlashcardActivity extends AppCompatActivity {
 
         ArrayList<LoadedImage> Images = w.getImages();
         String word = w.getWord();
+        String question= w.getQuestion();
+        String activity=w.getActivity();
 
         int CorrectRand = (int) (Math.random()*3);// determines the image view with the correct picture
 
@@ -31,14 +36,17 @@ public class FlashcardActivity extends AppCompatActivity {
 
         switch (CorrectRand){
             case 0:
+                randomImageLocation=1;
                 imageView = (ImageView) findViewById(R.id.imageView1);
                 imageView1 = (ImageView) findViewById(R.id.imageView2);
                 imageView2 = (ImageView) findViewById(R.id.imageView3);
             case 1:
+                randomImageLocation=2;
                 imageView = (ImageView) findViewById(R.id.imageView2);
                 imageView1 = (ImageView) findViewById(R.id.imageView1);
                 imageView2 = (ImageView) findViewById(R.id.imageView3);
             case 2:
+                randomImageLocation=3;
                 imageView = (ImageView) findViewById(R.id.imageView3);
                 imageView1 = (ImageView) findViewById(R.id.imageView1);
                 imageView2 = (ImageView) findViewById(R.id.imageView2);
@@ -93,7 +101,23 @@ public class FlashcardActivity extends AppCompatActivity {
             imageView2.setImageBitmap(words.get(1).RandomImage().getImage());
         }
     }
-    public void changePage(View v){
+    public void buttonOne(View v){
+        if(randomImageLocation==1){
+            changePage();
+        }
+    }
+    public void buttonTwo(View v){
+        if(randomImageLocation==2){
+            changePage();
+        }
+    }
+    public void buttonThree(View v){
+        if(randomImageLocation==3){
+           changePage();
+        }
+    }
+
+    public void changePage(){
         Intent intent = getIntent();
         boolean state = intent.getBooleanExtra("condition", true);
 
@@ -105,7 +129,9 @@ public class FlashcardActivity extends AppCompatActivity {
 
         else{
             Intent intent2 = new Intent(this, WordPage.class);
-            intent2.putExtra("word",word);
+            intent2.putExtra("word", word);
+            intent2.putExtra("question",question);
+            intent2.putExtra("activity",activity);
             startActivity(intent2);
         }
 

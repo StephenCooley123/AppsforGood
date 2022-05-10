@@ -66,8 +66,8 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="12sp"
         android:fontFamily="monospace"
-        android:text="@string/ParentStr"
-        android:onClick="Parental"/>
+        android:onClick="Parental"
+        android:text="@string/ParentStr" />
 
 
 </RelativeLayout>
