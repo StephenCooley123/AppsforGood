@@ -4,17 +4,34 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
+import android.renderscript.ScriptGroup;
+import android.speech.tts.TextToSpeech;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Writer;
+import java.lang.reflect.Array;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
+
 import android.view.View;
 import android.widget.ImageView;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
     //TO SAVE CHANGES TO MASTER
@@ -28,12 +45,25 @@ public class MainActivity extends AppCompatActivity {
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
-    String appFolder = "/VocabliData";
+
+    final boolean FORCE_FILESYSTEM_REBUILD = false;
+
+    public static final String appFolder = "/VocabliData";
+    public static final String imageFolder = "/Images";
+    public static final String assetsReferenceKey = "/assets/";
+
+    String interactionsFilePath;
+    String wordsFilePath;
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        readWords();
+        //generateTestWord(5);
+        //writeData();
 
-
-
+    }
 
 
     @Override
@@ -45,9 +75,6 @@ public class MainActivity extends AppCompatActivity {
         //generate 5 random words just to test the file system
         //to access device files, go to view > tool windows > device file explorer
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
-        generateTestWord(5);
-        writeData();
-
 
 
     }
@@ -56,7 +83,211 @@ public class MainActivity extends AppCompatActivity {
      * Interacts with the database and reads the words on startup
      */
     private void readWords() {
+        try {
 
+            File folder = new File(getFilesDir()
+                    + appFolder);
+            if (!folder.exists()) {
+                folder.mkdir();
+            }
+            wordsFilePath = folder.toString() + "/" + "words.csv";
+            System.out.println("Words File Path: " + wordsFilePath);
+            if (!new File(wordsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
+                File wordsFile = new File(wordsFilePath);
+                BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("DefaultWords.csv")));
+                String line = reader.readLine();
+                //System.out.println("First line incoming");
+                System.out.println("FIRST LINE:" + line);
+                BufferedWriter wr = new BufferedWriter(new FileWriter(wordsFile));
+                while (line != null) {
+                    wr.write(line + "\n");
+                    System.out.println("FILE LINE: " + line);
+                    line = reader.readLine();
+
+                }
+                reader.close();
+                wr.flush();
+                wr.close();
+            }
+
+            interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+            if (!new File(interactionsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
+                File interactionsFile = new File(interactionsFilePath);
+                interactionsFile.createNewFile();
+            }
+
+            File imagesFolder = new File(getFilesDir() + appFolder + imageFolder);
+            if (!imagesFolder.exists()) {
+                imagesFolder.mkdir();
+            }
+
+            System.out.println("Parsing words");
+            ArrayList<String> unparsedWords = CSVParser.readFile(wordsFilePath, this);
+            unparsedWords.remove(0);
+
+            for (String s : unparsedWords) {
+                System.out.println("WORDS LINE: " + s);
+                parseWord(s);
+            }
+
+            System.out.println("Wrote Directories");
+        } catch (IOException e) {
+            System.out.println("FAILED TO WRITE DIRECTORIES");
+            e.printStackTrace();
+        }
+    }
+
+    private void parseWord(String s) {
+        String w = s.substring(0, s.indexOf(","));
+        System.out.println("WORD: " + w);
+        s = s.substring(s.indexOf(",") + 1);
+        String images = s.substring(0, s.indexOf(","));
+        System.out.println("IMAGES: " + images);
+        s = s.substring(s.indexOf(",") + 1);
+        String interactionKeys = s.substring(0, s.indexOf(","));
+        System.out.println("Interaction Keys: " + interactionKeys);
+        s = s.substring(s.indexOf(",") + 1);
+        String tags = s;
+        System.out.println("TAGS: " + tags);
+
+
+        Word word = new Word(w);
+        ArrayList<LoadedImage> wordImages = parseImages(images);
+        word.setImages(wordImages);
+        word.setInteractions(parseInteractions(interactionKeys));
+        word.setTags(parseTags(tags));
+
+        words.add(word);
+    }
+
+    private ArrayList<Interaction> parseInteractions(String interactionKeys) {
+
+        ArrayList<Interaction> interactions = new ArrayList<Interaction>();
+        ArrayList<String> interactionsLines = new ArrayList<String>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(interactionsFilePath));
+            String line = reader.readLine();
+            while (line != null) {
+                line = reader.readLine();
+                if (line != null) {
+                    interactionsLines.add(line);
+                }
+            }
+            reader.close();
+
+            //makes a list of keys from the string where they are all in a list
+            ArrayList<String> keys = new ArrayList<String>();
+            while (interactionKeys.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+                String key = interactionKeys.substring(0, interactionKeys.indexOf(CSVParser.csvSeparatorChar));
+                interactionKeys = interactionKeys.substring(interactionKeys.indexOf(CSVParser.csvSeparatorChar) + 1);
+                keys.add(key);
+
+
+            }
+            if (!interactionKeys.equals("")) {
+                String tag = interactionKeys;
+                keys.add(tag);
+            }
+
+
+            //checks whether a key matches the list of keys
+            for(String interactionLine : interactionsLines) {
+                //if the key matches, it parses the line into an interaction
+                if(keys.contains(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)))) {
+                    Interaction i;
+                    String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                    Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+
+                    //parses it into individual button presses
+                    ArrayList<String> buttonsList = new ArrayList<String>();
+                    while (interactionLine.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+                        String tag = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
+                        interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                        buttonsList.add(tag);
+
+
+                    }
+                    if (!interactionLine.equals("")) {
+                        String tag = interactionLine;
+                        buttonsList.add(tag);
+                    }
+
+                    i = new Interaction(time, buttonsList);
+                    interactions.add(i);
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return interactions;
+
+    }
+
+    private ArrayList<String> parseTags(String tags) {
+        ArrayList<String> tagsList = new ArrayList<String>();
+        while (tags.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+            String tag = tags.substring(0, tags.indexOf(CSVParser.csvSeparatorChar));
+            tags = tags.substring(tags.indexOf(CSVParser.csvSeparatorChar) + 1);
+            tagsList.add(tag);
+
+
+        }
+        if (!tags.equals("")) {
+            String tag = tags;
+            tagsList.add(tag);
+        }
+        return tagsList;
+    }
+
+    private ArrayList<LoadedImage> parseImages(String images) {
+        System.out.println("parsing images: " + images);
+        ArrayList<LoadedImage> loadedImages = new ArrayList<LoadedImage>();
+        while (images.contains("|")) {
+            String reference = images.substring(0, images.indexOf("|"));
+            images = images.substring(images.indexOf("|") + 1);
+
+            if (reference.contains(assetsReferenceKey)) {
+                reference = reference.substring(assetsReferenceKey.length());
+                System.out.println("DECODING ASSET: " + reference);
+                try {
+
+                    loadedImages.add(new LoadedImage(BitmapFactory.decodeStream(getAssets().open(reference)), assetsReferenceKey + reference));
+                    // System.out.println("APPLIED REFERENCE: " + loadedImages.get(loadedImages.size() - 1).toString());
+                } catch (IOException e) {
+                    System.out.println("Failed decoding asset");
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("DECODING FILESYSTEM FILE" + reference);
+                loadedImages.add(new LoadedImage(BitmapFactory.decodeFile(reference), reference));
+            }
+
+
+        }
+        if (!images.equals("")) {
+
+            String reference = images;
+            if (reference.contains(assetsReferenceKey)) {
+                reference = reference.substring(assetsReferenceKey.length());
+                System.out.println("DECODING ASSET: " + reference);
+                try {
+                    loadedImages.add(new LoadedImage(BitmapFactory.decodeStream(getAssets().open(reference)), assetsReferenceKey + reference));
+                    //System.out.println("APPLIED REFERENCE: " + loadedImages.get(loadedImages.size() - 1).toString());
+                } catch (IOException e) {
+                    System.out.println("Failed decoding asset");
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("DECODING FILESYSTEM FILE" + reference);
+                loadedImages.add(new LoadedImage(BitmapFactory.decodeFile(reference), reference));
+            }
+
+        }
+        return loadedImages;
     }
 
     public static List<Word> getWords() {
@@ -67,13 +298,15 @@ public class MainActivity extends AppCompatActivity {
         File folder = new File(getFilesDir()
                 + appFolder);
         //System.out.println("FILE: " + folder.toString());
+        //System.out.println("IN WRITE DATA METHOD");
 
         boolean var = false;
         if (!folder.exists()) {
             var = folder.mkdir();
-            System.out.println("Made the directory");
+            //System.out.println("Made the directory");
             System.out.println(folder.toString());
         }
+        System.out.println("FOLDER: " + folder.toString());
 
         final String wordsFilePath = folder.toString() + "/" + "words.csv";
         final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
@@ -127,7 +360,7 @@ public class MainActivity extends AppCompatActivity {
         String s = w.toString() + CSVParser.csvSeparatorChar;
 
         //write images
-        if(w.getImages().size() > 0) {
+        if (w.getImages().size() > 0) {
             for (LoadedImage l : w.getImages()) {
                 s = s + l.toString() + CSVParser.listSeparatorChar;
             }
@@ -136,7 +369,7 @@ public class MainActivity extends AppCompatActivity {
         s = s + CSVParser.csvSeparatorChar;
 
         //write interaction keys
-        if(w.getInteractions().size() > 0) {
+        if (w.getInteractions().size() > 0) {
             for (Interaction i : w.getInteractions()) {
                 s = s + i.getKey() + CSVParser.listSeparatorChar;
             }
@@ -144,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         }
         s = s + CSVParser.csvSeparatorChar;
 
-        if(w.getTags().size() > 0) {
+        if (w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
                 System.out.println(tag);
@@ -156,61 +389,63 @@ public class MainActivity extends AppCompatActivity {
         return s;
     }
 
-    private void writeInteractions() {
-
-    }
-
-    private void writeTags() {
-
-    }
-
-    /**
-     * Triggered by the Edit Words button
-     */
-    public void editWords() {
-
-    }
-
-    /**
-     * Triggered by the Start button
-     * Starts the game; shows a word and answers
-     */
-    public void start() {
-
-    }
-
     private void generateTestWord(int numWords) {
         for (int j = 0; j < numWords; j++) {
-            String s = "";
-            for (int i = 0; i < 5; i++) {
-                s = s + (char) (((int) (Math.random() * 26)) + 'a');
-            }
+            String s = "Testing Word";
+
+            //String s = "";
+            //for (int i = 0; i < 5; i++) {
+            //    s = s + (char) (((int) (Math.random() * 26)) + 'a');
+            //}
             Word w = new Word(s);
-            w.addTag("tag1");
+            ArrayList<LoadedImage> temp = new ArrayList<LoadedImage>();
+            temp.add(new LoadedImage(getImageAsset("cow.jpg"), assetsReferenceKey + "cow.jpg"));
+            temp.add(new LoadedImage(getImageAsset("dog.jpg"), assetsReferenceKey + "dog.jpg"));
+            //temp.add(new LoadedImage(getImageFromAppData(getFilesDir() + imageFolder + "/dog.jpg"), getFilesDir() + imageFolder + "/dog.jpg"));
+            w.setImages(temp);
+            w.addTag("animal");
             w.addTag("tag2");
             w.addTag("tag3");
             words.add(w);
         }
     }
 
-    public void Description(View v){
-        Intent intent = new Intent(this,FlashcardActivity.class);
-        intent.putExtra("condition",false);
+
+    public void Description(View v) {
+        Intent intent = new Intent(this, FlashcardActivity.class);
+        intent.putExtra("condition", false);
         startActivity(intent);
     }
 
-    public void nextWord(View v){
-        Intent intent = new Intent(this,FlashcardActivity.class);
-        intent.putExtra("condition",true);
+    public void nextWord(View v) {
+        Intent intent = new Intent(this, FlashcardActivity.class);
+        intent.putExtra("condition", true);
         startActivity(intent);
     }
 
-    public void Parental(View v){
-        Intent intent = new Intent(this,Settings.class);
+    public void Parental(View v) {
+        Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
+    }
+
+    private Bitmap getImageAsset(String name) {
+
+        try {
+            //System.out.println("Getting Image Asset");
+            return BitmapFactory.decodeStream(getAssets().open(name));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-
-
+        return null;
     }
+
+    private Bitmap getImageFromAppData(String name) {
+
+
+        //System.out.println("Getting Image Asset");
+        return BitmapFactory.decodeFile(name);
+    }
+
+
+}
 
