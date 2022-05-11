@@ -30,13 +30,13 @@
         app:layout_constraintGuide_percent="0.22" />
 
     <ImageButton
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView1"
 
         android:layout_width="0dp"
 
         android:layout_height="0dp"
         android:contextClickable="false"
-        android:onClick="changePage"
+        android:onClick="bottomButton"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="1:1"
@@ -46,7 +46,7 @@
 
 
         app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView1"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
@@ -54,8 +54,9 @@
 
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:onClick="topButton"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/imageView1"
+        app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.5"
@@ -66,22 +67,23 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
-        android:id="@+id/imageView1"
+        android:id="@+id/imageView2"
 
 
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
+        android:onClick="midButton"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/imageView2"
+        app:layout_constraintBottom_toTopOf="@+id/imageView1"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="@id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+
+
         app:layout_constraintHorizontal_bias="0.5"
 
-
         app:layout_constraintStart_toEndOf="@+id/guideline2"
-
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:srcCompat="@drawable/ic_launcher_background" />

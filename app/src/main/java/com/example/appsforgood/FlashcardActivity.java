@@ -2,15 +2,20 @@ package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class FlashcardActivity extends AppCompatActivity {
 
@@ -23,12 +28,14 @@ public class FlashcardActivity extends AppCompatActivity {
     final boolean ALLOW_ALL_ANSWERS_FOR_DEBUG = false;
 
     TextToSpeech speaker;
-
+    Word correctWord;
     String word;
     int correctButton;// determines the image view with the correct picture
     long startTime;
 
-    Interaction interaction = new Interaction();
+    ArrayList<String> touchedWords = new ArrayList<String>();
+
+    ArrayList<Word> wordList = new ArrayList<Word>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +43,11 @@ public class FlashcardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d("stephen:", "oncreate");
         correctButton = (int) (Math.random() * 3);
+
         //says the correct word out loud
 
+        correctWord = MainActivity.getWords().get((int) (Math.random() * MainActivity.getWords().size()));
+        word = correctWord.getWord();
         speaker = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -52,46 +62,38 @@ public class FlashcardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_flashcard);
 
 
-        Word correctWord = MainActivity.getWords().get((int) (Math.random() * MainActivity.getWords().size()));
-        word = correctWord.getWord();
-        System.out.println("CorrectWord: " + correctWord.toString());
-        ArrayList<LoadedImage> Images = correctWord.getImages();
-        String correctString = correctWord.getWord();
 
 
-        Word[] wordArray = new Word[3];
-        wordArray[correctButton] = correctWord;
-        for (int i = 0; i < wordArray.length; i++) {
-            if (i != correctButton) {
-                wordArray[i] = getAnotherWord(correctWord, wordArray);
-            }
+
+        //System.out.println("Initializing Word List. Correct word is: " + correctWord);
+        for (int i = 0; i < 2; i++) {
+            wordList.add(getAnotherWord(correctWord, wordList));
         }
+        wordList.add(correctButton, correctWord);
+        System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
 
+        TextView textView0 = (TextView) findViewById(R.id.textView6);
+        textView0.setText(correctWord.toString());
+        TextView textView1 = (TextView) findViewById(R.id.textView5);
+        textView1.setText(correctWord.toString());
 
         ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
         ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
         ;
         ImageView imageView2 = (ImageView) findViewById(R.id.imageView3);
         ;
-        Button button0 = (Button) findViewById(R.id.button1);
-        Button button1 = (Button) findViewById(R.id.button2);
-        Button button2 = (Button) findViewById(R.id.button3);
 
         //Sets the the correct imageView to a random bitmap from the list of images for the word.
-        imageView0.setImageBitmap(wordArray[0].RandomImage().getImage());
-        imageView0.setImageBitmap(wordArray[1].RandomImage().getImage());
-        imageView0.setImageBitmap(wordArray[2].RandomImage().getImage());
-        button0.setText(wordArray[0].getWord());
-        button1.setText(wordArray[1].getWord());
-        button2.setText(wordArray[2].getWord());
-        // word0 = correctWord;
+        imageView0.setImageBitmap(wordList.get(0).RandomImage().getImage());
+        imageView1.setImageBitmap(wordList.get(1).RandomImage().getImage());
+        imageView2.setImageBitmap(wordList.get(2).RandomImage().getImage());
+
+                // word0 = correctWord;
         //Log.d("stephen:", "Right Before Speak");
-
-
-        speak("In on create");
     }
 
-    private Word getAnotherWord(Word correctWord, Word[] otherWords) {
+    private Word getAnotherWord(Word correctWord, ArrayList<Word> selectedWords) {
+       // System.out.print("GETTING ANOTHER WORD. CORRECT IS: " + correctWord.toString());
         ArrayList<String> tags = correctWord.getTags();
         ArrayList<String> selectedTags = new ArrayList<String>();
 
@@ -109,17 +111,26 @@ public class FlashcardActivity extends AppCompatActivity {
 
 
         // Finish getting tags
-        boolean foundTag = false;
+
         for (String t : tags) {
             for (Word s : words) {
 
-                if (s.containsTag(t)) {
+                if (s.containsTag(t) && !selectedWords.contains(s) && !(s == correctWord)) {
+                    //System.out.println("SELECTED: " + s.toString());
+
                     return s;
 
                 }
             }
         }
-        return words.get(0);
+        Word toReturn = words.get(0);
+        while(selectedWords.contains(toReturn) || toReturn == correctWord) {
+            Collections.shuffle(words);
+            Collections.shuffle(tags);
+            toReturn = words.get(0);
+        }
+        //System.out.println("SELECTED: " + toReturn.toString());
+        return toReturn;
     }
 
     private boolean containsArray(Object[] objects, Object obj) {
@@ -132,6 +143,7 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
     public void topButton(View v) {
+        touchedWords.add(wordList.get(0).toString());
         Log.d("stephen:", "In Top Button");
         //speak("top button");
 
@@ -140,34 +152,40 @@ public class FlashcardActivity extends AppCompatActivity {
         //System.out.println("Added " + word0.toString() + " to interaction");
 
         if (correctButton == 0 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
-            interaction.setTime(System.currentTimeMillis() - startTime);
+
             changePage(v);
         }
     }
 
     public void midButton(View v) {
+        touchedWords.add(wordList.get(1).toString());
         Log.d("stephen:", "In Mid Button");
         //speak("mid button");
 
         if (correctButton == 1 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
-            interaction.setTime(System.currentTimeMillis() - startTime);
+
             changePage(v);
         }
     }
 
     public void bottomButton(View v) {
+        touchedWords.add(wordList.get(2).toString());
+
         Log.d("stephen:", "In Bottom Button");
         //speak("bottom button");
 
         if (correctButton == 2 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
-            interaction.setTime(System.currentTimeMillis() - startTime);
+
             changePage(v);
         }
     }
 
 
     public void changePage(View v) {
+
         Log.d("stephen:", "changepage");
+        correctWord.addInteraction(new Interaction(System.currentTimeMillis() - startTime, touchedWords));
+        writeData();
         Intent intent = getIntent();
         boolean state = intent.getBooleanExtra("condition", true);
 
@@ -187,5 +205,104 @@ public class FlashcardActivity extends AppCompatActivity {
         System.out.println("Should have spoken");
         speaker.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
+
+    private void writeData() {
+        System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
+        File folder = new File(getFilesDir()
+                + MainActivity.appFolder);
+        //System.out.println("FILE: " + folder.toString());
+        //System.out.println("IN WRITE DATA METHOD");
+
+
+        if (!folder.exists()) {
+            folder.mkdir();
+            //System.out.println("Made the directory");
+            System.out.println(folder.toString());
+        }
+        System.out.println("FOLDER: " + folder.toString());
+
+        final String wordsFilePath = folder.toString() + "/" + "words.csv";
+        final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+
+
+        generateInteractionKeys();
+
+        ArrayList<String> wordsLines = new ArrayList<String>();
+
+        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + '\n');
+
+        for (Word w : words) {
+            wordsLines.add(writeWord(w));
+        }
+
+        ArrayList<String> interactionsLines = new ArrayList<String>();
+        interactionsLines.add("Key" + CSVParser.csvSeparatorChar + "Time" + CSVParser.csvSeparatorChar + "SelectedWords" + '\n');
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                interactionsLines.add(i.toString() + "\n");
+            }
+        }
+
+        CSVParser.savePublicly(wordsLines, wordsFilePath, this);
+        CSVParser.savePublicly(interactionsLines, interactionsFilePath, this);
+
+        //CSVParser.writeFile(interactionsLines, interactionsFilePath);
+
+
+    }
+
+    private String writeInteraction(Interaction i) {
+        return i.getKey();
+    }
+
+    private void generateInteractionKeys() {
+        int n = 0;
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                i.setKey(n);
+                n++;
+            }
+        }
+    }
+
+    /**
+     * Returns the String representing a CSV Line for a Word object
+     *
+     * @param
+     * @return The String representing a CSV Line for a Word object
+     */
+    private String writeWord(Word w) {
+        String s = w.toString() + CSVParser.csvSeparatorChar;
+
+        //write images
+        if (w.getImages().size() > 0) {
+            for (LoadedImage l : w.getImages()) {
+                s = s + l.toString() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write interaction keys
+        if (w.getInteractions().size() > 0) {
+            for (Interaction i : w.getInteractions()) {
+                s = s + i.getKey() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        if (w.getTags().size() > 0) {
+            for (String tag : w.getTags()) {
+                s = s + tag + CSVParser.listSeparatorChar;
+                System.out.println(tag);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + '\n';
+
+        return s;
+    }
+
 
 }

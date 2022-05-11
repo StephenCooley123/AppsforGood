@@ -5,17 +5,18 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Interaction {
-    public static final long timeoutLength = 30*1000;
+
     int key;
-    boolean timeout;
-    Long time;
+
+    Long duration;
     ArrayList<Tap> taps;
-    ArrayList<Word> orderedAnswers = new ArrayList<Word>();
+    ArrayList<String> touchedWords = new ArrayList<String>();
 
 
 
-    public Interaction() {
-
+    public Interaction(long duration, ArrayList<String> touchedWords ) {
+        this.duration = duration;
+        this.touchedWords = touchedWords;
     }
     public String getKey() {
         return Integer.toString(key);
@@ -25,16 +26,19 @@ public class Interaction {
         this.key = key;
     }
 
-    public void setTime(long timeLength) {
-        this.time = timeLength;
-        if(timeLength >= timeoutLength) {
-            timeout = true;
+
+    //format is KEY, DURATION, WORD1|WORD2|WORD3
+    public String toString() {
+        String s = "";
+        s = s + key + CSVParser.csvSeparatorChar;
+        s = s + duration + CSVParser.csvSeparatorChar;
+        for(String w : touchedWords) {
+            s = s + w + CSVParser.listSeparatorChar;
         }
+        s = s.substring(0, s.length() - 1);
+        return s;
     }
 
-    public void addWord(Word w) {
-        orderedAnswers.add(w);
-    }
 
 
 }

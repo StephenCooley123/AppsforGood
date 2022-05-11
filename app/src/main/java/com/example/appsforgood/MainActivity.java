@@ -14,6 +14,7 @@ import android.widget.EditText;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -45,9 +46,14 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
 
+    final boolean FORCE_FILESYSTEM_REBUILD = false;
+
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
+
+    String interactionsFilePath;
+    String wordsFilePath;
 
 
     @Override
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         readWords();
         //generateTestWord(5);
-        writeData();
+        //writeData();
 
     }
 
@@ -84,16 +90,16 @@ public class MainActivity extends AppCompatActivity {
             if (!folder.exists()) {
                 folder.mkdir();
             }
-            final String wordsFilePath = folder.toString() + "/" + "words.csv";
+            wordsFilePath = folder.toString() + "/" + "words.csv";
             System.out.println("Words File Path: " + wordsFilePath);
-            if (!new File(wordsFilePath).exists()) {
+            if (!new File(wordsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
                 File wordsFile = new File(wordsFilePath);
                 BufferedReader reader = new BufferedReader(new InputStreamReader(getAssets().open("DefaultWords.csv")));
                 String line = reader.readLine();
                 //System.out.println("First line incoming");
                 System.out.println("FIRST LINE:" + line);
                 BufferedWriter wr = new BufferedWriter(new FileWriter(wordsFile));
-                while(line != null) {
+                while (line != null) {
                     wr.write(line + "\n");
                     System.out.println("FILE LINE: " + line);
                     line = reader.readLine();
@@ -103,8 +109,9 @@ public class MainActivity extends AppCompatActivity {
                 wr.flush();
                 wr.close();
             }
-            final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
-            if (!new File(interactionsFilePath).exists()) {
+
+            interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+            if (!new File(interactionsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
                 File interactionsFile = new File(interactionsFilePath);
                 interactionsFile.createNewFile();
             }
@@ -147,16 +154,84 @@ public class MainActivity extends AppCompatActivity {
         Word word = new Word(w);
         ArrayList<LoadedImage> wordImages = parseImages(images);
         word.setImages(wordImages);
+        word.setInteractions(parseInteractions(interactionKeys));
         word.setTags(parseTags(tags));
 
         words.add(word);
     }
 
+    private ArrayList<Interaction> parseInteractions(String interactionKeys) {
+
+        ArrayList<Interaction> interactions = new ArrayList<Interaction>();
+        ArrayList<String> interactionsLines = new ArrayList<String>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(interactionsFilePath));
+            String line = reader.readLine();
+            while (line != null) {
+                line = reader.readLine();
+                if (line != null) {
+                    interactionsLines.add(line);
+                }
+            }
+            reader.close();
+
+            //makes a list of keys from the string where they are all in a list
+            ArrayList<String> keys = new ArrayList<String>();
+            while (interactionKeys.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+                String key = interactionKeys.substring(0, interactionKeys.indexOf(CSVParser.csvSeparatorChar));
+                interactionKeys = interactionKeys.substring(interactionKeys.indexOf(CSVParser.csvSeparatorChar) + 1);
+                keys.add(key);
+
+
+            }
+            if (!interactionKeys.equals("")) {
+                String tag = interactionKeys;
+                keys.add(tag);
+            }
+
+
+            //checks whether a key matches the list of keys
+            for(String interactionLine : interactionsLines) {
+                //if the key matches, it parses the line into an interaction
+                if(keys.contains(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)))) {
+                    Interaction i;
+                    String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                    Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+
+                    //parses it into individual button presses
+                    ArrayList<String> buttonsList = new ArrayList<String>();
+                    while (interactionLine.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+                        String tag = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
+                        interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                        buttonsList.add(tag);
+
+
+                    }
+                    if (!interactionLine.equals("")) {
+                        String tag = interactionLine;
+                        buttonsList.add(tag);
+                    }
+
+                    i = new Interaction(time, buttonsList);
+                    interactions.add(i);
+
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return interactions;
+
+    }
+
     private ArrayList<String> parseTags(String tags) {
         ArrayList<String> tagsList = new ArrayList<String>();
-        while (tags.contains("|")) {
-            String tag = tags.substring(0, tags.indexOf("|"));
-            tags = tags.substring(tags.indexOf("|") + 1);
+        while (tags.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
+            String tag = tags.substring(0, tags.indexOf(CSVParser.csvSeparatorChar));
+            tags = tags.substring(tags.indexOf(CSVParser.csvSeparatorChar) + 1);
             tagsList.add(tag);
 
 
@@ -169,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<LoadedImage> parseImages(String images) {
+        System.out.println("parsing images: " + images);
         ArrayList<LoadedImage> loadedImages = new ArrayList<LoadedImage>();
         while (images.contains("|")) {
             String reference = images.substring(0, images.indexOf("|"));
@@ -176,8 +252,17 @@ public class MainActivity extends AppCompatActivity {
 
             if (reference.contains(assetsReferenceKey)) {
                 reference = reference.substring(assetsReferenceKey.length());
-                loadedImages.add(new LoadedImage(getImageAsset(reference), reference));
+                System.out.println("DECODING ASSET: " + reference);
+                try {
+
+                    loadedImages.add(new LoadedImage(BitmapFactory.decodeStream(getAssets().open(reference)), assetsReferenceKey + reference));
+                    // System.out.println("APPLIED REFERENCE: " + loadedImages.get(loadedImages.size() - 1).toString());
+                } catch (IOException e) {
+                    System.out.println("Failed decoding asset");
+                    e.printStackTrace();
+                }
             } else {
+                System.out.println("DECODING FILESYSTEM FILE" + reference);
                 loadedImages.add(new LoadedImage(BitmapFactory.decodeFile(reference), reference));
             }
 
@@ -188,8 +273,16 @@ public class MainActivity extends AppCompatActivity {
             String reference = images;
             if (reference.contains(assetsReferenceKey)) {
                 reference = reference.substring(assetsReferenceKey.length());
-                loadedImages.add(new LoadedImage(getImageAsset(reference), reference));
+                System.out.println("DECODING ASSET: " + reference);
+                try {
+                    loadedImages.add(new LoadedImage(BitmapFactory.decodeStream(getAssets().open(reference)), assetsReferenceKey + reference));
+                    //System.out.println("APPLIED REFERENCE: " + loadedImages.get(loadedImages.size() - 1).toString());
+                } catch (IOException e) {
+                    System.out.println("Failed decoding asset");
+                    e.printStackTrace();
+                }
             } else {
+                System.out.println("DECODING FILESYSTEM FILE" + reference);
                 loadedImages.add(new LoadedImage(BitmapFactory.decodeFile(reference), reference));
             }
 

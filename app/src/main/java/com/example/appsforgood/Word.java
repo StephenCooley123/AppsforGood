@@ -78,11 +78,16 @@ public class Word {
         images = wordImages;
     }
     public LoadedImage RandomImage(){
+
         return images.get((int) (Math.random()*images.size()));
     }
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
+    }
+
+    public void setInteractions(ArrayList<Interaction> interactions) {
+        this.interactions = interactions;
     }
 
 }
