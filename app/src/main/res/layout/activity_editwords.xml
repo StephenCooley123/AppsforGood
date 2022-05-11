@@ -21,7 +21,7 @@
         android:gravity="center|center_horizontal"
         android:maxHeight="200sp"
         android:minHeight="10sp"
-        android:text="@string/Categories"
+        android:text="@string/Words"
         android:textColor="#0097A7"
         android:textColorHint="#00BCD4"
         android:textColorLink="#00BCD4" />

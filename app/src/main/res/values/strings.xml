@@ -17,7 +17,7 @@
     <string name="ParentStr">Parental Settings</string>
 
     <string name="GuidedStr">Guided Mode</string>
-    <string name="CreativeStr">Creative Mode</string>
+    <string name="CreativeStr">Learning Mode</string>
     <string name="Question">Related Question:</string>
     <string name="Activity">Related Activity:</string>
     <string name="ReplaceQuestion">-Question-</string>
@@ -34,6 +34,9 @@
     <string name="Categories">Categories</string>
     <string name="addword">AddWord</string>
     <string name="EditWords">Edit Words</string>
+    <string name="Words">Words</string>
+
+
 
 
 </resources>

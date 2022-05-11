@@ -19,4 +19,9 @@ public class Settings extends AppCompatActivity {
         intent.putExtra("edit",true);
         startActivity(intent);
     }
+
+    public void toWords(View v){
+        Intent intent = new Intent(this, Words.class);
+        startActivity(intent);
+    }
 }

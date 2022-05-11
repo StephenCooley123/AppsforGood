@@ -24,9 +24,9 @@ ArrayAdapter<String> arrayAdapter;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
-        alistview = (ListView)findViewById(R.id.alistview);
+        alistview = (ListView)findViewById(R.id.alistviewWords);
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.listinwordlists, R.id.textView, wordLists);
-        button=findViewById(R.id.AddVocabList);
+        button=findViewById(R.id.AddVocabWord);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {

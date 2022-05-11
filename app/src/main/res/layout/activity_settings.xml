@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#7AFFEB3B"
     tools:context=".Settings">
 
     <TextView
@@ -47,16 +48,17 @@
 
     <Button
         android:id="@+id/EditWords"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fontFamily="monospace"
+        android:onClick="toWords"
+        android:text="@string/EditWords"
+        android:textColor="#3F51B5"
+        android:textSize="30sp"
         app:autoSizeMaxTextSize="30sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="monospace"
-        android:text="@string/EditWords"
-        android:textColor="#3F51B5"
-        android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/thirty"
         app:layout_constraintEnd_toStartOf="@+id/sideninety"
         app:layout_constraintHorizontal_bias="0.0"
@@ -65,16 +67,16 @@
 
     <Button
         android:id="@+id/ViewProgress"
-        app:autoSizeMaxTextSize="30sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="monospace"
         android:text="@string/Stats"
         android:textColor="#3F51B5"
         android:textSize="30sp"
+        app:autoSizeMaxTextSize="30sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/ninety"
         app:layout_constraintEnd_toStartOf="@+id/sideninety"
         app:layout_constraintHorizontal_bias="1.0"
