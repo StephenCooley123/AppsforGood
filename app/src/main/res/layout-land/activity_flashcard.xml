@@ -13,9 +13,9 @@
 
         android:layout_width="0dp"
         android:layout_height="0dp"
+
+
         android:scaleType="centerCrop"
-
-
         app:layout_constraintBottom_toTopOf="@+id/guideline93"
         app:layout_constraintEnd_toStartOf="@+id/guideline94"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,6 +11,9 @@ import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class FlashcardActivity extends AppCompatActivity {
 
@@ -47,7 +50,7 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    speaker.setLanguage(Locale.UK);
+                    speaker.setLanguage(Locale.US);
                     speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
@@ -68,11 +71,12 @@ public class FlashcardActivity extends AppCompatActivity {
         System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
 
 
-
-        ImageView imageView0 = (ImageView) findViewById(R.id.imageView2);
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView3);
+        TextView title = (TextView) findViewById(R.id.Vocabli);
+        title.setText(word);
+        ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
+        ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
         ;
-        ImageView imageView2 = (ImageView) findViewById(R.id.imageView1);
+        ImageView imageView2 = (ImageView) findViewById(R.id.imageView3);
         ;
 
         //Sets the the correct imageView to a random bitmap from the list of images for the word.
@@ -191,6 +195,14 @@ public class FlashcardActivity extends AppCompatActivity {
             startActivity(intent2);
         }
 
+    }
+
+    public void goHome(View v) {
+        Log.d("stephen:", "going home");
+        writeData();
+        //Intent intent = getIntent();
+        Intent intent1 = new Intent(this, MainActivity.class);
+        startActivity(intent1);
     }
 
     private void speak(String text) {
