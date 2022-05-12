@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
 
-    final boolean FORCE_FILESYSTEM_REBUILD = false;
+    final boolean FORCE_FILESYSTEM_REBUILD = true;
 
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
@@ -62,7 +62,11 @@ public class MainActivity extends AppCompatActivity {
         readWords();
         //generateTestWord(5);
         //writeData();
-
+        int num = 0;
+        for (Word w : words) {
+            num += w.getInteractions().size();
+        }
+        System.out.println("STARTING NUM OF INTERACTIONS: " + num);
     }
 
 
@@ -113,6 +117,9 @@ public class MainActivity extends AppCompatActivity {
             interactionsFilePath = folder.toString() + "/" + "interactions.csv";
             if (!new File(interactionsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
                 File interactionsFile = new File(interactionsFilePath);
+                if(interactionsFile.exists()) {
+                    interactionsFile.delete();
+                }
                 interactionsFile.createNewFile();
             }
 
@@ -137,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //parses a line from the CSV into a word object and adds it to the list
     private void parseWord(String s) {
         String w = s.substring(0, s.indexOf(","));
         System.out.println("WORD: " + w);
@@ -147,8 +155,11 @@ public class MainActivity extends AppCompatActivity {
         String interactionKeys = s.substring(0, s.indexOf(","));
         System.out.println("Interaction Keys: " + interactionKeys);
         s = s.substring(s.indexOf(",") + 1);
-        String tags = s;
+        String tags = s.substring(0, s.indexOf(","));;
         System.out.println("TAGS: " + tags);
+        s = s.substring(s.indexOf(",") + 1);
+        String questions = s;
+        System.out.println("QUESTIONS: " + questions);
 
 
         Word word = new Word(w);
@@ -156,8 +167,27 @@ public class MainActivity extends AppCompatActivity {
         word.setImages(wordImages);
         word.setInteractions(parseInteractions(interactionKeys));
         word.setTags(parseTags(tags));
+        word.setQuestions(parseQuestions(questions));
 
         words.add(word);
+    }
+
+    //parses the pipe-separated list of questions into an arraylist of strings.
+    private ArrayList<String> parseQuestions(String questionsLine) {
+        ArrayList<String> questions = new ArrayList<String>();
+        while (questionsLine.contains(((Character) CSVParser.listSeparatorChar).toString())) {
+            String question = questionsLine.substring(0, questionsLine.indexOf(CSVParser.listSeparatorChar));
+            questionsLine = questionsLine.substring(questionsLine.indexOf(CSVParser.listSeparatorChar) + 1);
+            questions.add(question);
+
+
+        }
+        if (!questionsLine.equals("")) {
+            String question = questionsLine;
+            questions.add(question);
+        }
+
+        return questions;
     }
 
     private ArrayList<Interaction> parseInteractions(String interactionKeys) {
@@ -189,35 +219,34 @@ public class MainActivity extends AppCompatActivity {
                 keys.add(tag);
             }
 
-
+            System.out.println("INTERACTIONS LINES SIZE: " + interactionsLines.size());
             //checks whether a key matches the list of keys
-            for(String interactionLine : interactionsLines) {
+            for (String interactionLine : interactionsLines) {
                 //if the key matches, it parses the line into an interaction
-                if(keys.contains(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)))) {
-                    Interaction i;
-                    String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
-                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
-                    Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
-                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
 
-                    //parses it into individual button presses
-                    ArrayList<String> buttonsList = new ArrayList<String>();
-                    while (interactionLine.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
-                        String tag = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
-                        interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
-                        buttonsList.add(tag);
+                Interaction i;
+                String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
+                interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
+                interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
 
+                //parses it into individual button presses
+                ArrayList<String> buttonsList = new ArrayList<String>();
+                while (interactionLine.contains(((Character) CSVParser.listSeparatorChar).toString())) {
+                    String interaction = interactionLine.substring(0, interactionLine.indexOf(CSVParser.listSeparatorChar));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.listSeparatorChar) + 1);
+                    buttonsList.add(interaction);
 
-                    }
-                    if (!interactionLine.equals("")) {
-                        String tag = interactionLine;
-                        buttonsList.add(tag);
-                    }
-
-                    i = new Interaction(time, buttonsList);
-                    interactions.add(i);
 
                 }
+                if (!interactionLine.equals("")) {
+                    String interaction = interactionLine;
+                    buttonsList.add(interaction);
+                }
+
+                i = new Interaction(time, buttonsList);
+                interactions.add(i);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -445,6 +474,8 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println("Getting Image Asset");
         return BitmapFactory.decodeFile(name);
     }
+
+
 
 
 }

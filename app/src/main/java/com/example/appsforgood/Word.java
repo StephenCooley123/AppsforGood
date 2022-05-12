@@ -21,6 +21,7 @@ public class Word {
     private ArrayList<Interaction> interactions = new ArrayList<Interaction>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
+    private ArrayList<String> questions = new ArrayList<String>();
 
 
     public Word(String str) {
@@ -89,5 +90,11 @@ public class Word {
     public void setInteractions(ArrayList<Interaction> interactions) {
         this.interactions = interactions;
     }
+
+    public void setQuestions(ArrayList<String> questions) {
+        this.questions = questions;
+    }
+
+
 
 }

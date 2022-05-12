@@ -3,19 +3,14 @@ package com.example.appsforgood;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class FlashcardActivity extends AppCompatActivity {
 
@@ -72,15 +67,12 @@ public class FlashcardActivity extends AppCompatActivity {
         wordList.add(correctButton, correctWord);
         System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
 
-        TextView textView0 = (TextView) findViewById(R.id.textView6);
-        textView0.setText(correctWord.toString());
-        TextView textView1 = (TextView) findViewById(R.id.textView5);
-        textView1.setText(correctWord.toString());
 
-        ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
+
+        ImageView imageView0 = (ImageView) findViewById(R.id.imageView2);
+        ImageView imageView1 = (ImageView) findViewById(R.id.imageView3);
         ;
-        ImageView imageView2 = (ImageView) findViewById(R.id.imageView3);
+        ImageView imageView2 = (ImageView) findViewById(R.id.imageView1);
         ;
 
         //Sets the the correct imageView to a random bitmap from the list of images for the word.

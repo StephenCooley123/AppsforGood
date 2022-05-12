@@ -93,13 +93,13 @@
         app:layout_constraintGuide_percent="0.95" />
 
     <ImageButton
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView3"
 
         android:layout_width="0dp"
 
         android:layout_height="0dp"
         android:contextClickable="false"
-        android:onClick="changePage"
+        android:onClick="bottomButton"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline76"
 
@@ -110,10 +110,11 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
-        android:id="@+id/imageView3"
+        android:id="@+id/imageView1"
 
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:onClick="topButton"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline64"
         app:layout_constraintEnd_toStartOf="@+id/guideline74"
@@ -124,22 +125,23 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
-        android:id="@+id/imageView1"
+        android:id="@+id/imageView2"
 
 
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:onClick="midButton"
         android:scaleType="centerCrop"
+
+
         app:layout_constraintBottom_toTopOf="@+id/guideline72"
-
-
         app:layout_constraintEnd_toStartOf="@+id/guideline74"
         app:layout_constraintStart_toStartOf="@+id/guideline75"
         app:layout_constraintTop_toTopOf="@+id/guideline71"
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/Vocabli"
 
         android:layout_width="0dp"
         android:layout_height="0dp"
