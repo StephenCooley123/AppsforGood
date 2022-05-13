@@ -46,12 +46,17 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
 
     //*******STUFF TO WATCH FOR IN YOUR TESTING:*******
-    //****DO NOT HIT BACK. EVER. IF YOU DO, THE APP WILL BREAK, EVEN ON RELAUNCH.
-    //-------This is evident through multiple of the same word on the screen at a time.
+    //If multiple of the same word ever appear, set both FORCE_FILESYSTEM_REBUILD and FLUSH_INTERACTIONS to true,
+    // run it, complete one flashcard, exit, and then relaunch with both set to false.
     // To salvage after this, set FORCE_FILESYSTEM_REBUILD and FLUSH_INTERACTIONS to true and go through one flashcard
     //Then set them both to false and reinstall
     // Some functionality with adding words may be limited
     // The text to speech runs early in the guided mode. We are working on a fix.
+
+    //Garyth is currently working on adding/deleting words and has changed many UI elements to be color and text consistent.
+    //Donny is working on playing animations after each correct answer.
+    //The main criteria for our app is complete, but these are important nice-to-haves as well.
+    //more words will be added in to be packaged with the app by default as well by editing DefaultWords.csv and adding the associated images to the assets folder.
     static List<Word> words = new ArrayList<Word>();
 
     //this forces a rebuild of the file system
@@ -183,7 +188,15 @@ public class MainActivity extends AppCompatActivity {
         word.setTags(parseTags(tags));
         word.setQuestions(parseQuestions(questions));
 
-        words.add(word);
+        boolean addWord = true;
+        for(Word checkedWord : words) {
+            if(checkedWord.toString().equals(word.toString())) {
+                addWord = false;
+            }
+        }
+        if(addWord) {
+            words.add(word);
+        }
     }
 
     //parses the pipe-separated list of questions into an arraylist of strings.
