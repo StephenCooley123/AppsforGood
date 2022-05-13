@@ -16,7 +16,7 @@ boolean condition;
 boolean edit;
 
 ListView alistview;
-ArrayList<String> wordLists = Controller.getListofLists();
+ArrayList<String> wordLists = SmallStorage.getListofLists();
 ImageButton button;
 ArrayAdapter<String> arrayAdapter;
 
@@ -25,12 +25,12 @@ ArrayAdapter<String> arrayAdapter;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
         alistview = (ListView)findViewById(R.id.alistviewWords);
-        arrayAdapter = new ArrayAdapter<String>(this, R.layout.listinwordlists, R.id.textView, wordLists);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.listinwordlists, R.id.wordtext, wordLists);
         button=findViewById(R.id.AddVocabWord);
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Controller.addtowordLists("New Category");
+                SmallStorage.addtowordLists("New Category");
                 arrayAdapter.notifyDataSetChanged();
             }
         };

@@ -41,6 +41,7 @@ public class Word {
         word = str;
     }
 
+
     public String getWord() {
         return word;
 

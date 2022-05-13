@@ -8,11 +8,14 @@
         android:id="@+id/deleteSymbol"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="Delete Button"
+        android:background="#002196F3"
+        android:backgroundTint="#002196F3"
+        android:contentDescription="@string/DeleteWord"
+        android:onClick="toDeleteWord"
         android:src="@android:drawable/btn_dialog" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/wordtext"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

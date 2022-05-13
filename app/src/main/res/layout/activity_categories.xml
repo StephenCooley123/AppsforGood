@@ -5,17 +5,17 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:orientation="vertical"
-    android:background="#7AFFEB3B">
+    android:background="#B2FF9800">
 
     <TextView
         android:id="@+id/Words"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_gravity="center_horizontal"
-        android:autoSizeMaxTextSize="200sp"
-        android:autoSizeMinTextSize="30sp"
-        android:autoSizeStepGranularity="20sp"
-        android:autoSizeTextType="uniform"
+        app:autoSizeMaxTextSize="60sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
         android:elegantTextHeight="true"
         android:fontFamily="monospace"
         android:gravity="center|center_horizontal"

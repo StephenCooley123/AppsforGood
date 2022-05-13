@@ -15,7 +15,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="VocabliStr">Vocabli</string>
     <string name="ParentStr">Parental Settings</string>
-
+    <string name="NewWord">New Word:</string>
     <string name="GuidedStr">Guided Mode</string>
     <string name="CreativeStr">Learning Mode</string>
     <string name="Question">Related Question:</string>
@@ -35,6 +35,7 @@
     <string name="addword">AddWord</string>
     <string name="EditWords">Edit Words</string>
     <string name="Words">Words</string>
+    <string name="DeleteWord">Delete Word</string>
 
 
 

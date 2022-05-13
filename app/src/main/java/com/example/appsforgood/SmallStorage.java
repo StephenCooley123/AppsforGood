@@ -2,7 +2,7 @@ package com.example.appsforgood;
 
 import java.util.ArrayList;
 
-public class Controller {
+public class SmallStorage {
 
     static ArrayList<String> wordLists = new ArrayList<String>();
 

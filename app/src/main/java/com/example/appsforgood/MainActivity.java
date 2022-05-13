@@ -31,15 +31,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //readWords();
-
         //generate 5 random words just to test the file system
         //to access device files, go to view > tool windows > device file explorer
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
         generateTestWord(5);
         writeData();
+    }
+    public static void addtoMainWords(Word word){
+        words.add(word);
+    }
 
-
-
+    public static void deletefromMainWords(ArrayList<Word> wordobjects){
+        for(Word toDelete : wordobjects) {
+            words.remove(toDelete);
+        }
 
     }
 
