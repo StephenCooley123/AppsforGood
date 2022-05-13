@@ -23,6 +23,7 @@ public class Word {
     private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
     private ArrayList<String> questions = new ArrayList<String>();
 
+    //THESE METHODS ARE ALMOST EXCLUSIVELY GETTERS AND SETTERS, AS WORD IS A DATA STRUCTURE
 
     public Word(String str) {
         word = str;
@@ -43,6 +44,7 @@ public class Word {
         interactions.add(i);
     }
 
+    //checks for unique tags and adds one
     public void addTag(String tag) {
         boolean contains = false;
         for(String s : tags) {
@@ -54,6 +56,8 @@ public class Word {
             tags.add(tag);
         }
     }
+
+    //essentially a .contains()
     public boolean containsTag(String tag) {
         for(String s : tags) {
             if(s.equals(tag)) {
@@ -87,6 +91,7 @@ public class Word {
         this.tags = tags;
     }
 
+    //performs an arraycopy via shallow copy
     public void setInteractions(ArrayList<Interaction> interactions) {
         for(Interaction i : interactions) {
             this.interactions.add(i);

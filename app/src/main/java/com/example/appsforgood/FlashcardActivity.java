@@ -45,7 +45,8 @@ public class FlashcardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Log.d("stephen:", "oncreate");
+        //Log.d("stephen:", "oncreate");
+        //sets up the 3 buttons
         setContentView(R.layout.activity_flashcard);
         imageView0 = (ImageView) findViewById(R.id.imageView1);
         imageView1 = (ImageView) findViewById(R.id.imageView2);
@@ -55,6 +56,7 @@ public class FlashcardActivity extends AppCompatActivity {
         start();
     }
 
+    //picks a correct word and populates the imageviews. Prioritizes similar words based on shared tags to make it more difficult and build context.
     private void start() {
         correctButton = (int) (Math.random() * 3);
         touchedWords.clear();
@@ -92,12 +94,12 @@ public class FlashcardActivity extends AppCompatActivity {
         imageView0.setImageBitmap(wordList.get(0).RandomImage().getImage());
         imageView1.setImageBitmap(wordList.get(1).RandomImage().getImage());
         imageView2.setImageBitmap(wordList.get(2).RandomImage().getImage());
-
-        // word0 = correctWord;
-        //Log.d("stephen:", "Right Before Speak");
     }
 
 
+    //algorithm for determining the next word in the sequence. Picks one which hasn't been seen first, or
+    // if they all have been seen, one which has had the most interaction time.
+    // This can cause a problem though, but I am not sure what is going on tbh.
     private Word getNextWord() {
         for (Word w : words) {
             if (w.getInteractions().size() == 0) {
@@ -119,6 +121,7 @@ public class FlashcardActivity extends AppCompatActivity {
         return longestTime;
     }
 
+    //picks the other words to fill the other imageviews
     private Word getAnotherWord(Word correctWord, ArrayList<Word> selectedWords) {
         // System.out.print("GETTING ANOTHER WORD. CORRECT IS: " + correctWord.toString());
         ArrayList<String> tags = correctWord.getTags();
@@ -160,6 +163,9 @@ public class FlashcardActivity extends AppCompatActivity {
         return toReturn;
     }
 
+    //called when the top/left button is pressed
+    //adds associated word to interaction
+    //checks whether correct button
     public void topButton(View v) {
         touchedWords.add(wordList.get(0).toString());
         Log.d("stephen:", "In Top Button");
@@ -174,7 +180,9 @@ public class FlashcardActivity extends AppCompatActivity {
             changePage(v);
         }
     }
-
+    //called when the top/left button is pressed
+    //adds associated word to interaction
+    //checks whether correct button
     public void midButton(View v) {
         touchedWords.add(wordList.get(1).toString());
         Log.d("stephen:", "In Mid Button");
@@ -185,7 +193,9 @@ public class FlashcardActivity extends AppCompatActivity {
             changePage(v);
         }
     }
-
+    //called when the top/left button is pressed
+    //adds associated word to interaction
+    //checks whether correct button
     public void bottomButton(View v) {
         touchedWords.add(wordList.get(2).toString());
 
@@ -199,7 +209,7 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
 
-
+    //writes interactions and refereshes the page.
     public void changePage(View v) {
 
         Log.d("stephen:", "changepage");
@@ -211,8 +221,8 @@ public class FlashcardActivity extends AppCompatActivity {
         if (!state) {
             Intent intent2 = new Intent(this, WordPage.class);
             intent2.putExtra("word", word);
-            intent2.putExtra("question", correctWord.getQuestions().get(((int)  Math.random() * correctWord.getQuestions().size())));
-            intent2.putExtra("activity", correctWord.getQuestions().get(((int)  Math.random() * correctWord.getQuestions().size())));
+            intent2.putExtra("question", correctWord.getQuestions().get(((int) Math.random() * correctWord.getQuestions().size())));
+            intent2.putExtra("activity", correctWord.getQuestions().get(((int) Math.random() * correctWord.getQuestions().size())));
             startActivity(intent2);
         }
         wordList.clear();
@@ -220,29 +230,15 @@ public class FlashcardActivity extends AppCompatActivity {
 
     }
 
-    public void goHome(View v) {
-        Log.d("stephen:", "going home");
-        writeData();
-        //Intent intent = getIntent();
-        Intent intent1 = new Intent(this, MainActivity.class);
-        intent1.putExtra("condition", true);
-        startActivity(intent1);
-    }
 
-    private void speak(String text) {
-        System.out.println("Should have spoken");
-        speaker.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-    }
-
-
-
+    //data writing method. Interacts with the files.
     private void writeData() {
-        System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
+        //System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
         int numInteractions = 0;
-        for(Word w : words) {
+        for (Word w : words) {
             numInteractions += w.getInteractions().size();
         }
-        System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
+        //System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
 
         File folder = new File(getFilesDir()
                 + MainActivity.appFolder);
@@ -291,6 +287,7 @@ public class FlashcardActivity extends AppCompatActivity {
         return i.getKey();
     }
 
+    //makes sure each interact
     private void generateInteractionKeys() {
         int n = 0;
         for (Word w : words) {
@@ -346,7 +343,6 @@ public class FlashcardActivity extends AppCompatActivity {
             }
             s = s.substring(0, s.length() - 1);
         }
-
 
 
         s = s + '\n';

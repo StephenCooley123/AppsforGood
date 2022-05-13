@@ -44,11 +44,20 @@ public class MainActivity extends AppCompatActivity {
     // Bottom Right Menu -> master -> update
     //          "       -> master -> merge into current
     //to merge changes from someone else, fetch first
+
+    //*******STUFF TO WATCH FOR IN YOUR TESTING:*******
+    //****DO NOT HIT BACK. EVER
+    // Some functionality with adding words may be limited
+    //
     static List<Word> words = new ArrayList<Word>();
 
+    //this forces a rebuild of the file system
     final boolean FORCE_FILESYSTEM_REBUILD = false;
+
+    //this flushes the existing interactions.
     final boolean FLUSH_INTERACTIONS = false;
 
+    //keys for locations of files and folders
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
@@ -85,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Interacts with the database and reads the words on startup
+     * Interacts with the file system and reads the words on startup
      */
     private void readWords() {
         try {
@@ -129,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 imagesFolder.mkdir();
             }
 
-            System.out.println("Parsing words");
+            //System.out.println("Parsing words");
             ArrayList<String> unparsedWords = CSVParser.readFile(wordsFilePath, this);
             unparsedWords.remove(0);
 
@@ -138,9 +147,9 @@ public class MainActivity extends AppCompatActivity {
                 parseWord(s);
             }
 
-            System.out.println("Wrote Directories");
+            //System.out.println("Wrote Directories");
         } catch (IOException e) {
-            System.out.println("FAILED TO WRITE DIRECTORIES");
+            //System.out.println("FAILED TO WRITE DIRECTORIES");
             e.printStackTrace();
         }
     }
@@ -192,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
         return questions;
     }
 
+    //parses the interactions from the string of a bunch of interactions
     private ArrayList<Interaction> parseInteractions(String interactionKeys) {
 
         //parses which keys the word has
@@ -277,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //parses the tags from a bunch of tags in a string
     private ArrayList<String> parseTags(String tags) {
         ArrayList<String> tagsList = new ArrayList<String>();
         while (tags.contains(((Character) CSVParser.csvSeparatorChar).toString())) {
@@ -293,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
         return tagsList;
     }
 
+    //parses the images from a bunch of images in a string and returns some LoadedImage objects (essentially a bitmap and a reference to where it is stored).
     private ArrayList<LoadedImage> parseImages(String images) {
         System.out.println("parsing images: " + images);
         ArrayList<LoadedImage> loadedImages = new ArrayList<LoadedImage>();
@@ -344,101 +356,7 @@ public class MainActivity extends AppCompatActivity {
         return words;
     }
 
-    private void writeData() {
-        File folder = new File(getFilesDir()
-                + appFolder);
-        //System.out.println("FILE: " + folder.toString());
-        //System.out.println("IN WRITE DATA METHOD");
-
-        boolean var = false;
-        if (!folder.exists()) {
-            var = folder.mkdir();
-            //System.out.println("Made the directory");
-            System.out.println(folder.toString());
-        }
-        System.out.println("FOLDER: " + folder.toString());
-
-        final String wordsFilePath = folder.toString() + "/" + "words.csv";
-        final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
-
-
-        generateInteractionKeys();
-
-        ArrayList<String> wordsLines = new ArrayList<String>();
-
-        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + '\n');
-
-        for (Word w : words) {
-            wordsLines.add(writeWord(w));
-        }
-
-        ArrayList<String> interactionsLines = new ArrayList<String>();
-        interactionsLines.add("Key" + CSVParser.csvSeparatorChar + "Timeout" + CSVParser.csvSeparatorChar + "Time" + CSVParser.csvSeparatorChar + "TapsX" + CSVParser.csvSeparatorChar + "TapsY" + CSVParser.csvSeparatorChar + "Answers" + CSVParser.csvSeparatorChar + "CorrectAnswer" + CSVParser.csvSeparatorChar + "SelectedAnswer" + '\n');
-        for (Word w : words) {
-            for (Interaction i : w.getInteractions()) {
-                interactionsLines.add(writeInteraction(i));
-            }
-        }
-
-        CSVParser.savePublicly(wordsLines, wordsFilePath, this);
-        //CSVParser.writeFile(interactionsLines, interactionsFilePath);
-
-
-    }
-
-    private String writeInteraction(Interaction i) {
-        return i.getKey();
-    }
-
-    private void generateInteractionKeys() {
-        int n = 0;
-        for (Word w : words) {
-            for (Interaction i : w.getInteractions()) {
-                i.setKey(n);
-                n++;
-            }
-        }
-    }
-
-    /**
-     * Returns the String representing a CSV Line for a Word object
-     *
-     * @param
-     * @return The String representing a CSV Line for a Word object
-     */
-    private String writeWord(Word w) {
-        String s = w.toString() + CSVParser.csvSeparatorChar;
-
-        //write images
-        if (w.getImages().size() > 0) {
-            for (LoadedImage l : w.getImages()) {
-                s = s + l.toString() + CSVParser.listSeparatorChar;
-            }
-            s = s.substring(0, s.length() - 1);
-        }
-        s = s + CSVParser.csvSeparatorChar;
-
-        //write interaction keys
-        if (w.getInteractions().size() > 0) {
-            for (Interaction i : w.getInteractions()) {
-                s = s + i.getKey() + CSVParser.listSeparatorChar;
-            }
-            s = s.substring(0, s.length() - 1);
-        }
-        s = s + CSVParser.csvSeparatorChar;
-
-        if (w.getTags().size() > 0) {
-            for (String tag : w.getTags()) {
-                s = s + tag + CSVParser.listSeparatorChar;
-                System.out.println(tag);
-            }
-            s = s.substring(0, s.length() - 1);
-        }
-        s = s + '\n';
-
-        return s;
-    }
-
+    //testing method which makes random testing words
     private void generateTestWord(int numWords) {
         for (int j = 0; j < numWords; j++) {
             String s = "Testing Word";
