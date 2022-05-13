@@ -21,7 +21,9 @@ public class Word {
     private ArrayList<Interaction> interactions = new ArrayList<Interaction>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
+    private ArrayList<String> questions = new ArrayList<String>();
 
+    //THESE METHODS ARE ALMOST EXCLUSIVELY GETTERS AND SETTERS, AS WORD IS A DATA STRUCTURE
 
     public Word(String str) {
         word = str;
@@ -42,6 +44,7 @@ public class Word {
         interactions.add(i);
     }
 
+    //checks for unique tags and adds one
     public void addTag(String tag) {
         boolean contains = false;
         for(String s : tags) {
@@ -53,6 +56,8 @@ public class Word {
             tags.add(tag);
         }
     }
+
+    //essentially a .contains()
     public boolean containsTag(String tag) {
         for(String s : tags) {
             if(s.equals(tag)) {
@@ -73,5 +78,35 @@ public class Word {
     public ArrayList<Interaction> getInteractions() {
         return interactions;
     }
+
+    public void setImages(ArrayList<LoadedImage> wordImages) {
+        images = wordImages;
+    }
+    public LoadedImage RandomImage(){
+
+        return images.get((int) (Math.random()*images.size()));
+    }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    //performs an arraycopy via shallow copy
+    public void setInteractions(ArrayList<Interaction> interactions) {
+        for(Interaction i : interactions) {
+            this.interactions.add(i);
+        }
+
+    }
+
+    public void setQuestions(ArrayList<String> questions) {
+        this.questions = questions;
+    }
+
+    public ArrayList<String> getQuestions() {
+        return questions;
+    }
+
+
 
 }
