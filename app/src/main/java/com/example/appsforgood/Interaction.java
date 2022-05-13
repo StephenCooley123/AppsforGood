@@ -16,7 +16,9 @@ public class Interaction {
 
     public Interaction(long duration, ArrayList<String> touchedWords ) {
         this.duration = duration;
-        this.touchedWords = touchedWords;
+        for(String touchedWord : touchedWords) {
+            this.touchedWords.add(touchedWord);
+        }
     }
     public String getKey() {
         return Integer.toString(key);
@@ -37,6 +39,10 @@ public class Interaction {
         }
         s = s.substring(0, s.length() - 1);
         return s;
+    }
+
+    public Long getDuration() {
+        return duration;
     }
 
 

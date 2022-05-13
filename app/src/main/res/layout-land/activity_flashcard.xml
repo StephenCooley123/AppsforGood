@@ -7,21 +7,6 @@
     app:layout_gravity="center"
     tools:context=".FlashcardActivity">
 
-    <ImageButton
-        android:id="@+id/imageView4"
-
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-
-
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/guideline93"
-        app:layout_constraintEnd_toStartOf="@+id/guideline94"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
     <TextView
         android:id="@+id/Vocabli"
         android:layout_width="0dp"

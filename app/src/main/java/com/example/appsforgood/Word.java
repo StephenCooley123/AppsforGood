@@ -88,11 +88,18 @@ public class Word {
     }
 
     public void setInteractions(ArrayList<Interaction> interactions) {
-        this.interactions = interactions;
+        for(Interaction i : interactions) {
+            this.interactions.add(i);
+        }
+
     }
 
     public void setQuestions(ArrayList<String> questions) {
         this.questions = questions;
+    }
+
+    public ArrayList<String> getQuestions() {
+        return questions;
     }
 
 

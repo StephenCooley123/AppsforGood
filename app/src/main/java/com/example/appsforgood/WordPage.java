@@ -16,10 +16,14 @@ public class WordPage extends AppCompatActivity {
 
         Intent intent2 = getIntent();
         String word = intent2.getStringExtra("word");
+        String questionString = intent2.getStringExtra("question");
 
         TextView Word = findViewById(R.id.Word);
 
         Word.setText(word);
+
+        TextView question = findViewById(R.id.Question);
+        question.setText(questionString);
     }
 
     public void returntoSlides(View v){

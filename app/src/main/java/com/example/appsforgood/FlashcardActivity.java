@@ -35,16 +35,34 @@ public class FlashcardActivity extends AppCompatActivity {
 
     ArrayList<Word> wordList = new ArrayList<Word>();
 
+    ImageView imageView0;
+    ImageView imageView1;
+    ImageView imageView2;
+
+    TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         Log.d("stephen:", "oncreate");
-        correctButton = (int) (Math.random() * 3);
+        setContentView(R.layout.activity_flashcard);
+        imageView0 = (ImageView) findViewById(R.id.imageView1);
+        imageView1 = (ImageView) findViewById(R.id.imageView2);
+        imageView2 = (ImageView) findViewById(R.id.imageView3);
 
+        title = (TextView) findViewById(R.id.Vocabli);
+        start();
+    }
+
+    private void start() {
+        correctButton = (int) (Math.random() * 3);
+        touchedWords.clear();
         //says the correct word out loud
 
-        correctWord = MainActivity.getWords().get((int) (Math.random() * MainActivity.getWords().size()));
+        correctWord = getNextWord();
+
+        // MainActivity.getWords().get((int) (Math.random() * MainActivity.getWords().size()));
         word = correctWord.getWord();
         speaker = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -57,10 +75,6 @@ public class FlashcardActivity extends AppCompatActivity {
         });
 
         startTime = System.currentTimeMillis();
-        setContentView(R.layout.activity_flashcard);
-
-
-
 
 
         //System.out.println("Initializing Word List. Correct word is: " + correctWord);
@@ -71,25 +85,42 @@ public class FlashcardActivity extends AppCompatActivity {
         System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
 
 
-        TextView title = (TextView) findViewById(R.id.Vocabli);
         title.setText(word);
-        ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
-        ;
-        ImageView imageView2 = (ImageView) findViewById(R.id.imageView3);
-        ;
+
 
         //Sets the the correct imageView to a random bitmap from the list of images for the word.
         imageView0.setImageBitmap(wordList.get(0).RandomImage().getImage());
         imageView1.setImageBitmap(wordList.get(1).RandomImage().getImage());
         imageView2.setImageBitmap(wordList.get(2).RandomImage().getImage());
 
-                // word0 = correctWord;
+        // word0 = correctWord;
         //Log.d("stephen:", "Right Before Speak");
     }
 
+
+    private Word getNextWord() {
+        for (Word w : words) {
+            if (w.getInteractions().size() == 0) {
+                return w;
+            }
+        }
+        Word longestTime = words.get(0);
+        Long longestDuration = Long.MAX_VALUE;
+        for (Word w : words) {
+            long wordTime = 0;
+            for (Interaction i : w.getInteractions()) {
+                wordTime += i.getDuration();
+            }
+            if (wordTime > longestDuration) {
+                longestDuration = wordTime;
+                longestTime = w;
+            }
+        }
+        return longestTime;
+    }
+
     private Word getAnotherWord(Word correctWord, ArrayList<Word> selectedWords) {
-       // System.out.print("GETTING ANOTHER WORD. CORRECT IS: " + correctWord.toString());
+        // System.out.print("GETTING ANOTHER WORD. CORRECT IS: " + correctWord.toString());
         ArrayList<String> tags = correctWord.getTags();
         ArrayList<String> selectedTags = new ArrayList<String>();
 
@@ -120,22 +151,13 @@ public class FlashcardActivity extends AppCompatActivity {
             }
         }
         Word toReturn = words.get(0);
-        while(selectedWords.contains(toReturn) || toReturn == correctWord) {
+        while (selectedWords.contains(toReturn) || toReturn == correctWord) {
             Collections.shuffle(words);
             Collections.shuffle(tags);
             toReturn = words.get(0);
         }
         //System.out.println("SELECTED: " + toReturn.toString());
         return toReturn;
-    }
-
-    private boolean containsArray(Object[] objects, Object obj) {
-        for (Object o : objects) {
-            if (o == obj) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public void topButton(View v) {
@@ -177,23 +199,24 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
 
+
     public void changePage(View v) {
 
         Log.d("stephen:", "changepage");
         correctWord.addInteraction(new Interaction(System.currentTimeMillis() - startTime, touchedWords));
         writeData();
+
         Intent intent = getIntent();
         boolean state = intent.getBooleanExtra("condition", true);
-
-        if (state) {
-            Intent intent1 = new Intent(this, FlashcardActivity.class);
-            intent1.putExtra("condition", true);
-            startActivity(intent1);
-        } else {
+        if (!state) {
             Intent intent2 = new Intent(this, WordPage.class);
             intent2.putExtra("word", word);
+            intent2.putExtra("question", correctWord.getQuestions().get(((int)  Math.random() * correctWord.getQuestions().size())));
+            intent2.putExtra("activity", correctWord.getQuestions().get(((int)  Math.random() * correctWord.getQuestions().size())));
             startActivity(intent2);
         }
+        wordList.clear();
+        start();
 
     }
 
@@ -202,6 +225,7 @@ public class FlashcardActivity extends AppCompatActivity {
         writeData();
         //Intent intent = getIntent();
         Intent intent1 = new Intent(this, MainActivity.class);
+        intent1.putExtra("condition", true);
         startActivity(intent1);
     }
 
@@ -210,8 +234,16 @@ public class FlashcardActivity extends AppCompatActivity {
         speaker.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 
+
+
     private void writeData() {
         System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
+        int numInteractions = 0;
+        for(Word w : words) {
+            numInteractions += w.getInteractions().size();
+        }
+        System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
+
         File folder = new File(getFilesDir()
                 + MainActivity.appFolder);
         //System.out.println("FILE: " + folder.toString());
@@ -233,7 +265,7 @@ public class FlashcardActivity extends AppCompatActivity {
 
         ArrayList<String> wordsLines = new ArrayList<String>();
 
-        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + '\n');
+        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + CSVParser.csvSeparatorChar + "Questions" + '\n');
 
         for (Word w : words) {
             wordsLines.add(writeWord(w));
@@ -248,9 +280,9 @@ public class FlashcardActivity extends AppCompatActivity {
         }
 
         CSVParser.savePublicly(wordsLines, wordsFilePath, this);
-        CSVParser.savePublicly(interactionsLines, interactionsFilePath, this);
+        //CSVParser.savePublicly(interactionsLines, interactionsFilePath, this);
 
-        //CSVParser.writeFile(interactionsLines, interactionsFilePath);
+        CSVParser.writeFile(interactionsLines, interactionsFilePath);
 
 
     }
@@ -296,6 +328,7 @@ public class FlashcardActivity extends AppCompatActivity {
         }
         s = s + CSVParser.csvSeparatorChar;
 
+        //write tags
         if (w.getTags().size() > 0) {
             for (String tag : w.getTags()) {
                 s = s + tag + CSVParser.listSeparatorChar;
@@ -303,6 +336,19 @@ public class FlashcardActivity extends AppCompatActivity {
             }
             s = s.substring(0, s.length() - 1);
         }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write questions
+        if (w.getQuestions().size() > 0) {
+            for (String question : w.getQuestions()) {
+                s = s + question + CSVParser.listSeparatorChar;
+                System.out.println(question);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+
+
+
         s = s + '\n';
 
         return s;

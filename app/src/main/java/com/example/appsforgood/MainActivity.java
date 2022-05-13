@@ -46,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
 
-    final boolean FORCE_FILESYSTEM_REBUILD = true;
+    final boolean FORCE_FILESYSTEM_REBUILD = false;
+    final boolean FLUSH_INTERACTIONS = false;
 
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             interactionsFilePath = folder.toString() + "/" + "interactions.csv";
-            if (!new File(interactionsFilePath).exists() || FORCE_FILESYSTEM_REBUILD) {
+            if (!new File(interactionsFilePath).exists() || FLUSH_INTERACTIONS) {
                 File interactionsFile = new File(interactionsFilePath);
                 if(interactionsFile.exists()) {
                     interactionsFile.delete();
@@ -133,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             unparsedWords.remove(0);
 
             for (String s : unparsedWords) {
-                System.out.println("WORDS LINE: " + s);
+                //System.out.println("WORDS LINE: " + s);
                 parseWord(s);
             }
 
@@ -146,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     //parses a line from the CSV into a word object and adds it to the list
     private void parseWord(String s) {
+        System.out.println("WORD LINE: " + s);
         String w = s.substring(0, s.indexOf(","));
         System.out.println("WORD: " + w);
         s = s.substring(s.indexOf(",") + 1);
@@ -192,6 +194,20 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Interaction> parseInteractions(String interactionKeys) {
 
+        //parses which keys the word has
+        ArrayList<Integer> keysToMatch = new ArrayList<Integer>();
+        while (interactionKeys.contains(((Character) CSVParser.listSeparatorChar).toString())) {
+            String key = interactionKeys.substring(0, interactionKeys.indexOf(CSVParser.listSeparatorChar));
+            interactionKeys = interactionKeys.substring(interactionKeys.indexOf(CSVParser.listSeparatorChar) + 1);
+            keysToMatch.add(Integer.parseInt(key));
+
+
+        }
+        if (!interactionKeys.equals("")) {
+            String key = interactionKeys;
+            keysToMatch.add(Integer.parseInt(key));
+        }
+
         ArrayList<Interaction> interactions = new ArrayList<Interaction>();
         ArrayList<String> interactionsLines = new ArrayList<String>();
         try {
@@ -220,38 +236,43 @@ public class MainActivity extends AppCompatActivity {
             }
 
             System.out.println("INTERACTIONS LINES SIZE: " + interactionsLines.size());
+
             //checks whether a key matches the list of keys
             for (String interactionLine : interactionsLines) {
                 //if the key matches, it parses the line into an interaction
 
                 Interaction i;
                 String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
-                interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
-                Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
-                interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                int keyInt = Integer.parseInt(key);
+                //does the checking to make sure only the interactions for this word are parsed
+                if(keysToMatch.contains(keyInt)) {
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
+                    Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
+                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
 
-                //parses it into individual button presses
-                ArrayList<String> buttonsList = new ArrayList<String>();
-                while (interactionLine.contains(((Character) CSVParser.listSeparatorChar).toString())) {
-                    String interaction = interactionLine.substring(0, interactionLine.indexOf(CSVParser.listSeparatorChar));
-                    interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.listSeparatorChar) + 1);
-                    buttonsList.add(interaction);
+                    //parses it into individual button presses
+                    ArrayList<String> interactionsList = new ArrayList<String>();
+                    while (interactionLine.contains(((Character) CSVParser.listSeparatorChar).toString())) {
+                        String interaction = interactionLine.substring(0, interactionLine.indexOf(CSVParser.listSeparatorChar));
+                        interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.listSeparatorChar) + 1);
+                        interactionsList.add(interaction);
 
 
+                    }
+                    if (!interactionLine.equals("")) {
+                        String interaction = interactionLine;
+                        interactionsList.add(interaction);
+                    }
+
+                    i = new Interaction(time, interactionsList);
+                    interactions.add(i);
                 }
-                if (!interactionLine.equals("")) {
-                    String interaction = interactionLine;
-                    buttonsList.add(interaction);
-                }
-
-                i = new Interaction(time, buttonsList);
-                interactions.add(i);
 
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println("PARSED " + interactions.size() + " INTERACTIONS");
         return interactions;
 
     }
