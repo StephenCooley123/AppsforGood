@@ -7,23 +7,8 @@
     app:layout_gravity="center"
     tools:context=".FlashcardActivity">
 
-    <ImageButton
-        android:id="@+id/imageView13"
-
-
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-
-
-        app:layout_constraintBottom_toTopOf="@+id/guideline93"
-        app:layout_constraintEnd_toStartOf="@+id/guideline94"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_launcher_background" />
-
     <TextView
-        android:id="@+id/vocabli"
+        android:id="@+id/Vocabli"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="monospace"
@@ -44,14 +29,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageView10"
+        android:id="@+id/imageView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
+        android:onClick="topButton"
         android:scaleType="centerCrop"
+
+
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
-
-
         app:layout_constraintEnd_toStartOf="@+id/guideline91"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline79"
@@ -59,11 +45,12 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
-        android:id="@+id/imageView11"
+        android:id="@+id/imageView2"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
 
+        android:onClick="midButton"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline81"
@@ -74,11 +61,12 @@
         app:srcCompat="@drawable/ic_launcher_background" />
 
     <ImageButton
-        android:id="@+id/imageView12"
+        android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
 
 
+        android:onClick="bottomButton"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline82"

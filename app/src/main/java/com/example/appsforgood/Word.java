@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 
 import java.util.ArrayList;
@@ -18,29 +21,13 @@ public class Word {
     private ArrayList<Interaction> interactions = new ArrayList<Interaction>();
     private ArrayList<String> tags = new ArrayList<String>();
     private ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
-    private String Question= new String();
-    private String Activity = new String();
+    private ArrayList<String> questions = new ArrayList<String>();
 
-    public void defineActivity(String S){
-        Question=S;
-    }
-
-    public void defineQuestion(String S){
-        Activity=S;
-    }
-
-    public String getQuestion(){
-        return Question;
-    }
-
-    public String getActivity(){
-        return Activity;
-    }
+    //THESE METHODS ARE ALMOST EXCLUSIVELY GETTERS AND SETTERS, AS WORD IS A DATA STRUCTURE
 
     public Word(String str) {
         word = str;
     }
-
 
     public String getWord() {
         return word;
@@ -57,6 +44,7 @@ public class Word {
         interactions.add(i);
     }
 
+    //checks for unique tags and adds one
     public void addTag(String tag) {
         boolean contains = false;
         for(String s : tags) {
@@ -68,6 +56,8 @@ public class Word {
             tags.add(tag);
         }
     }
+
+    //essentially a .contains()
     public boolean containsTag(String tag) {
         for(String s : tags) {
             if(s.equals(tag)) {
@@ -89,8 +79,34 @@ public class Word {
         return interactions;
     }
 
+    public void setImages(ArrayList<LoadedImage> wordImages) {
+        images = wordImages;
+    }
     public LoadedImage RandomImage(){
+
         return images.get((int) (Math.random()*images.size()));
     }
+
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
+
+    //performs an arraycopy via shallow copy
+    public void setInteractions(ArrayList<Interaction> interactions) {
+        for(Interaction i : interactions) {
+            this.interactions.add(i);
+        }
+
+    }
+
+    public void setQuestions(ArrayList<String> questions) {
+        this.questions = questions;
+    }
+
+    public ArrayList<String> getQuestions() {
+        return questions;
+    }
+
+
 
 }

@@ -19,31 +19,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline49" />
 
     <TextView
-        android:id="@+id/Activity"
-        android:layout_width="357dp"
-        android:layout_height="86dp"
-        android:fontFamily="monospace"
-        android:text="@string/ReplaceActivity"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline42"
-        app:layout_constraintEnd_toStartOf="@+id/guideline69"
-        app:layout_constraintStart_toStartOf="@+id/guideline67"
-        app:layout_constraintTop_toTopOf="@+id/guideline63" />
-
-    <TextView
-        android:id="@+id/TextActivity"
-        android:layout_width="357dp"
-        android:layout_height="74dp"
-        android:fontFamily="monospace"
-        android:text="@string/Activity"
-        android:textColor="@color/purple_700"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline37"
-        app:layout_constraintEnd_toStartOf="@+id/guideline69"
-        app:layout_constraintStart_toStartOf="@+id/guideline67"
-        app:layout_constraintTop_toTopOf="@+id/guideline34" />
-
-    <TextView
         android:id="@+id/Question"
         android:layout_width="357dp"
         android:layout_height="86dp"
@@ -52,7 +27,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline42"
         app:layout_constraintEnd_toStartOf="@+id/guideline68"
-        app:layout_constraintStart_toStartOf="@+id/guideline70"
+        app:layout_constraintStart_toStartOf="@+id/guideline67"
         app:layout_constraintTop_toTopOf="@+id/guideline63" />
 
     <TextView
@@ -65,7 +40,7 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline37"
         app:layout_constraintEnd_toStartOf="@+id/guideline68"
-        app:layout_constraintStart_toStartOf="@+id/guideline70"
+        app:layout_constraintStart_toStartOf="@+id/guideline67"
         app:layout_constraintTop_toTopOf="@+id/guideline34" />
 
     <TextView

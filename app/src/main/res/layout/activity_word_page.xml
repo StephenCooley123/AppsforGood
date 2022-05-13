@@ -33,27 +33,6 @@
         app:layout_constraintTop_toTopOf="@+id/guideline31"
         app:rippleColor="#3F51B5" />
 
-    <TextView
-        android:id="@+id/TextQuestion"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="4dp"
-        android:fontFamily="monospace"
-        android:text="@string/Question"
-        android:textColor="@color/purple_700"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline41"
-        app:layout_constraintTop_toTopOf="@+id/guideline29"
-        app:layout_constraintVertical_bias="0.194"
-        app:autoSizeMaxTextSize="50sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"
-
-        />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline29"
         android:layout_width="wrap_content"
@@ -95,13 +74,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.17" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.61" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline31"
@@ -153,54 +125,34 @@
         android:fontFamily="monospace"
         android:text="@string/ReplaceQuestion"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline33"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/guideline41"
-        app:layout_constraintTop_toBottomOf="@+id/TextQuestion"
-        app:layout_constraintVertical_bias="1.0"
         app:autoSizeMaxTextSize="30sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
-        />
-
-    <TextView
-        android:id="@+id/Activity"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="monospace"
-        android:text="@string/ReplaceActivity"
-        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline35"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline41"
         app:layout_constraintTop_toTopOf="@+id/guideline36"
-        app:layout_constraintVertical_bias="0.487"
-        app:autoSizeMaxTextSize="30sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"
-        />
+        app:layout_constraintVertical_bias="0.487" />
 
     <TextView
-        android:id="@+id/TextActivity"
+        android:id="@+id/TextQuestion"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fontFamily="monospace"
-        android:text="@string/Activity"
+        android:text="@string/Question"
         android:textColor="@color/purple_700"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/guideline36"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.415"
-        app:layout_constraintStart_toStartOf="@+id/guideline41"
-        app:layout_constraintTop_toTopOf="@+id/guideline38"
         app:autoSizeMaxTextSize="50sp"
         app:autoSizeMinTextSize="12sp"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/guideline36"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline41"
+        app:layout_constraintTop_toTopOf="@+id/guideline38"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

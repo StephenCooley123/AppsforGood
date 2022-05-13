@@ -27,9 +27,13 @@
         <activity
             android:name=".AddWord"
             android:exported="false" />
+
+
         <activity
             android:name=".WordPage"
             android:exported="false" />
+
+
         <activity
             android:name=".FlashcardActivity"
             android:exported="false" />
