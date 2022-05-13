@@ -46,9 +46,12 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
 
     //*******STUFF TO WATCH FOR IN YOUR TESTING:*******
-    //****DO NOT HIT BACK. EVER
+    //****DO NOT HIT BACK. EVER. IF YOU DO, THE APP WILL BREAK, EVEN ON RELAUNCH.
+    //-------This is evident through multiple of the same word on the screen at a time.
+    // To salvage after this, set FORCE_FILESYSTEM_REBUILD and FLUSH_INTERACTIONS to true and go through one flashcard
+    //Then set them both to false and reinstall
     // Some functionality with adding words may be limited
-    //
+    // The text to speech runs early in the guided mode. We are working on a fix.
     static List<Word> words = new ArrayList<Word>();
 
     //this forces a rebuild of the file system
