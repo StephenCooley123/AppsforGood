@@ -1,21 +1,27 @@
 package com.example.appsforgood;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+import pl.droidsonroids.gif.GifImageView;
+import pl.droidsonroids.gif.GifTextView;
+
 
 public class FlashcardActivity extends AppCompatActivity {
 
@@ -32,6 +38,8 @@ public class FlashcardActivity extends AppCompatActivity {
     String word;
     int correctButton;// determines the image view with the correct picture
     long startTime;
+    GifImageView gifView;
+
 
     ArrayList<String> touchedWords = new ArrayList<String>();
 
@@ -42,6 +50,8 @@ public class FlashcardActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         Log.d("stephen:", "oncreate");
+
+
         correctButton = (int) (Math.random() * 3);
 
         //says the correct word out loud
@@ -61,8 +71,8 @@ public class FlashcardActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
         setContentView(R.layout.activity_flashcard);
 
-
-
+        TextView wordView = (TextView)findViewById(R.id.newword);
+        wordView.setText(word.toString());
 
 
         //System.out.println("Initializing Word List. Correct word is: " + correctWord);
@@ -72,10 +82,7 @@ public class FlashcardActivity extends AppCompatActivity {
         wordList.add(correctButton, correctWord);
         System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
 
-        TextView textView0 = (TextView) findViewById(R.id.textView6);
-        textView0.setText(correctWord.toString());
-        TextView textView1 = (TextView) findViewById(R.id.textView5);
-        textView1.setText(correctWord.toString());
+
 
         ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
         ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
@@ -141,8 +148,12 @@ public class FlashcardActivity extends AppCompatActivity {
         }
         return false;
     }
-
+    @Override
+    public void onBackPressed() {
+        // Simply Do noting!
+    }
     public void topButton(View v) {
+
         touchedWords.add(wordList.get(0).toString());
         Log.d("stephen:", "In Top Button");
         //speak("top button");
@@ -152,8 +163,22 @@ public class FlashcardActivity extends AppCompatActivity {
         //System.out.println("Added " + word0.toString() + " to interaction");
 
         if (correctButton == 0 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(this, R.raw.ding);
+            mediaPlayer.start();
 
-            changePage(v);
+            confetti(gifView);
+            fireworks(gifView);
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    changePage(v);
+                }
+            }, 1000);
+
         }
     }
 
@@ -163,8 +188,20 @@ public class FlashcardActivity extends AppCompatActivity {
         //speak("mid button");
 
         if (correctButton == 1 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(this, R.raw.ding);
+            mediaPlayer.start();
 
-            changePage(v);
+            confetti(gifView);
+            fireworks(gifView);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    changePage(v);
+                }
+            }, 1000);
         }
     }
 
@@ -175,8 +212,21 @@ public class FlashcardActivity extends AppCompatActivity {
         //speak("bottom button");
 
         if (correctButton == 2 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(this, R.raw.ding);
+            mediaPlayer.start();
 
-            changePage(v);
+            confetti(gifView);
+            fireworks(gifView);
+
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    changePage(v);
+                }
+            }, 1000);
         }
     }
 
@@ -199,6 +249,16 @@ public class FlashcardActivity extends AppCompatActivity {
             startActivity(intent2);
         }
 
+    }
+    public void confetti(GifImageView v) {
+       v = findViewById(R.id.confettiGif);
+
+        v.setImageURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.confetti));
+    }
+    public void fireworks(GifImageView v) {
+        v = findViewById(R.id.fireworksGif);
+
+        v.setImageURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.fireworks));
     }
 
     private void speak(String text) {

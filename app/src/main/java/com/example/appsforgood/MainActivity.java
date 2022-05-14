@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     //to merge changes from someone else, fetch first
     static List<Word> words = new ArrayList<Word>();
 
-    final boolean FORCE_FILESYSTEM_REBUILD = false;
+    final boolean FORCE_FILESYSTEM_REBUILD = true;
 
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
