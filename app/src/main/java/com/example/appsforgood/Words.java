@@ -3,9 +3,13 @@ package com.example.appsforgood;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.UserDictionary;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,10 +24,9 @@ public class Words extends AppCompatActivity {
         ArrayList<String> words = new ArrayList<String>();
        ArrayList<Word> deletingwords =new ArrayList<Word>();
 
-
         @Override
         protected void onCreate(Bundle savedInstanceState) {
-            for(Word n: MainActivity.getWords()){
+            for (Word n : MainActivity.getWords()) {
                 words.add(n.getWord());
             }
             super.onCreate(savedInstanceState);
@@ -32,16 +35,18 @@ public class Words extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.activity_words, R.id.wordtext,words);
             alistviewWords.setAdapter(arrayAdapter);
             Intent intent = getIntent();
+            alistviewWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    toDeleteWord(words.get(position));
+                    view.setBackgroundColor(Color.parseColor("#ff0000"));
+                }
+            });
         }
 
-    public void toDeleteWord(View v){
-        ImageButton deletebutton =findViewById(R.id.deleteSymbol);
-        deletebutton.setDrawingCacheBackgroundColor(Color.parseColor("#FF0000"));
-        TextView deleteWord =findViewById(R.id.wordtext);
-        String deletedWord = deleteWord.toString();
-        System.out.println("IN TO DELETE WORD. WORD IS: " + deletedWord);
+    public void toDeleteWord(String deletedWord){
         for(Word n: MainActivity.getWords()){
-            String wordn=n.getWord();
+            String wordn=n.toString();
             if(wordn.equals(deletedWord)){
                 deletingwords.add(n);
             }
@@ -53,8 +58,7 @@ public class Words extends AppCompatActivity {
         }
 
         public void DeleteAllWords(View v){
-            System.out.println(deletingwords);
-            MainActivity.deletefromMainWords(deletingwords);
+            SettingsModel.addedtodeletedwords(deletingwords);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

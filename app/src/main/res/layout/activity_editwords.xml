@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_gravity="center_horizontal"
-        app:autoSizeMaxTextSize="60sp"
-        app:autoSizeMinTextSize="12sp"
+        app:autoSizeMaxTextSize="80sp"
+        app:autoSizeMinTextSize="40sp"
         app:autoSizeStepGranularity="2sp"
         app:autoSizeTextType="uniform"
         android:elegantTextHeight="true"
@@ -31,6 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="toAddWord"
+        android:minHeight="70dp"
         android:contentDescription="@string/addword"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
@@ -40,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:contentDescription="@string/DeleteWord"
-        android:minHeight="48dp"
+        android:minHeight="70dp"
         app:srcCompat="@android:drawable/stat_notify_more" />
 
     <ListView

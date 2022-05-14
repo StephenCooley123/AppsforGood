@@ -27,9 +27,6 @@ Word W;
         String activity = theactivity.getText().toString();
         String question = thequestion.getText().toString();
 
-        W = new Word(word);
-        W.defineActivity(activity);
-        W.defineQuestion(question);
     }
 
     public void EnterClicked(View v){

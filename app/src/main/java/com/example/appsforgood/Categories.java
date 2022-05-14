@@ -16,7 +16,7 @@ boolean condition;
 boolean edit;
 
 ListView alistview;
-ArrayList<String> wordLists = SmallStorage.getListofLists();
+ArrayList<String> wordLists = SettingsModel.getListofLists();
 ImageButton button;
 ArrayAdapter<String> arrayAdapter;
 
@@ -30,7 +30,7 @@ ArrayAdapter<String> arrayAdapter;
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SmallStorage.addtowordLists("New Category");
+                SettingsModel.addtowordLists("New Category");
                 arrayAdapter.notifyDataSetChanged();
             }
         };
