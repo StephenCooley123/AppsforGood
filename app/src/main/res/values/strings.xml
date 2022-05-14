@@ -2,9 +2,9 @@
     <string name="app_name">Apps for Good</string>
 
     <string name="title_activity_word">WordActivity</string>
-=========
+    =========
     <string name="title_activity_home_page">HomePage</string>
->>>>>>>>> Temporary merge branch 2
+    >>>>>>>>> Temporary merge branch 2
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -15,9 +15,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="VocabliStr">Vocabli</string>
     <string name="ParentStr">Parental Settings</string>
-
+    <string name="NewWord">New Word:</string>
     <string name="GuidedStr">Guided Mode</string>
-    <string name="CreativeStr">Creative Mode</string>
+    <string name="CreativeStr">Learning Mode</string>
     <string name="Question">Related Question:</string>
     <string name="Activity">Related Activity:</string>
     <string name="ReplaceQuestion">-Question-</string>
@@ -29,6 +29,14 @@
     <string name="VocabHeading">Update Vocab List</string>
     <string name="Settings">Settings</string>
     <string name="UploadImage">Upload Image</string>
+    <string name="Stats">View Progress</string>
+    <string name="EditCategories">Edit Categories</string>
+    <string name="Categories">Categories</string>
+    <string name="addword">AddWord</string>
+    <string name="EditWords">Edit Words</string>
+    <string name="Words">Words</string>
+    <string name="DeleteWord">Delete Word</string>
+
 
 
 

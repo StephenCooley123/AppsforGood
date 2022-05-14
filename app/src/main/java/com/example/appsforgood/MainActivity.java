@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         readWords();
-        //generateTestWord(5);
+        deletefromMainWords(SettingsModel.prevdeletingwords);
         //writeData();
         int num = 0;
         for (Word w : words) {
@@ -97,8 +97,15 @@ public class MainActivity extends AppCompatActivity {
         //generate 5 random words just to test the file system
         //to access device files, go to view > tool windows > device file explorer
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
+    }
+    public static void addtoMainWords(Word word){
+        words.add(word);
+    }
 
-
+    public static void deletefromMainWords(ArrayList<Word> wordobjects){
+        for(Word toDelete : wordobjects) {
+            words.remove(toDelete);
+        }
     }
 
     /**
