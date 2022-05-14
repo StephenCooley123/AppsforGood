@@ -24,6 +24,7 @@ public class Words extends AppCompatActivity {
         ArrayList<String> words = new ArrayList<String>();
        ArrayList<Word> deletingwords =new ArrayList<Word>();
 
+
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             for (Word n : MainActivity.getWords()) {
@@ -58,7 +59,11 @@ public class Words extends AppCompatActivity {
         }
 
         public void DeleteAllWords(View v){
-            SettingsModel.addedtodeletedwords(deletingwords);
+            for(Word n:deletingwords){
+                if(!SettingsModel.prevdeletingwords.contains(n)){
+                    SettingsModel.prevdeletingwords.add(n);
+                }
+            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         }

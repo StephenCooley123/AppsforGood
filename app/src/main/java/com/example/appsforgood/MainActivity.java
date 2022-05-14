@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     //****DO NOT HIT BACK. EVER
     // Some functionality with adding words may be limited
     //
-    static List<Word> words = new ArrayList<Word>();
+    static ArrayList<Word> words = new ArrayList<Word>();
 
     //this forces a rebuild of the file system
     final boolean FORCE_FILESYSTEM_REBUILD = false;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         readWords();
-        deletefromMainWords(SettingsModel.deletedwords);
+        deletefromMainWords(SettingsModel.prevdeletingwords);
         //writeData();
     }
 
@@ -91,10 +91,7 @@ public class MainActivity extends AppCompatActivity {
     public static void deletefromMainWords(ArrayList<Word> wordobjects){
         for(Word toDelete : wordobjects) {
             words.remove(toDelete);
-            System.out.println("Deleting word"+toDelete.toString());
         }
-
-
     }
 
     /**
