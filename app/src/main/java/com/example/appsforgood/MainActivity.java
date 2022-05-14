@@ -102,10 +102,11 @@ public class MainActivity extends AppCompatActivity {
         words.add(word);
     }
 
-    public static void deletefromMainWords(ArrayList<Word> wordobjects){
+    public void deletefromMainWords(ArrayList<Word> wordobjects){
         for(Word toDelete : wordobjects) {
             words.remove(toDelete);
         }
+        writeData();
     }
 
     /**
@@ -430,12 +431,115 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private Bitmap getImageFromAppData(String name) {
+    //writes the data to the disk
+    private void writeData() {
+        //System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
+        int numInteractions = 0;
+        for (Word w : words) {
+            numInteractions += w.getInteractions().size();
+        }
+        //System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
+
+        File folder = new File(getFilesDir()
+                + MainActivity.appFolder);
+        //System.out.println("FILE: " + folder.toString());
+        //System.out.println("IN WRITE DATA METHOD");
 
 
-        //System.out.println("Getting Image Asset");
-        return BitmapFactory.decodeFile(name);
+        if (!folder.exists()) {
+            folder.mkdir();
+            //System.out.println("Made the directory");
+            System.out.println(folder.toString());
+        }
+        System.out.println("FOLDER: " + folder.toString());
+
+        final String wordsFilePath = folder.toString() + "/" + "words.csv";
+        final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+
+
+        generateInteractionKeys();
+
+        ArrayList<String> wordsLines = new ArrayList<String>();
+
+        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + CSVParser.csvSeparatorChar + "Questions" + '\n');
+
+        for (Word w : words) {
+            wordsLines.add(writeWord(w));
+        }
+
+        ArrayList<String> interactionsLines = new ArrayList<String>();
+        interactionsLines.add("Key" + CSVParser.csvSeparatorChar + "Time" + CSVParser.csvSeparatorChar + "SelectedWords" + '\n');
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                interactionsLines.add(i.toString() + "\n");
+            }
+        }
+
+        CSVParser.savePublicly(wordsLines, wordsFilePath, this);
+        //CSVParser.savePublicly(interactionsLines, interactionsFilePath, this);
+
+        CSVParser.writeFile(interactionsLines, interactionsFilePath);
+
+
     }
+
+    //makes sure each interact
+    private void generateInteractionKeys() {
+        int n = 0;
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                i.setKey(n);
+                n++;
+            }
+        }
+    }
+
+    private String writeWord(Word w) {
+        String s = w.toString() + CSVParser.csvSeparatorChar;
+
+        //write images
+        if (w.getImages().size() > 0) {
+            for (LoadedImage l : w.getImages()) {
+                s = s + l.toString() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write interaction keys
+        if (w.getInteractions().size() > 0) {
+            for (Interaction i : w.getInteractions()) {
+                s = s + i.getKey() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write tags
+        if (w.getTags().size() > 0) {
+            for (String tag : w.getTags()) {
+                s = s + tag + CSVParser.listSeparatorChar;
+                System.out.println(tag);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write questions
+        if (w.getQuestions().size() > 0) {
+            for (String question : w.getQuestions()) {
+                s = s + question + CSVParser.listSeparatorChar;
+                System.out.println(question);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+
+
+        s = s + '\n';
+
+        return s;
+    }
+
 
 
 
