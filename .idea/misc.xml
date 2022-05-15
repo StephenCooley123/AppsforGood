@@ -29,7 +29,7 @@
         <entry key="app/src/main/res/layout-sw600dp/activity_flashcard.xml" value="0.1" />
         <entry key="app/src/main/res/layout-w600dp-land/activity_flashcard.xml" value="0.20384615384615384" />
         <entry key="app/src/main/res/layout-xlarge-land/activity_flashcard.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_flashcard.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_home_page.xml" value="0.15494791666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_parental_settings.xml" value="0.25" />

@@ -5,21 +5,27 @@
     android:id="@+id/cLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FFFFFF"
     app:layout_gravity="center"
+
     tools:context=".FlashcardActivity">
+
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/confettiGif"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/fireworksGif"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView1"
-        app:layout_constraintEnd_toEndOf="@+id/newword"
-        app:layout_constraintStart_toStartOf="@+id/newword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline

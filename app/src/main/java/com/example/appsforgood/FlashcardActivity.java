@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -38,7 +40,13 @@ public class FlashcardActivity extends AppCompatActivity {
     String word;
     int correctButton;// determines the image view with the correct picture
     long startTime;
+
     GifImageView gifView;
+    ImageView imageView0;
+    ImageView imageView1;
+    boolean correctPress;
+    ImageView imageView2
+    ;
 
 
     ArrayList<String> touchedWords = new ArrayList<String>();
@@ -58,6 +66,8 @@ public class FlashcardActivity extends AppCompatActivity {
 
         correctWord = MainActivity.getWords().get((int) (Math.random() * MainActivity.getWords().size()));
         word = correctWord.getWord();
+        correctPress = true;
+
         speaker = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -75,6 +85,7 @@ public class FlashcardActivity extends AppCompatActivity {
         wordView.setText(word.toString());
 
 
+
         //System.out.println("Initializing Word List. Correct word is: " + correctWord);
         for (int i = 0; i < 2; i++) {
             wordList.add(getAnotherWord(correctWord, wordList));
@@ -84,10 +95,10 @@ public class FlashcardActivity extends AppCompatActivity {
 
 
 
-        ImageView imageView0 = (ImageView) findViewById(R.id.imageView1);
-        ImageView imageView1 = (ImageView) findViewById(R.id.imageView2);
+         imageView0 = (ImageView) findViewById(R.id.imageView1);
+         imageView1 = (ImageView) findViewById(R.id.imageView2);
         ;
-        ImageView imageView2 = (ImageView) findViewById(R.id.imageView3);
+         imageView2 = (ImageView) findViewById(R.id.imageView3);
         ;
 
         //Sets the the correct imageView to a random bitmap from the list of images for the word.
@@ -162,7 +173,8 @@ public class FlashcardActivity extends AppCompatActivity {
         //interaction.addWord(word0);
         //System.out.println("Added " + word0.toString() + " to interaction");
 
-        if (correctButton == 0 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+        if ((correctButton == 0 || ALLOW_ALL_ANSWERS_FOR_DEBUG)  &&  correctPress==true) {
+            correctPress = false;
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
@@ -170,14 +182,37 @@ public class FlashcardActivity extends AppCompatActivity {
             confetti(gifView);
             fireworks(gifView);
 
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+            imageView1.setAnimation(fadeout);
+            imageView2.setAnimation(fadeout);
+
+
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    imageView1.setAlpha(0.0F);
+                    imageView2.setAlpha(0.0F);
+
+                }
+            }, 450);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    speaker.setLanguage(Locale.UK);
+                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+
+                }
+            }, 700);
+
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     changePage(v);
                 }
-            }, 1000);
+            }, 1500);
 
         }
     }
@@ -187,22 +222,46 @@ public class FlashcardActivity extends AppCompatActivity {
         Log.d("stephen:", "In Mid Button");
         //speak("mid button");
 
-        if (correctButton == 1 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+        if ((correctButton == 1 || ALLOW_ALL_ANSWERS_FOR_DEBUG) && correctPress==true) {
+            correctPress = false;
+
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+
 
             confetti(gifView);
             fireworks(gifView);
+            imageView0.setAnimation(fadeout);
+            imageView2.setAnimation(fadeout);
 
-            Handler handler = new Handler();
+             Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            imageView0.setAlpha(0.0F);
+            imageView2.setAlpha(0.0F);
+        }
+    }, 450);
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    changePage(v);
+                    speaker.setLanguage(Locale.UK);
+                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+
                 }
-            }, 1000);
+            }, 700);
+
+
+            handler.postDelayed(new Runnable() {
+        @Override
+        public void run() {
+            changePage(v);
         }
+    }, 1500);
+
+}
     }
 
     public void bottomButton(View v) {
@@ -211,22 +270,46 @@ public class FlashcardActivity extends AppCompatActivity {
         Log.d("stephen:", "In Bottom Button");
         //speak("bottom button");
 
-        if (correctButton == 2 || ALLOW_ALL_ANSWERS_FOR_DEBUG) {
+        if ((correctButton == 2 || ALLOW_ALL_ANSWERS_FOR_DEBUG) && correctPress==true) {
+            correctPress = false;
+
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
 
             confetti(gifView);
             fireworks(gifView);
+            imageView0.setAnimation(fadeout);
+            imageView1.setAnimation(fadeout);
+
 
 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    imageView0.setAlpha(0.0F);
+                    imageView1.setAlpha(0.0F);
+                }
+            }, 450);
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    speaker.setLanguage(Locale.UK);
+                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+
+                }
+            }, 700);
+
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
                     changePage(v);
                 }
-            }, 1000);
+            }, 1500);
+
         }
     }
 
