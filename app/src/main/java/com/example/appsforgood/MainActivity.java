@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
             num += w.getInteractions().size();
         }
         System.out.println("STARTING NUM OF INTERACTIONS: " + num);
+
     }
 
 
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
         //readWords();
 
         //generate 5 random words just to test the file system
@@ -99,6 +101,18 @@ public class MainActivity extends AppCompatActivity {
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
     }
     public static void addtoMainWords(Word word){
+        for(LoadedImage i : word.getImages()) {
+            int n = 0;
+            while(new File(i.reference).exists()) {
+                n++;
+                i.reference = word.toString() + n;
+
+            }
+            File imageFile = new File(i.reference);
+
+            }
+        }
+
         words.add(word);
     }
 
