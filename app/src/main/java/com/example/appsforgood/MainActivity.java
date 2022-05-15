@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         readWords();
         deletefromMainWords(SettingsModel.prevdeletingwords);
+
         //writeData();
     }
 

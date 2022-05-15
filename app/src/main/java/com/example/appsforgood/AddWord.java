@@ -29,6 +29,7 @@ ArrayList<String> questions = new ArrayList<String>();
 ArrayList<String> tags= new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getFilesDir();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addword);
         Intent intent = getIntent();
@@ -81,6 +82,7 @@ ArrayList<String> tags= new ArrayList<String>();
         if(isword){ W.setImages(images);
         MainActivity.addtoMainWords(W);}
         Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
 
