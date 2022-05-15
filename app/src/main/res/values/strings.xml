@@ -18,10 +18,12 @@
     <string name="NewWord">New Word:</string>
     <string name="GuidedStr">Guided Mode</string>
     <string name="CreativeStr">Learning Mode</string>
-    <string name="Question">Related Question:</string>
+    <string name="Question1">Question 1</string>
+    <string name="Question2">Question 2</string>
+    <string name="Question">Question</string>
     <string name="Activity">Related Activity:</string>
-    <string name="ReplaceQuestion">-Question-</string>
-    <string name="ReplaceActivity">-Activity-</string>
+    <string name="ReplaceQuestion">Question:</string>
+    <string name="ReplaceActivity">Activity</string>
     <string name="Word">Word</string>
     <string name="Next">Next</string>
     <string name="AddWord">Add Word:</string>
@@ -36,8 +38,16 @@
     <string name="EditWords">Edit Words</string>
     <string name="Words">Words</string>
     <string name="DeleteWord">Delete Word</string>
-
-
+    <string name="Tags">Categories:</string>
+    <string name="c1">Category 1</string>
+    <string name="c2">Category 2</string>
+    <string name="c3">Category 3</string>
+    <string name="add">To add word</string>
+    <string name="Upload1">Upload Image 1</string>
+    <string name="Upload2">Upload Image 2</string>
+    <string name="Upload3">Upload Image 3</string>
+    <string name="UploadImages">Upload Images</string>
+    <string name="done">Done</string>
 
 
 </resources>

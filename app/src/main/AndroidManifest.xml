@@ -26,13 +26,9 @@
         <activity
             android:name=".AddWord"
             android:exported="false" />
-
-
         <activity
             android:name=".WordPage"
             android:exported="false" />
-
-
         <activity
             android:name=".FlashcardActivity"
             android:exported="false" />
@@ -47,5 +43,6 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permisssion.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>

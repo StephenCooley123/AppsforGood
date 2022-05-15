@@ -5,7 +5,6 @@ import java.util.List;
 
 public class SettingsModel {
     //Relates to the Categories of Words
-
     static ArrayList<Word> prevdeletingwords =new ArrayList<Word>();
     static ArrayList<String> wordLists = new ArrayList<String>();
 
