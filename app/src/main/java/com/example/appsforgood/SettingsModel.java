@@ -6,13 +6,8 @@ import java.util.List;
 public class SettingsModel {
     //Relates to the Categories of Words
     static ArrayList<Word> prevdeletingwords =new ArrayList<Word>();
-    static ArrayList<String> wordLists = new ArrayList<String>();
-
-    public static ArrayList<String> getListofLists(){
-        return wordLists;
+    static ArrayList<ArrayList<String>> tags = new ArrayList<ArrayList<String>>();
+    static ArrayList<String> Categorynames = new ArrayList<String>();
     }
 
-    public static void addtowordLists(String s){
-        wordLists.add(s);
-    }
-}
+

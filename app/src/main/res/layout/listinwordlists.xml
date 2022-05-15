@@ -8,7 +8,10 @@
         android:id="@+id/wordtext"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textSize="30sp"
         android:layout_gravity="center"
         android:padding="@dimen/default_gap"
         android:textColor="@color/black" />
+
+
 </LinearLayout>

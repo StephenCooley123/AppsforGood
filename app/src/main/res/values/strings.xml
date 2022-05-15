@@ -38,16 +38,18 @@
     <string name="EditWords">Edit Words</string>
     <string name="Words">Words</string>
     <string name="DeleteWord">Delete Word</string>
-    <string name="Tags">Categories:</string>
-    <string name="c1">Category 1</string>
-    <string name="c2">Category 2</string>
-    <string name="c3">Category 3</string>
+    <string name="Tags">Tags:</string>
+    <string name="c1">Tag 1</string>
+    <string name="c2">Tag 2</string>
+    <string name="c3">Tag 3</string>
     <string name="add">To add word</string>
     <string name="Upload1">Upload Image 1</string>
     <string name="Upload2">Upload Image 2</string>
     <string name="Upload3">Upload Image 3</string>
     <string name="UploadImages">Upload Images</string>
     <string name="done">Done</string>
+    <string name="tag">A tag</string>
+    <string name="name">Category Name</string>
 
 
 </resources>

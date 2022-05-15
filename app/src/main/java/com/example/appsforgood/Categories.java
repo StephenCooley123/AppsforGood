@@ -3,8 +3,10 @@ package com.example.appsforgood;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -16,9 +18,15 @@ boolean condition;
 boolean edit;
 
 ListView alistview;
-ArrayList<String> wordLists = SettingsModel.getListofLists();
+ArrayList<String> wordLists = SettingsModel.Categorynames;
 ImageButton button;
 ArrayAdapter<String> arrayAdapter;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        wordLists=SettingsModel.Categorynames;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,40 +38,28 @@ ArrayAdapter<String> arrayAdapter;
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SettingsModel.addtowordLists("New Category");
+                SettingsModel.Categorynames.add("Category "+(wordLists.size()+1));
+                ArrayList<String> n = new ArrayList<String>();
+                SettingsModel.tags.add(n);
                 arrayAdapter.notifyDataSetChanged();
             }
         };
         button.setOnClickListener(onClickListener);
         alistview.setAdapter(arrayAdapter);
 
-        Intent intent = getIntent();
-        edit=intent.getBooleanExtra("edit",true);
 
-        if(!edit){
-            condition=intent.getBooleanExtra("condition",true);
-        }
+        alistview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                edittags(position);
+            }
+        });
     }
 
-    public void buttonClick(View v){
-        if(edit){
-            toEdit();
-        }
-        else{
-            toFlashCard();
-        }
-    }
-    public void toFlashCard(View v){
-        Intent intent = new Intent(this, FlashcardActivity.class);
-        intent.putExtra("condition",condition);
-    }
-
-    public void toEdit(){
-
-
-    }
-    public void toFlashCard(){
-
+    public void edittags(int pos){
+        Intent intent = new Intent(this, Categorylistview.class);
+        intent.putExtra("taglistpos", pos);
+        startActivity(intent);
     }
 
 }

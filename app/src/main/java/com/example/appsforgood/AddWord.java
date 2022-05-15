@@ -33,7 +33,11 @@ ArrayList<String> tags= new ArrayList<String>();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addword);
         Intent intent = getIntent();
+        uploadimage=(ImageButton)findViewById(R.id.upimg);
+        uploadimage.setOnClickListener(this);
+    }
 
+    public void EnterClicked(View v){
         EditText theword =findViewById(R.id.AddedWord);
         EditText q1=findViewById(R.id.q1);
         EditText q2=findViewById(R.id.q2);
@@ -47,9 +51,6 @@ ArrayList<String> tags= new ArrayList<String>();
         word = theword.getText().toString();
         String ques1 = q1.getText().toString();
         String ques2 = q2.getText().toString();
-
-        uploadimage=(ImageButton)findViewById(R.id.upimg);
-        uploadimage.setOnClickListener(this);
 
         if(!ques1.isEmpty()){
             questions.add(ques1);
@@ -76,9 +77,6 @@ ArrayList<String> tags= new ArrayList<String>();
             isword=false;
         }
 
-    }
-
-    public void EnterClicked(View v){
         if(isword){ W.setImages(images);
         MainActivity.addtoMainWords(W);}
         Intent intent = new Intent(this,MainActivity.class);
