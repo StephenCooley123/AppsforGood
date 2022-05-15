@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_gravity="center"
-    tools:context=".FlashcardActivity">
+    tools:context=".FlashcardActivity"
+    android:background="#27FFEB3B">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
