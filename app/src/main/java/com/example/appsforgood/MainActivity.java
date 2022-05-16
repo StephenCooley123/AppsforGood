@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     //more words will be added in to be packaged with the app by default as well by editing DefaultWords.csv and adding the associated images to the assets folder.
     static List<Word> words = new ArrayList<Word>();
 
+    static boolean comingFromAddedWord = false;
+
     //this forces a rebuild of the file system
     final boolean FORCE_FILESYSTEM_REBUILD = false;
 
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
     final boolean FLUSH_INTERACTIONS = false;
 
     //keys for locations of files and folders
+    public static String mainPath = "";
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
@@ -76,7 +79,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
         super.onStart();
+        mainPath = getFilesDir().toString();
+
+        if(comingFromAddedWord) {
+            System.out.println("WORDS TO BE WRITTEN: "  + words);
+            writeData();
+            comingFromAddedWord = false;
+        }
         readWords();
         deletefromMainWords(SettingsModel.prevdeletingwords);
 
@@ -94,22 +105,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
+       // System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
         //readWords();
 
         //generate 5 random words just to test the file system
         //to access device files, go to view > tool windows > device file explorer
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
     }
-    public static void addtoMainWords(Word word){
-        for(LoadedImage i : word.getImages()) {
-            int n = 0;
-            while(new File(i.reference).exists()) {
-                n++;
-                i.reference = word.toString() + n;
 
-            }
-            File imageFile = new File(i.reference);
+    public static void addtoMainWords(Word word) {
+        for (LoadedImage i : word.getImages()) {
+            int n = 0;
+            while (new File(i.reference).exists()) {
+                n++;
+                i.reference = mainPath + appFolder + imageFolder + "/" + word.toString() + n;
 
             }
         }
@@ -117,8 +126,8 @@ public class MainActivity extends AppCompatActivity {
         words.add(word);
     }
 
-    public void deletefromMainWords(ArrayList<Word> wordobjects){
-        for(Word toDelete : wordobjects) {
+    public void deletefromMainWords(ArrayList<Word> wordobjects) {
+        for (Word toDelete : wordobjects) {
             words.remove(toDelete);
         }
         writeData();
@@ -158,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             interactionsFilePath = folder.toString() + "/" + "interactions.csv";
             if (!new File(interactionsFilePath).exists() || FLUSH_INTERACTIONS) {
                 File interactionsFile = new File(interactionsFilePath);
-                if(interactionsFile.exists()) {
+                if (interactionsFile.exists()) {
                     interactionsFile.delete();
                 }
                 interactionsFile.createNewFile();
@@ -197,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
         String interactionKeys = s.substring(0, s.indexOf(","));
         System.out.println("Interaction Keys: " + interactionKeys);
         s = s.substring(s.indexOf(",") + 1);
-        String tags = s.substring(0, s.indexOf(","));;
+        String tags = s.substring(0, s.indexOf(","));
+        ;
         System.out.println("TAGS: " + tags);
         s = s.substring(s.indexOf(",") + 1);
         String questions = s;
@@ -212,12 +222,12 @@ public class MainActivity extends AppCompatActivity {
         word.setQuestions(parseQuestions(questions));
 
         boolean addWord = true;
-        for(Word checkedWord : words) {
-            if(checkedWord.toString().equals(word.toString())) {
+        for (Word checkedWord : words) {
+            if (checkedWord.toString().equals(word.toString())) {
                 addWord = false;
             }
         }
-        if(addWord) {
+        if (addWord) {
             words.add(word);
         }
     }
@@ -294,7 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
                 int keyInt = Integer.parseInt(key);
                 //does the checking to make sure only the interactions for this word are parsed
-                if(keysToMatch.contains(keyInt)) {
+                if (keysToMatch.contains(keyInt)) {
                     interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
                     Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
                     interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
@@ -455,7 +465,7 @@ public class MainActivity extends AppCompatActivity {
         }
         //System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
 
-        File folder = new File(getFilesDir()
+        File folder = new File(mainPath
                 + MainActivity.appFolder);
         //System.out.println("FILE: " + folder.toString());
         //System.out.println("IN WRITE DATA METHOD");
@@ -498,7 +508,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //makes sure each interact
     private void generateInteractionKeys() {
         int n = 0;
         for (Word w : words) {
@@ -554,9 +563,6 @@ public class MainActivity extends AppCompatActivity {
 
         return s;
     }
-
-
-
 
 
 }
