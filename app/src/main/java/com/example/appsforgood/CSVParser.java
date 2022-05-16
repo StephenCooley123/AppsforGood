@@ -32,20 +32,7 @@ public class CSVParser {
     private static int EXTERNAL_STORAGE_PERMISSION_CODE = 23;
 
 
-    public static String wordsToList(List<Object> objects) {
-        if (objects.size() == 0) {
-            return "";
-        }
-        String str = "";
-        for (Object o : objects) {
-            str = str + o.toString() + listSeparatorChar;
-        }
-        str = str.substring(0, str.length() - 1);
-        str = str + csvSeparatorChar;
-        return str;
-
-    }
-
+    //reads a file and returns it line by line
     public static ArrayList<String> readFile(String filePath, Context c){
         try {
             BufferedReader reader = new BufferedReader(new FileReader(new File(filePath)));
@@ -65,6 +52,7 @@ public class CSVParser {
 
     }
 
+    //saves the lines to a file at filepath. Always throw in "this" for activity.
     public static void savePublicly(ArrayList<String> lines, String filePath, Activity activity) {
         // Requesting Permission to access External Storage
         ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -73,6 +61,7 @@ public class CSVParser {
 
         // Storing the data in file with name as geeksData.txt
         File file = new File(filePath);
+
         String entireFile = "";
         for (String s : lines) {
             entireFile += s;
@@ -81,6 +70,7 @@ public class CSVParser {
         writeTextData(file, entireFile);
     }
 
+    //helper method for savePublicly
     public static void writeFile(ArrayList<String> lines, String filePath) {
         try {
             File f = new File(filePath);
@@ -100,6 +90,7 @@ public class CSVParser {
         }
     }
 
+    //more helper methods to allow file writing
     private static void writeTextData(File file, String data) {
         FileOutputStream fileOutputStream = null;
         try {

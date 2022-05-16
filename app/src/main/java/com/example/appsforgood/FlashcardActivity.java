@@ -72,8 +72,8 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    speaker.setLanguage(Locale.UK);
-                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.setLanguage(Locale.US);
+                    speaker.speak("Pick the" + word, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
         });
@@ -201,10 +201,10 @@ public class FlashcardActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     speaker.setLanguage(Locale.UK);
-                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.speak("This is a" +word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
-            }, 700);
+            }, 1000);
 
 
             handler.postDelayed(new Runnable() {
@@ -212,7 +212,7 @@ public class FlashcardActivity extends AppCompatActivity {
                 public void run() {
                     changePage(v);
                 }
-            }, 1500);
+            }, 2000);
 
         }
     }
@@ -248,10 +248,10 @@ public class FlashcardActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     speaker.setLanguage(Locale.UK);
-                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.speak("This is a" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
-            }, 700);
+            }, 1000);
 
 
             handler.postDelayed(new Runnable() {
@@ -259,7 +259,7 @@ public class FlashcardActivity extends AppCompatActivity {
         public void run() {
             changePage(v);
         }
-    }, 1500);
+    }, 2000);
 
 }
     }
@@ -297,10 +297,10 @@ public class FlashcardActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     speaker.setLanguage(Locale.UK);
-                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.speak("This is a" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
-            }, 700);
+            }, 1000);
 
 
             handler.postDelayed(new Runnable() {
@@ -308,7 +308,7 @@ public class FlashcardActivity extends AppCompatActivity {
                 public void run() {
                     changePage(v);
                 }
-            }, 1500);
+            }, 2000);
 
         }
     }

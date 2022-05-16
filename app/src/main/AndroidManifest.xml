@@ -25,9 +25,6 @@
         <activity
             android:name=".WordPage"
             android:exported="false" />
-        <activity
-            android:name=".HomePage"
-            android:exported="false" />
 
 
         <activity
