@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
+        deletefromMainWords(SettingsModel.prevdeletingwords);
         super.onStart();
         mainPath = getFilesDir().toString();
 

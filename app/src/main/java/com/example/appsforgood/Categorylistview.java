@@ -54,7 +54,9 @@ public class Categorylistview extends AppCompatActivity {
 
     }
     public void selectedTag(String tag) {
-    selectedtags.add(tag);
+    if(!selectedtags.contains(tag)){
+        selectedtags.add(tag);
+    }
     }
 
     public void returnClick(View v){

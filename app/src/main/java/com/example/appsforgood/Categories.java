@@ -62,4 +62,9 @@ ArrayAdapter<String> arrayAdapter;
         startActivity(intent);
     }
 
+    public void toHome(View v){
+        Intent intent =new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
+
 }

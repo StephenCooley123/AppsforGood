@@ -52,5 +52,5 @@
     <string name="name">Category Name</string>
     <string name="SelectC">Select Category:</string>
     <string name="noCat">No Category</string>
-
+    <string name="Rt">Return Home</string>
 </resources>

@@ -4,18 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:orientation="vertical"
-    android:background="#27FFEB3B">
+    android:background="#27FFEB3B"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/Words"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_gravity="center_horizontal"
-        app:autoSizeMaxTextSize="60sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"
         android:elegantTextHeight="true"
         android:fontFamily="monospace"
         android:gravity="center|center_horizontal"
@@ -24,7 +20,11 @@
         android:text="@string/Categories"
         android:textColor="#0097A7"
         android:textColorHint="#00BCD4"
-        android:textColorLink="#00BCD4" />
+        android:textColorLink="#00BCD4"
+        app:autoSizeMaxTextSize="60sp"
+        app:autoSizeMinTextSize="12sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform" />
 
     <ImageButton
         android:id="@+id/AddVocabWord"
@@ -32,6 +32,15 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/addword"
         app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="60sp"
+        android:onClick="toHome"
+        android:text="@string/Rt"
+        android:textAllCaps="true" />
 
     <ListView
         android:id="@+id/alistviewWords"
