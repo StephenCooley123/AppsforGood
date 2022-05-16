@@ -243,6 +243,11 @@ public class FlashcardActivity extends AppCompatActivity {
             startActivity(intent2);
         }
         wordList.clear();
+        try {
+            Thread.sleep(100);
+        } catch(InterruptedException e) {
+            e.printStackTrace();
+        }
         start();
 
     }
