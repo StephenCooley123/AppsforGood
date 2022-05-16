@@ -37,7 +37,7 @@ public class choosecategory extends AppCompatActivity {
         });
     }
 
-    public void normalChange(){
+    public void normalChange(View v){
         Intent intent = new Intent(this,FlashcardActivity.class);
         intent.putExtra("condition",condition);
         intent.putExtra("edit",false);

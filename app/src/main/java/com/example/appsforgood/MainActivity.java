@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         mainPath = getFilesDir().toString();
 
-        if(comingFromAddedWord) {
-            System.out.println("WORDS TO BE WRITTEN: "  + words);
+        if (comingFromAddedWord) {
+            System.out.println("WORDS TO BE WRITTEN: " + words);
             writeData();
             comingFromAddedWord = false;
         }
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
+        // System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
         //readWords();
 
         //generate 5 random words just to test the file system
@@ -181,8 +181,10 @@ public class MainActivity extends AppCompatActivity {
             unparsedWords.remove(0);
 
             for (String s : unparsedWords) {
-                //System.out.println("WORDS LINE: " + s);
-                parseWord(s);
+                if (!s.equals("")) {
+                    //System.out.println("WORDS LINE: " + s);
+                    parseWord(s);
+                }
             }
 
             //System.out.println("Wrote Directories");
@@ -194,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     //parses a line from the CSV into a word object and adds it to the list
     private void parseWord(String s) {
+        //System.out.println("Parsing Word: " + s);
         System.out.println("WORD LINE: " + s);
         String w = s.substring(0, s.indexOf(","));
         System.out.println("WORD: " + w);
