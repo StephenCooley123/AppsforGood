@@ -22,7 +22,6 @@ public class AddWord extends AppCompatActivity implements View.OnClickListener {
 Word W;
 private static final int RESULT_LOAD_IMAGE=1;
 ImageButton uploadimage;
-String word;
 boolean isword;
 ArrayList<LoadedImage> images = new ArrayList<LoadedImage>();
 ArrayList<String> questions = new ArrayList<String>();
@@ -48,7 +47,7 @@ ArrayList<String> tags= new ArrayList<String>();
         String tag1 =cat1.getText().toString();
         String tag2 =cat2.getText().toString();
         String tag3 =cat3.getText().toString();
-        word = theword.getText().toString();
+        String word = theword.getText().toString();
         String ques1 = q1.getText().toString();
         String ques2 = q2.getText().toString();
 

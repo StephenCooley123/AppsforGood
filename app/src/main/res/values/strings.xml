@@ -50,6 +50,7 @@
     <string name="done">Done</string>
     <string name="tag">A tag</string>
     <string name="name">Category Name</string>
-
+    <string name="SelectC">Select Category:</string>
+    <string name="noCat">No Category</string>
 
 </resources>

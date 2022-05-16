@@ -69,8 +69,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         readWords();
-        deletefromMainWords(SettingsModel.prevdeletingwords);
-
         //writeData();
     }
 
@@ -390,13 +388,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void Description(View v) {
-        Intent intent = new Intent(this, FlashcardActivity.class);
+        Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", false);
         startActivity(intent);
     }
 
     public void nextWord(View v) {
-        Intent intent = new Intent(this, FlashcardActivity.class);
+        Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", true);
         startActivity(intent);
     }

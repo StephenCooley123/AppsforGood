@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppsForGood">
         <activity
+            android:name=".choosecategory"
+            android:exported="false" />
+        <activity
             android:name=".Categorylistview"
             android:exported="false" />
         <activity

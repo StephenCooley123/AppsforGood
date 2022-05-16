@@ -17,7 +17,7 @@ import org.w3c.dom.Text;
 
 public class FlashcardActivity extends AppCompatActivity {
 
-    List<Word> words = MainActivity.getWords();
+    List<Word> words;
 
     //Word wordTop;
     //Word wordMid;
@@ -45,6 +45,23 @@ public class FlashcardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        boolean edit=intent.getBooleanExtra("edit",false);
+        if(edit){
+            ArrayList<String> tags =intent.getStringArrayListExtra("tags");
+        for(Word n: MainActivity.words){
+            ArrayList<String> wtags =n.getTags();
+            for(String s: tags){
+                if(wtags.contains(s)){
+                    words.add(n);
+                }
+            }
+
+        }}
+        else{
+            words=MainActivity.getWords();
+        }
+
         //Log.d("stephen:", "oncreate");
         //sets up the 3 buttons
         setContentView(R.layout.activity_flashcard);
