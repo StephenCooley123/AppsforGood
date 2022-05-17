@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean comingFromAddedWord = false;
 
     //this forces a rebuild of the file system
-    final boolean FORCE_FILESYSTEM_REBUILD = true;
+    final boolean FORCE_FILESYSTEM_REBUILD = false;
 
     //this flushes the existing interactions.
     final boolean FLUSH_INTERACTIONS = false;

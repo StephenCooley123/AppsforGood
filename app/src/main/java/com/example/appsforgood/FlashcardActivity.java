@@ -44,12 +44,11 @@ public class FlashcardActivity extends AppCompatActivity {
     int correctButton;// determines the image view with the correct picture
     long startTime;
 
-    GifImageView gifView;
+    GifImageView gifView; //image view for GIFS
     ImageView imageView0;
     ImageView imageView1;
     boolean correctPress;
     ImageView imageView2;
-
 
 
     ArrayList<String> touchedWords = new ArrayList<String>();
@@ -107,9 +106,9 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ENGLISH);
                     //speaker.speak("Pick the" + word, TextToSpeech.QUEUE_FLUSH, null);
-                    if(!blockSpeech) {
+                    if (!blockSpeech) {
                         speaker.speak("Pick the" + word, TextToSpeech.QUEUE_FLUSH, null);
                     }
                 }
@@ -119,6 +118,7 @@ public class FlashcardActivity extends AppCompatActivity {
         startTime = System.currentTimeMillis();
         setContentView(R.layout.activity_flashcard);
 
+        // sets the text in the textView which displays the current word
         TextView wordView = (TextView) findViewById(R.id.newword);
         wordView.setText(word.toString());
 
@@ -144,28 +144,36 @@ public class FlashcardActivity extends AppCompatActivity {
     }
 
 
-    //algorithm for determining the next word in the sequence. Picks one which hasn't been seen first, or
-    // if they all have been seen, one which has had the most interaction time.
-    // This can cause a problem though, but I am not sure what is going on tbh.
+    //runs through all of the words to make sure that each one is tried. After that:
+    // 3/4 of the time, it picks a random word
+    //1/4 of the time, it picks the word with the longest average time.
     private Word getNextWord() {
+        System.out.println("Getting Next Word");
         for (Word w : words) {
             if (w.getInteractions().size() == 0) {
                 return w;
             }
         }
-        Word longestTime = words.get(0);
-        Long longestDuration = Long.MAX_VALUE;
-        for (Word w : words) {
-            long wordTime = 0;
-            for (Interaction i : w.getInteractions()) {
-                wordTime += i.getDuration();
-            }
-            if (wordTime > longestDuration) {
-                longestDuration = wordTime;
-                longestTime = w;
+        Word pickedWord = words.get(0);
+        double pickLongestWordProbability = 0.25;
+        if (Math.random() > pickLongestWordProbability) {
+            Long longestAverage = (long) 0;
+
+            for (Word w : words) {
+                long avgWordTime = 0;
+
+                for (Interaction i : w.getInteractions()) {
+                    avgWordTime += i.getDuration();
+                }
+                avgWordTime /= (double) w.getInteractions().size();
+
+                if (avgWordTime > longestAverage) {
+                    longestAverage = avgWordTime;
+                    pickedWord = w;
+                }
             }
         }
-        return longestTime;
+        return pickedWord;
     }
 
     //picks the other words to fill the other imageviews
@@ -225,18 +233,18 @@ public class FlashcardActivity extends AppCompatActivity {
 
         if ((correctButton == 0 || ALLOW_ALL_ANSWERS_FOR_DEBUG) && correctPress == true) {
             correctPress = false;
+            //plays a ding sound effect
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
+            confetti(gifView);  //calls the confetti helper function
+            fireworks(gifView);  //firework helper function
 
-            confetti(gifView);
-            fireworks(gifView);
-
-            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
-            imageView1.setAnimation(fadeout);
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out); //sets the fadeout animation
+            imageView1.setAnimation(fadeout); //sets the fadeout animation for the wrong answers
             imageView2.setAnimation(fadeout);
 
-
+            //delay and sets the fadeout answers to transparent
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -246,16 +254,17 @@ public class FlashcardActivity extends AppCompatActivity {
 
                 }
             }, 450);
+            //delay and plays the text to speech of the word
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ENGLISH);
                     speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
 
-
+            //delay and changes the page
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -276,18 +285,19 @@ public class FlashcardActivity extends AppCompatActivity {
 
         if ((correctButton == 1 || ALLOW_ALL_ANSWERS_FOR_DEBUG) && correctPress == true) {
             correctPress = false;
-
+            //plays a ding sound effect
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
-            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
 
+            confetti(gifView); //calls the confetti helper function
+            fireworks(gifView); //calls the confetti helper function
 
-            confetti(gifView);
-            fireworks(gifView);
-            imageView0.setAnimation(fadeout);
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out); //sets the fadeout animation
+            imageView0.setAnimation(fadeout); //sets the fadeout animation for wrong answers
             imageView2.setAnimation(fadeout);
 
+            //delay and sets the fadeout answers to transparent
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -296,16 +306,17 @@ public class FlashcardActivity extends AppCompatActivity {
                     imageView2.setAlpha(0.0F);
                 }
             }, 450);
+            //delays and plays the text to speech of the word
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ENGLISH);
                     speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
 
-
+            //delays and changes the page
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -327,18 +338,20 @@ public class FlashcardActivity extends AppCompatActivity {
 
         if ((correctButton == 2 || ALLOW_ALL_ANSWERS_FOR_DEBUG) && correctPress == true) {
             correctPress = false;
-
+            //plays the ding sound effect
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer = MediaPlayer.create(this, R.raw.ding);
             mediaPlayer.start();
-            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
 
-            confetti(gifView);
-            fireworks(gifView);
-            imageView0.setAnimation(fadeout);
+            Animation fadeout = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out); //sets the fadeout animation
+
+            imageView0.setAnimation(fadeout); //sets the fadeout animation for the wrong answers
             imageView1.setAnimation(fadeout);
 
+            confetti(gifView); //calls the confetti helper function
+            fireworks(gifView);  //calls the fireworks helper function
 
+            //delay and sets the fadeout answers to transparent
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -347,16 +360,17 @@ public class FlashcardActivity extends AppCompatActivity {
                     imageView1.setAlpha(0.0F);
                 }
             }, 450);
+            //delay and plays the text to speech of the word
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ENGLISH);
                     speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
 
-
+            //delay and changes the page
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -396,12 +410,21 @@ public class FlashcardActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * sets the confetti gif
+     *
+     * @param v
+     */
     public void confetti(GifImageView v) {
         v = findViewById(R.id.confettiGif);
-
         v.setImageURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.confetti));
     }
 
+    /**
+     * sets the fireworks gif
+     *
+     * @param v
+     */
     public void fireworks(GifImageView v) {
         v = findViewById(R.id.fireworksGif);
 

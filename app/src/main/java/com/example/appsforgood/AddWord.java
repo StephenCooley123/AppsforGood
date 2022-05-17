@@ -56,9 +56,8 @@ public class AddWord extends AppCompatActivity implements View.OnClickListener {
 
     }
 
+    //When the Add Button is clicked it sends get the following strings from the user and creates a word object
     public void EnterClicked(View v) {
-
-
         String tag1 = cat1.getText().toString();
         String tag2 = cat2.getText().toString();
         String tag3 = cat3.getText().toString();
@@ -123,13 +122,13 @@ public class AddWord extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    @Override
+    @Override//Access external content from the device.
     public void onClick(View view) {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
     }
 
-    @Override
+    @Override//Gets the selected Uri, converts it to a bitmap, and forms a loaded image object
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);

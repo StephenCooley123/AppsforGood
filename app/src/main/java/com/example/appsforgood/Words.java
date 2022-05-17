@@ -50,33 +50,21 @@ public class Words extends AppCompatActivity {
         }
 
     public void toDeleteWord(String deletedWord, View v){
-            //Adds the selected word to the words that will be deleted unless there are less than three words with the same tag.
-        Word rightword;
+            //Adds the selected word to the words that will be deleted unless there are less than three words.
+
         for(Word n: MainActivity.getWords()){
             String wordn=n.toString();
             if(wordn.equals(deletedWord)){
-                int times=0;
-                rightword=n;
-                for(String tag:n.getTags()){
-                    existingwords.remove(n);
-                    for(Word b:existingwords){
-                        if(b.getTags().contains(tag)){
-                            times++;
-                        }
-                    }
-                }
-                if(times>3||times==3) {
-                    v.setBackgroundColor(Color.parseColor("#ff0000"));
-                    deletingwords.add(rightword);
-                }
-                else{
-                    existingwords.add(rightword);
-                }
+                existingwords.remove(n);
+               if(existingwords.size()>=3){
+                   deletingwords.add(n);
+                   v.setBackgroundColor(Color.parseColor("#ff0000"));
+               }
             }
         }
     }
         public void toAddWord(View v){
-                //Sneds the user to the addWords page
+                //Sedns the user to the addWords page
             Intent intent = new Intent(this, AddWord.class);
             startActivity(intent);
         }
