@@ -59,13 +59,16 @@ public class MainActivity extends AppCompatActivity {
     //more words will be added in to be packaged with the app by default as well by editing DefaultWords.csv and adding the associated images to the assets folder.
     static List<Word> words = new ArrayList<Word>();
 
+    static boolean comingFromAddedWord = false;
+
     //this forces a rebuild of the file system
-    final boolean FORCE_FILESYSTEM_REBUILD = false;
+    final boolean FORCE_FILESYSTEM_REBUILD = true;
 
     //this flushes the existing interactions.
     final boolean FLUSH_INTERACTIONS = false;
 
     //keys for locations of files and folders
+    public static String mainPath = "";
     public static final String appFolder = "/VocabliData";
     public static final String imageFolder = "/Images";
     public static final String assetsReferenceKey = "/assets/";
@@ -76,15 +79,23 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        deletefromMainWords(SettingsModel.prevdeletingwords);
         super.onStart();
+        mainPath = getFilesDir().toString();
+
+        if (comingFromAddedWord) {
+            System.out.println("WORDS TO BE WRITTEN: " + words);
+            writeData();
+            comingFromAddedWord = false;
+        }
         readWords();
-        //generateTestWord(5);
         //writeData();
         int num = 0;
         for (Word w : words) {
             num += w.getInteractions().size();
         }
         System.out.println("STARTING NUM OF INTERACTIONS: " + num);
+
     }
 
 
@@ -92,13 +103,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // System.out.println(getFilesDir() + MainActivity.appFolder + MainActivity.imageFolder + "/" + "test.txt");
         //readWords();
 
         //generate 5 random words just to test the file system
         //to access device files, go to view > tool windows > device file explorer
         //folder with data is data > user > 0 > com.example.appsforgood > files > VocabliData
+    }
 
+    public static void addtoMainWords(Word word) {
+        for (LoadedImage i : word.getImages()) {
+            int n = 0;
+            while (new File(i.reference).exists()) {
+                n++;
+                i.reference = mainPath + appFolder + imageFolder + "/" + word.toString() + n;
 
+            }
+        }
+
+        words.add(word);
+    }
+
+    public void deletefromMainWords(ArrayList<Word> wordobjects) {
+        for (Word toDelete : wordobjects) {
+            words.remove(toDelete);
+        }
+        writeData();
     }
 
     /**
@@ -135,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             interactionsFilePath = folder.toString() + "/" + "interactions.csv";
             if (!new File(interactionsFilePath).exists() || FLUSH_INTERACTIONS) {
                 File interactionsFile = new File(interactionsFilePath);
-                if(interactionsFile.exists()) {
+                if (interactionsFile.exists()) {
                     interactionsFile.delete();
                 }
                 interactionsFile.createNewFile();
@@ -151,8 +181,10 @@ public class MainActivity extends AppCompatActivity {
             unparsedWords.remove(0);
 
             for (String s : unparsedWords) {
-                //System.out.println("WORDS LINE: " + s);
-                parseWord(s);
+                if (!s.equals("")) {
+                    //System.out.println("WORDS LINE: " + s);
+                    parseWord(s);
+                }
             }
 
             //System.out.println("Wrote Directories");
@@ -164,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     //parses a line from the CSV into a word object and adds it to the list
     private void parseWord(String s) {
+        //System.out.println("Parsing Word: " + s);
         System.out.println("WORD LINE: " + s);
         String w = s.substring(0, s.indexOf(","));
         System.out.println("WORD: " + w);
@@ -174,7 +207,8 @@ public class MainActivity extends AppCompatActivity {
         String interactionKeys = s.substring(0, s.indexOf(","));
         System.out.println("Interaction Keys: " + interactionKeys);
         s = s.substring(s.indexOf(",") + 1);
-        String tags = s.substring(0, s.indexOf(","));;
+        String tags = s.substring(0, s.indexOf(","));
+        ;
         System.out.println("TAGS: " + tags);
         s = s.substring(s.indexOf(",") + 1);
         String questions = s;
@@ -189,12 +223,12 @@ public class MainActivity extends AppCompatActivity {
         word.setQuestions(parseQuestions(questions));
 
         boolean addWord = true;
-        for(Word checkedWord : words) {
-            if(checkedWord.toString().equals(word.toString())) {
+        for (Word checkedWord : words) {
+            if (checkedWord.toString().equals(word.toString())) {
                 addWord = false;
             }
         }
-        if(addWord) {
+        if (addWord) {
             words.add(word);
         }
     }
@@ -271,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                 String key = interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar));
                 int keyInt = Integer.parseInt(key);
                 //does the checking to make sure only the interactions for this word are parsed
-                if(keysToMatch.contains(keyInt)) {
+                if (keysToMatch.contains(keyInt)) {
                     interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
                     Long time = Long.parseLong(interactionLine.substring(0, interactionLine.indexOf(CSVParser.csvSeparatorChar)));
                     interactionLine = interactionLine.substring(interactionLine.indexOf(CSVParser.csvSeparatorChar) + 1);
@@ -395,18 +429,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //starts guided mode
     public void Description(View v) {
         Intent intent = new Intent(this, FlashcardActivity.class);
+        //Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", false);
         startActivity(intent);
     }
 
+    //starts solo mode
     public void nextWord(View v) {
         Intent intent = new Intent(this, FlashcardActivity.class);
+        //Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", true);
         startActivity(intent);
     }
 
+    //opens settings
     public void Parental(View v) {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
@@ -423,14 +462,113 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
-    private Bitmap getImageFromAppData(String name) {
+    //writes the data to the disk
+    private void writeData() {
+        //System.out.println("WRITING DATA IN FLASHCARDACTIVITY");
+        int numInteractions = 0;
+        for (Word w : words) {
+            numInteractions += w.getInteractions().size();
+        }
+        //System.out.println("THERE ARE " + numInteractions + " INTERACTIONS");
+
+        File folder = new File(mainPath
+                + MainActivity.appFolder);
+        //System.out.println("FILE: " + folder.toString());
+        //System.out.println("IN WRITE DATA METHOD");
 
 
-        //System.out.println("Getting Image Asset");
-        return BitmapFactory.decodeFile(name);
+        if (!folder.exists()) {
+            folder.mkdir();
+            //System.out.println("Made the directory");
+            System.out.println(folder.toString());
+        }
+        System.out.println("FOLDER: " + folder.toString());
+
+        final String wordsFilePath = folder.toString() + "/" + "words.csv";
+        final String interactionsFilePath = folder.toString() + "/" + "interactions.csv";
+
+
+        generateInteractionKeys();
+
+        ArrayList<String> wordsLines = new ArrayList<String>();
+
+        wordsLines.add("Word" + CSVParser.csvSeparatorChar + "Images" + CSVParser.csvSeparatorChar + "InteractionKeys" + CSVParser.csvSeparatorChar + "Tags" + CSVParser.csvSeparatorChar + "Questions" + '\n');
+
+        for (Word w : words) {
+            wordsLines.add(writeWord(w));
+        }
+
+        ArrayList<String> interactionsLines = new ArrayList<String>();
+        interactionsLines.add("Key" + CSVParser.csvSeparatorChar + "Time" + CSVParser.csvSeparatorChar + "SelectedWords" + '\n');
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                interactionsLines.add(i.toString() + "\n");
+            }
+        }
+
+        CSVParser.savePublicly(wordsLines, wordsFilePath, this);
+        //CSVParser.savePublicly(interactionsLines, interactionsFilePath, this);
+
+        CSVParser.writeFile(interactionsLines, interactionsFilePath);
+
+
     }
 
+    private void generateInteractionKeys() {
+        int n = 0;
+        for (Word w : words) {
+            for (Interaction i : w.getInteractions()) {
+                i.setKey(n);
+                n++;
+            }
+        }
+    }
 
+    private String writeWord(Word w) {
+        String s = w.toString() + CSVParser.csvSeparatorChar;
+
+        //write images
+        if (w.getImages().size() > 0) {
+            for (LoadedImage l : w.getImages()) {
+                s = s + l.toString() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write interaction keys
+        if (w.getInteractions().size() > 0) {
+            for (Interaction i : w.getInteractions()) {
+                s = s + i.getKey() + CSVParser.listSeparatorChar;
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write tags
+        if (w.getTags().size() > 0) {
+            for (String tag : w.getTags()) {
+                s = s + tag + CSVParser.listSeparatorChar;
+                System.out.println(tag);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+        s = s + CSVParser.csvSeparatorChar;
+
+        //write questions
+        if (w.getQuestions().size() > 0) {
+            for (String question : w.getQuestions()) {
+                s = s + question + CSVParser.listSeparatorChar;
+                System.out.println(question);
+            }
+            s = s.substring(0, s.length() - 1);
+        }
+
+
+        s = s + '\n';
+
+        return s;
+    }
 
 
 }

@@ -29,6 +29,12 @@ public class Word {
         word = str;
     }
 
+    public Word(String w,ArrayList<String> qs,ArrayList<String> tgs){
+        word=w;
+        questions=qs;
+        tags=tgs;
+    }
+
     public String getWord() {
         return word;
 
@@ -83,7 +89,6 @@ public class Word {
         images = wordImages;
     }
     public LoadedImage RandomImage(){
-
         return images.get((int) (Math.random()*images.size()));
     }
 
@@ -98,7 +103,6 @@ public class Word {
         }
 
     }
-
     public void setQuestions(ArrayList<String> questions) {
         this.questions = questions;
     }

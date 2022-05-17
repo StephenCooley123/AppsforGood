@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.appsforgood" >
+    package="com.example.appsforgood">
 
-    <uses-permission android:name="android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION"/>
-    <uses-permission android:name="android.permission.MANAGE_MEDIA"/>
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.settings.MANAGE_APP_ALL_FILES_ACCESS_PERMISSION" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permisssion.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -16,23 +17,35 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppsForGood">
         <activity
+            android:name=".choosecategory"
+            android:exported="false" />
+        <activity
+            android:name=".Categorylistview"
+            android:exported="false" />
+        <activity
+            android:name=".tagsincategory"
+            android:exported="false" />
+        <activity
+            android:name=".Words"
+            android:exported="false" />
+        <activity
+            android:name=".Categories"
+            android:exported="false" />
+        <activity
             android:name=".Settings"
             android:exported="false" />
         <activity
-            android:name=".ParentalSettings"
+            android:name=".AddWord"
             android:exported="false" />
         <activity
             android:name=".WordPage"
             android:exported="false" />
-
-
         <activity
             android:name=".FlashcardActivity"
             android:exported="false" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             android:theme="@style/Theme.AppsForGood" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

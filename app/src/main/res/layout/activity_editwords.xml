@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical"
+    android:background="#27FFEB3B">
+
+    <TextView
+        android:id="@+id/Words"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_gravity="center_horizontal"
+        app:autoSizeMaxTextSize="80sp"
+        app:autoSizeMinTextSize="40sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform"
+        android:elegantTextHeight="true"
+        android:fontFamily="monospace"
+        android:gravity="center|center_horizontal"
+        android:maxHeight="200sp"
+        android:minHeight="10sp"
+        android:text="@string/Words"
+        android:textColor="#0097A7"
+        android:textColorHint="#00BCD4"
+        android:textColorLink="#00BCD4" />
+
+    <ImageButton
+        android:id="@+id/AddVocabWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="toAddWord"
+        android:minHeight="70dp"
+        android:contentDescription="@string/addword"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <ImageButton
+        android:id="@+id/DeleteAll"
+        android:onClick="DeleteAllWords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/DeleteWord"
+        android:minHeight="70dp"
+        app:srcCompat="@android:drawable/stat_notify_more" />
+
+    <ListView
+        android:id="@+id/alistviewWords"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/material_blue_grey_800"
+        android:dividerHeight="2dp"
+        android:listSelector="#FF00BCD4">
+
+    </ListView>
+
+</LinearLayout>

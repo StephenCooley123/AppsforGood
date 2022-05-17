@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:orientation="vertical"
+    android:background="#27FFEB3B">
+
+    <TextView
+        android:id="@+id/Tags"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_gravity="center_horizontal"
+        android:elegantTextHeight="true"
+        android:fontFamily="monospace"
+        android:gravity="center|center_horizontal"
+        android:maxHeight="200sp"
+        android:minHeight="10sp"
+        android:text="@string/Tags"
+        android:textColor="#0097A7"
+        android:textColorHint="#00BCD4"
+        android:textColorLink="#00BCD4"
+        app:autoSizeMaxTextSize="80sp"
+        app:autoSizeMinTextSize="40sp"
+        app:autoSizeStepGranularity="2sp"
+        app:autoSizeTextType="uniform" />
+
+    <EditText
+        android:id="@+id/cn"
+        android:layout_width="match_parent"
+        android:layout_height="77dp"
+        android:textSize="25sp"
+        android:ems="10"
+        android:hint="@string/name"
+        android:inputType="textPersonName" />
+
+    <ImageButton
+        android:id="@+id/Tagsdone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/addword"
+        android:minHeight="70dp"
+        android:onClick="returnClick"
+        app:srcCompat="?attr/actionModeCloseDrawable" />
+
+    <ListView
+        android:id="@+id/alistviewtags"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/material_blue_grey_800"
+        android:dividerHeight="2dp">
+
+    </ListView>
+
+</LinearLayout>
