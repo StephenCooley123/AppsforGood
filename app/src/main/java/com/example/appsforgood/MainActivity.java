@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     static boolean comingFromAddedWord = false;
 
     //this forces a rebuild of the file system
-    final boolean FORCE_FILESYSTEM_REBUILD = false;
+    final boolean FORCE_FILESYSTEM_REBUILD = true;
 
     //this flushes the existing interactions.
     final boolean FLUSH_INTERACTIONS = false;
@@ -429,18 +429,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    //starts guided mode
     public void Description(View v) {
-        Intent intent = new Intent(this, choosecategory.class);
+        Intent intent = new Intent(this, FlashcardActivity.class);
+        //Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", false);
         startActivity(intent);
     }
 
+    //starts solo mode
     public void nextWord(View v) {
-        Intent intent = new Intent(this, choosecategory.class);
+        Intent intent = new Intent(this, FlashcardActivity.class);
+        //Intent intent = new Intent(this, choosecategory.class);
         intent.putExtra("condition", true);
         startActivity(intent);
     }
 
+    //opens settings
     public void Parental(View v) {
         Intent intent = new Intent(this, Settings.class);
         startActivity(intent);
