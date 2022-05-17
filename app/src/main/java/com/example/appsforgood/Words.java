@@ -23,12 +23,17 @@ public class Words extends AppCompatActivity {
         ListView alistviewWords;
         ArrayList<String> words = new ArrayList<String>();
        ArrayList<Word> deletingwords =new ArrayList<Word>();
+       ArrayList<Word> existingwords = new ArrayList<Word>();
 
 
         @Override
+        //Forms the list view and reads the position of the words to be deleted
         protected void onCreate(Bundle savedInstanceState) {
             for (Word n : MainActivity.getWords()) {
                 words.add(n.getWord());
+                if(!SettingsModel.prevdeletingwords.contains(n)){
+                    existingwords.add(n);
+                }
             }
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_editwords);
@@ -39,26 +44,45 @@ public class Words extends AppCompatActivity {
             alistviewWords.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    toDeleteWord(words.get(position));
-                    view.setBackgroundColor(Color.parseColor("#ff0000"));
+                    toDeleteWord(words.get(position),view);
                 }
             });
         }
 
-    public void toDeleteWord(String deletedWord){
+    public void toDeleteWord(String deletedWord, View v){
+            //Adds the selected word to the words that will be deleted unless there are less than three words with the same tag.
+        Word rightword;
         for(Word n: MainActivity.getWords()){
             String wordn=n.toString();
             if(wordn.equals(deletedWord)){
-                deletingwords.add(n);
+                int times=0;
+                rightword=n;
+                for(String tag:n.getTags()){
+                    existingwords.remove(n);
+                    for(Word b:existingwords){
+                        if(b.getTags().contains(tag)){
+                            times++;
+                        }
+                    }
+                }
+                if(times>3||times==3) {
+                    v.setBackgroundColor(Color.parseColor("#ff0000"));
+                    deletingwords.add(rightword);
+                }
+                else{
+                    existingwords.add(rightword);
+                }
             }
         }
     }
         public void toAddWord(View v){
+                //Sneds the user to the addWords page
             Intent intent = new Intent(this, AddWord.class);
             startActivity(intent);
         }
 
         public void DeleteAllWords(View v){
+                //Adds new words from deletingwords to the words in prevdeleting words and rewrites the words in Main Activity
             for(Word n:deletingwords){
                 if(!SettingsModel.prevdeletingwords.contains(n)){
                     SettingsModel.prevdeletingwords.add(n);

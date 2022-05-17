@@ -65,25 +65,6 @@
         app:layout_constraintStart_toStartOf="@+id/sideten"
         app:layout_constraintTop_toTopOf="@+id/ten" />
 
-    <Button
-        android:id="@+id/ViewProgress"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:fontFamily="monospace"
-        android:text="@string/Stats"
-        android:textColor="#3F51B5"
-        android:textSize="30sp"
-        app:autoSizeMaxTextSize="30sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="2sp"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/ninety"
-        app:layout_constraintEnd_toStartOf="@+id/sideninety"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/sideten"
-        app:layout_constraintTop_toTopOf="@+id/seventy"
-        app:layout_constraintVertical_bias="0.75" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/sideten"
         android:layout_width="wrap_content"
@@ -105,47 +86,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="235dp"
-        app:layout_constraintGuide_percent=".4" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/seventy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="418dp"
-        app:layout_constraintGuide_percent=".7" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/ninety"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_begin="537dp"
-        app:layout_constraintGuide_percent=".9" />
+        app:layout_constraintGuide_percent="0.61" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/sixty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="369dp"
-        app:layout_constraintGuide_percent=".6" />
+        app:layout_constraintGuide_percent="0.85" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/ten"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="55dp"
-        app:layout_constraintGuide_percent=".1" />
+        app:layout_constraintGuide_percent="0.29" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/thirty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="254dp"
-        app:layout_constraintGuide_percent=".3" />
+        app:layout_constraintGuide_percent="0.53" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

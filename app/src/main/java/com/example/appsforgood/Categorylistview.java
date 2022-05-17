@@ -43,6 +43,14 @@ public class Categorylistview extends AppCompatActivity {
         pos =intent.getIntExtra("taglistpos",0);
         selectedtags=SettingsModel.tags.get(pos);
 
+
+        for (int i=0; i < thetags.size(); i++) {
+                if (selectedtags.contains(thetags.get(i))) {
+                    //tag.getChidAt(i).setBackgroundColor(Color.parseColor("#00ff00"));
+                    //Doesn't set the colors of the previous selects, needs fix.
+                }
+        }
+
         tags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -62,7 +70,6 @@ public class Categorylistview extends AppCompatActivity {
     public void returnClick(View v){
         EditText categorynames = findViewById(R.id.cn);
         catname= categorynames.getText().toString();
-        System.out.println("hola"+catname);
         SettingsModel.tags.set(pos,selectedtags);
         if(!(catname.isEmpty())){SettingsModel.Categorynames.set(pos,catname);}
         Intent intent = new Intent(this,Categories.class);

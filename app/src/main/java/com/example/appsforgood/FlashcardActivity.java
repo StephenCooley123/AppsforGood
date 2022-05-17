@@ -20,7 +20,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import pl.droidsonroids.gif.GifImageView;
 import pl.droidsonroids.gif.GifTextView;
 
@@ -54,10 +53,6 @@ public class FlashcardActivity extends AppCompatActivity {
     ArrayList<String> touchedWords = new ArrayList<String>();
 
     ArrayList<Word> wordList = new ArrayList<Word>();
-
-    ImageView imageView0;
-    ImageView imageView1;
-    ImageView imageView2;
 
     TextView title;
 
@@ -110,8 +105,6 @@ public class FlashcardActivity extends AppCompatActivity {
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
                     speaker.setLanguage(Locale.US);
-                    speaker.speak(word, TextToSpeech.QUEUE_FLUSH, null);
-                    speaker.setLanguage(Locale.US);
                     speaker.speak("Pick the" + word, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
@@ -131,9 +124,6 @@ public class FlashcardActivity extends AppCompatActivity {
         }
         wordList.add(correctButton, correctWord);
         System.out.println("CORRECT WORD: " + correctWord.toString() + " LOCATION: " + correctButton);
-
-
-        title.setText(word);
 
 
          imageView0 = (ImageView) findViewById(R.id.imageView1);
@@ -255,8 +245,8 @@ public class FlashcardActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.UK);
-                    speaker.speak("This is a" +word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.setLanguage(Locale.US);
+                    speaker.speak("You found the" +word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
@@ -304,8 +294,8 @@ public class FlashcardActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.UK);
-                    speaker.speak("This is a" + word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.setLanguage(Locale.US);
+                    speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
@@ -355,8 +345,8 @@ public class FlashcardActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.UK);
-                    speaker.speak("This is a" + word, TextToSpeech.QUEUE_FLUSH, null);
+                    speaker.setLanguage(Locale.US);
+                    speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
             }, 1000);
@@ -409,7 +399,6 @@ public class FlashcardActivity extends AppCompatActivity {
         v.setImageURI(Uri.parse("android.resource://" + getPackageName() + "/" + R.drawable.fireworks));
     }
 
-    }
 
 
     //data writing method. Interacts with the files.
