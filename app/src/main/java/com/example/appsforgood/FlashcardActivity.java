@@ -104,7 +104,7 @@ public class FlashcardActivity extends AppCompatActivity {
             @Override
             public void onInit(int status) {
                 if (status != TextToSpeech.ERROR) {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ITALIAN);
                     speaker.speak("Pick the" + word, TextToSpeech.QUEUE_FLUSH, null);
                 }
             }
@@ -245,7 +245,7 @@ public class FlashcardActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ITALIAN);
                     speaker.speak("You found the" +word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }
@@ -294,7 +294,7 @@ public class FlashcardActivity extends AppCompatActivity {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    speaker.setLanguage(Locale.US);
+                    speaker.setLanguage(Locale.ITALIAN);
                     speaker.speak("You found the" + word, TextToSpeech.QUEUE_FLUSH, null);
 
                 }

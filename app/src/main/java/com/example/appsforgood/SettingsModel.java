@@ -9,7 +9,6 @@ public class SettingsModel {
     static ArrayList<ArrayList<String>> tags = new ArrayList<ArrayList<String>>();
     static ArrayList<String> Categorynames = new ArrayList<String>();
 
-
     }
 
 
